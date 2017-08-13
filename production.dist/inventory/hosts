@@ -1,0 +1,10 @@
+[satnogs]
+satnogs ansible_host=10.20.30.40 ansible_user=pi ansible_ssh_pass=raspberry
+
+[satnogs-radios]
+satnogs
+
+[rotctlds]
+
+[satnogs-clients]
+satnogs

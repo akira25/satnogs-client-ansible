@@ -1,0 +1,54 @@
+---
+- name: Add satnogs-client service user
+  user:
+    name: '{{ satnogs_client_user }}'
+    home: '/var/lib/{{ satnogs_client_user }}'
+    shell: '/bin/false'
+    groups:
+      - 'plugdev'
+    system: True
+    state: 'present'
+  become: True
+  notify:
+    - Restart satnogs-client service
+- name: Install dependencies
+  package:
+    name: '{{ item }}'
+  become: True
+  with_items: '{{ satnogs_client_packages }}'
+  notify:
+    - Restart satnogs-client service
+- name: Install satnogs-client
+  pip:
+    name: '{{ satnogs_client_name }}'
+    version: '{{ satnogs_client_version }}'
+    virtualenv: '/var/lib/{{ satnogs_client_user }}'
+    state: 'present'
+  become: True
+  become_user: '{{ satnogs_client_user }}'
+  notify:
+    - Restart satnogs-client service
+- name: Install satnogs-client configuration
+  template:
+    src: 'etc/default/satnogs-client.j2'
+    dest: '/etc/default/satnogs-client'
+    # TODO: Fix ownership
+    mode: 0644
+  become: True
+  notify:
+    - Restart satnogs-client service
+- name: Add satnogs-client systemd service
+  copy:
+    src: 'etc/systemd/system/satnogs-client.service'
+    dest: '/etc/systemd/system/satnogs-client.service'
+    mode: 0644
+  become: True
+  notify:
+    - Restart satnogs-client service
+# TODO: Use service module instead of systemd directly
+- name: Start satnogs-client service
+  systemd:
+    name: 'satnogs-client'
+    enabled: True
+    state: 'started'
+  become: True

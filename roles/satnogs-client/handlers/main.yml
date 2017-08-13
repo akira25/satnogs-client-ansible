@@ -1,0 +1,8 @@
+---
+- name: Restart satnogs-client service
+  systemd:
+    daemon_reload: True
+    name: 'satnogs-client'
+    enabled: True
+    state: 'restarted'
+  become: True

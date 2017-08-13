@@ -1,0 +1,39 @@
+---
+- name: Add hamlib utilities service user
+  user:
+    name: 'hamlib'
+    home: '/nonexistent'
+    shell: '/bin/false'
+    groups:
+      - 'dialout'
+    system: True
+    state: 'present'
+  become: True
+    - Restart hamlib utilities services
+- name: Install hamlib utilities
+  package:
+    name: 'libhamlib-utils'
+  become: True
+- name: Install hamlib utilities configuration
+  template:
+    src: 'etc/default/hamlib-utils.j2'
+    dest: '/etc/default/hamlib-utils'
+    mode: 0644
+  become: True
+  notify:
+    - Restart hamlib utilities services
+- name: Add rotctld systemd service
+  copy:
+    src: 'etc/systemd/system/rotctld.service'
+    dest: '/etc/systemd/system/rotctld.service'
+    mode: 0644
+  become: True
+  notify:
+    - Restart hamlib utilities services
+# TODO: Use service module instead of systemd directly
+- name: Start rotctld service
+  systemd:
+    name: 'rotctld'
+    enabled: True
+    state: 'started'
+  become: True

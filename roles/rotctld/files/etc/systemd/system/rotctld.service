@@ -1,0 +1,12 @@
+[Unit]
+Description=rotctld server
+
+[Service]
+EnvironmentFile=-/etc/default/rotctld
+ExecStart=/usr/bin/rotctld $ROT_OPTS
+Restart=on-failure
+User=hamlib
+Group=hamlib
+
+[Install]
+WantedBy=multi-user.target
