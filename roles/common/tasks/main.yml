@@ -1,2 +1,6 @@
 ---
+- name: Check Ansible version
+  assert:
+    that: ansible_version.full | version_compare(ansible_version_minimum, '>=')
+    msg: 'Detected Ansible {{ ansible_version.full }}. This role requires Ansible {{ ansible_version_minimum }} or greater.'
 - include: apt.yml
