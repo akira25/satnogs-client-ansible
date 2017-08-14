@@ -1,5 +1,4 @@
 ---
-# TODO: Assert ansible version > 2.3
 - include: satnogs-clients.yml
 - include: satnogs-radios.yml
 - include: rotctlds.yml
