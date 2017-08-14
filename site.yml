@@ -1,14 +1,10 @@
 ---
 # TODO: Assert ansible version > 2.3
-- hosts: common
+- hosts: satnogs-clients
   roles:
     - role: common
       tags:
         - common
-  tags:
-    - common
-- hosts: satnogs-clients
-  roles:
     - role: satnogs-client
       tags:
         - satnogs-client
@@ -16,6 +12,9 @@
     - satnogs-clients
 - hosts: rotctlds
   roles:
+    - role: common
+      tags:
+        - common
     - role: rotctld
       tags:
         - rotctld
@@ -23,6 +22,9 @@
     - rotctlds
 # - hosts: rigctld
 #   roles:
+#     - role: common
+#       tags:
+#         - common
 #     - role: rigctld
 #       tags:
 #         - rigctld
@@ -30,6 +32,9 @@
 #     - rigctlds
 - hosts: satnogs-radios
   roles:
+    - role: common
+      tags:
+        - common
     - role: satnogs-radio
       tags:
         - satnogs-radio
