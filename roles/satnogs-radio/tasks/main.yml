@@ -3,6 +3,7 @@
   apt_key:
     keyserver: 'pool.sks-keyservers.net'
     id: '{{ item }}'
+    state: 'present'
   become: True
   with_items:
     - '8B48AD6246925553'
@@ -10,37 +11,34 @@
 - name: Add backports repository
   apt_repository:
     repo: 'deb http://ftp.debian.org/debian jessie-backports main'
+    state: 'present'
   become: True
 - name: Install dependencies
   apt:
     name: '{{ item }}'
     default_release: 'jessie-backports'
+    state: 'latest'
   become: True
-  with_items:
-    - 'gnuradio'
-    - 'libgnuradio-osmosdr0.1.4'
-    - 'libgnuradio-fcdproplus0'
+  with_items: '{{ satnogs_radio_packages }}'
 - name: Install gr-satnogs
   apt:
-    # TODO: Make debian package a variable
-    deb: 'https://github.com/acinonyx/gr-satnogs-package/releases/download/1.0%2Bgit20170805.0.6b0deac-1/gr-satnogs_1.0.git20170805.0.6b0deac-1_armhf.deb'
+    deb: '{{ satnogs_radio_gr_satnogs_package }}'
+    state: 'present'
   become: True
-- name: Blacklist RTL-SDR modules
+- name: Blacklist SDR modules
   kernel_blacklist:
     name: '{{ item }}'
+    state: 'present'
   become: True
-  with_items:
-    - 'dvb_usb_rtl28xxu'
-- name: Unload RTL-SDR modules
+  with_items: '{{ satnogs_radio_blacklist_modules }}'
+- name: Unload SDR modules
   modprobe:
     name: '{{ item }}'
     state: 'absent'
   become: True
-  with_items:
-    - 'dvb_usb_rtl28xxu'
+  with_items: '{{ satnogs_radio_blacklist_modules }}'
 - name: Download UHD images
   command: '/usr/bin/uhd_images_downloader'
   args:
-    # TODO: Make tag a variable
-    creates: '/usr/share/uhd/images/003.009.005.tag'
+    creates: '/usr/share/uhd/images/{{ satnogs_radio_uhd_images_tag }}.tag'
   become: True
