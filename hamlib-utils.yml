@@ -1,0 +1,11 @@
+---
+- hosts: hamlib-utils
+  roles:
+    - role: common
+      tags:
+        - common
+    - role: hamlib-utils
+      tags:
+        - hamlib-utils
+  tags:
+    - hamlib-utils

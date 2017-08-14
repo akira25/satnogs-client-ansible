@@ -2,11 +2,11 @@
 Description=rotctld server
 
 [Service]
-EnvironmentFile=-/etc/default/rotctld
+EnvironmentFile=-/etc/default/hamlib-utils
 ExecStart=/usr/bin/rotctld $ROT_OPTS
 Restart=on-failure
-User=hamlib
-Group=hamlib
+User={{ hamlib_utils_user }}
+Group={{ hamlib_utils_user }}
 
 [Install]
 WantedBy=multi-user.target

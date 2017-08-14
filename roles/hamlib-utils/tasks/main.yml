@@ -1,0 +1,59 @@
+---
+- name: Add hamlib utilities service user
+  user:
+    name: '{{ hamlib_utils_user }}'
+    home: '/nonexistent'
+    shell: '/bin/false'
+    groups:
+      - 'dialout'
+    system: True
+    state: 'present'
+  become: True
+  notify:
+    - Restart rigctld service
+    - Restart rotctld service
+- name: Install hamlib utilities
+  package:
+    name: 'libhamlib-utils'
+    state: 'latest'
+  become: True
+  notify:
+    - Restart rigctld service
+    - Restart rotctld service
+- name: Install hamlib utilities configuration
+  template:
+    src: 'etc/default/hamlib-utils.j2'
+    dest: '/etc/default/hamlib-utils'
+    mode: 0644
+  become: True
+  notify:
+    - Restart rigctld service
+    - Restart rotctld service
+- name: Add rigctld systemd service
+  template:
+    src: 'etc/systemd/system/rigctld.service.j2'
+    dest: '/etc/systemd/system/rigctld.service'
+    mode: 0644
+  become: True
+  notify:
+    - Restart rigctld service
+- name: Add rotctld systemd service
+  template:
+    src: 'etc/systemd/system/rotctld.service.j2'
+    dest: '/etc/systemd/system/rotctld.service'
+    mode: 0644
+  become: True
+  notify:
+    - Restart rotctld service
+- name: Start/stop rigctld service
+  service:
+    name: 'rigctld'
+    enabled: '{{ hamlib_utils_rig_enabled | default(False) }}'
+    state: '{{ "started" if hamlib_utils_rig_enabled | default(False) else "stopped" }}'
+  become: True
+- name: Start/stop rotctld service
+  service:
+    name: 'rotctld'
+    enabled: '{{ hamlib_utils_rot_enabled | default(False) }}'
+    state: '{{ "started" if hamlib_utils_rot_enabled | default(False) else "stopped" }}'
+  become: True

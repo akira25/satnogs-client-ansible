@@ -1,0 +1,15 @@
+---
+- name: Restart rigctld service
+  systemd:
+    daemon_reload: True
+    name: 'rigctld'
+    enabled: '{{ hamlib_utils_rig_enabled | default(False) }}'
+    state: 'restarted'
+  become: True
+- name: Restart rotctld service
+  systemd:
+    daemon_reload: True
+    name: 'rotctld'
+    enabled: '{{ hamlib_utils_rot_enabled | default(False) }}'
+    state: 'restarted'
+  become: True
