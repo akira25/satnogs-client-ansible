@@ -1,0 +1,11 @@
+---
+- hosts: satnogs-clients
+  roles:
+    - role: common
+      tags:
+        - common
+    - role: satnogs-client
+      tags:
+        - satnogs-client
+  tags:
+    - satnogs-clients
