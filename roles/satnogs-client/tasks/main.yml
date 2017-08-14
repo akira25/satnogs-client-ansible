@@ -46,9 +46,8 @@
   become: True
   notify:
     - Restart satnogs-client service
-# TODO: Use service module instead of systemd directly
 - name: Start satnogs-client service
-  systemd:
+  service:
     name: 'satnogs-client'
     enabled: True
     state: 'started'
