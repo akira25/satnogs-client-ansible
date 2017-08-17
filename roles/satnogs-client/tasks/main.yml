@@ -46,6 +46,16 @@
   become: True
   notify:
     - Restart satnogs-client service
+- name: Use tmpfs for state directory
+  mount:
+    path: '{{ satnogs_client_state_dir }}'
+    src: 'tmpfs'
+    fstype: 'tmpfs'
+    opts: 'rw,nosuid,noexec,nodev,noatime'
+    state: 'mounted'
+  become: True
+  notify:
+    - Restart satnogs-client service
 - name: Start satnogs-client service
   service:
     name: 'satnogs-client'

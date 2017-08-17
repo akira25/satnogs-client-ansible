@@ -7,3 +7,4 @@ satnogs_client_packages:
   - 'libffi-dev'
   - 'libssl-dev'
   - 'gnuplot'
+satnogs_client_state_dir: '/tmp/.satnogs'
