@@ -1,3 +1,11 @@
+#
+# SatNOGS client version
+#
+# satnogs_client_version: '0.4'
+
+#
+# SatNOGS client configuration
+#
 satnogs_api_token: '0123456789abcdef0123456789abcdef01234567'
 satnogs_network_api_url: 'https://network-dev.satnogs.org/api/'
 satnogs_rx_device: 'rtlsdr'
@@ -6,7 +14,10 @@ satnogs_station_id: '9999'
 satnogs_station_lat: '37.971'
 satnogs_station_lon: '23.725'
 
-hamlib_utils_rig_enabled: False
-hamlib_utils_rig_opts: '-m 1'
+#
+# Hamlib configuration
+#
+# hamlib_utils_rig_enabled: False
+# hamlib_utils_rig_opts: '-m 1'
 hamlib_utils_rot_enabled: True
 hamlib_utils_rot_opts: '-m 1'
