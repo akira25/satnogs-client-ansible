@@ -19,11 +19,19 @@
   with_items: '{{ satnogs_client_packages }}'
   notify:
     - Restart satnogs-client service
-- name: Install satnogs-client
+- name: Uninstall previous version of satnogs-client
   pip:
     name: '{{ satnogs_client_name }}'
-    version: '{{ satnogs_client_version }}'
     virtualenv: '/var/lib/{{ satnogs_client_user }}'
+    state: 'absent'
+  become: True
+  become_user: '{{ satnogs_client_user }}'
+- name: Install satnogs-client
+  pip:
+    name: '{{ satnogs_client_url | default(satnogs_client_name) }}'
+    version: '{{ satnogs_client_version if satnogs_client_url is undefined else omit }}'
+    virtualenv: '/var/lib/{{ satnogs_client_user }}'
+    editable: False
     state: 'present'
   become: True
   become_user: '{{ satnogs_client_user }}'
