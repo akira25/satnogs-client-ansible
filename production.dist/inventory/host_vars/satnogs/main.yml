@@ -1,7 +1,14 @@
+###
+# SatNOGS client ansible configuration
 #
-# SatNOGS client version
+
+
 #
-# satnogs_client_version: '0.4'
+# SatNOGS client package
+#
+#satnogs_client_url: 'git+https://gitlab.com/librespacefoundation/satnogs/satnogs-client.git@0'
+#satnogs_client_version: '0.4'
+
 
 #
 # SatNOGS client configuration
@@ -14,10 +21,51 @@ satnogs_station_id: '9999'
 satnogs_station_lat: '37.971'
 satnogs_station_lon: '23.725'
 
+#satnogs_pre_observation_script: Null
+#satnogs_post_observation_script:  Null
+#satnogs_app_path: '/tmp/.satnogs'
+#satnogs_output_path: '/tmp/.satnogs/data'
+#satnogs_complete_output_path: '/tmp/.satnogs/data/complete'
+#satnogs_incomplete_output_path: '/tmp/.satnogs/data/incomplete'
+#satnogs_remove_raw_files: 'True'
+#satnogs_verify_ssl: 'True'
+#satnogs_sqlite_url: 'sqlite:///jobs.sqlite'
+
+#satnogs_rot_ip: '127.0.0.1'
+#satnogs_rot_port: '4533'
+#satnogs_rig_ip: '127.0.0.1'
+#satnogs_rig_port: '4532'
+#satnogs_rot_threshold: '4'
+
+#satnogs_serial_port: Null
+
+#satnogs_doppler_corr_per_sec: Null
+#satnogs_lo_offset: Null
+#satnogs_ppm_error: Null
+#satnogs_if_gain: Null
+#satnogs_rf_gain: Null
+#satnogs_bb_gain: Null
+#satnogs_antenna: Null
+#satnogs_dev_args: Null
+#enable_iq_dump: 0
+#iq_dump_filename: Null
+
+#rf_sw_cmd_off_int: Null
+#rf_sw_cmd_off_char_seq: Null
+#rf_sw_cmd_on_int: Null
+#rf_sw_cmd_on_char_seq: Null
+
+
+#
+# SatNOGS radio configuration
+#
+#satnogs_radio_gr_satnogs_package: 'https://gitlab.com/librespacefoundation/satnogs/gr-satnogs-package/builds/artifacts/master/raw/build/debian/output/{{ satnogs_radio_package_arch[ansible_architecture] }}/gr-satnogs_{{ satnogs_radio_package_arch[ansible_architecture] }}.deb?job=nightly'
+
+
 #
 # Hamlib configuration
 #
-# hamlib_utils_rig_enabled: False
-# hamlib_utils_rig_opts: '-m 1'
+#hamlib_utils_rig_enabled: False
+#hamlib_utils_rig_opts: '-m 1'
 hamlib_utils_rot_enabled: True
 hamlib_utils_rot_opts: '-m 1'
