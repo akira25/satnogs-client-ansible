@@ -6,5 +6,6 @@ satnogs_client_packages:
   - 'redis-server'
   - 'libffi-dev'
   - 'libssl-dev'
+  - 'git'
   - 'gnuplot'
 satnogs_client_state_dir: '/tmp/.satnogs'
