@@ -7,7 +7,7 @@
 # SatNOGS client package
 #
 #satnogs_client_url: 'git+https://gitlab.com/librespacefoundation/satnogs/satnogs-client.git@0'
-#satnogs_client_version: '0.4'
+#satnogs_client_version: '0.4.1'
 
 
 #
