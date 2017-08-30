@@ -16,7 +16,6 @@
 - name: Install dependencies
   apt:
     name: '{{ item }}'
-    default_release: 'jessie-backports'
     state: 'latest'
   become: True
   with_items: '{{ satnogs_radio_packages }}'
