@@ -3,4 +3,8 @@
   assert:
     that: ansible_version.full | version_compare(version_minimum, '>=')
     msg: 'Detected Ansible {{ ansible_version.full }}. This role requires Ansible {{ version_minimum }} or greater.'
+- name: Check distribution
+  assert:
+    that: ansible_distribution == distribution and ansible_distribution_release == distribution_release
+    msg: 'This role requires {{ distribution }} {{ distribution_release }}.'
 - include: apt.yml
