@@ -2,3 +2,5 @@
 version_minimum: '2.3'
 distribution: 'Debian'
 distribution_release: 'stretch'
+packages:
+  - 'acl'

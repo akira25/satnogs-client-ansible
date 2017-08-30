@@ -8,3 +8,4 @@
     that: ansible_distribution == distribution and ansible_distribution_release == distribution_release
     msg: 'This role requires {{ distribution }} {{ distribution_release }}.'
 - include: apt.yml
+- include: packages.yml

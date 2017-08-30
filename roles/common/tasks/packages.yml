@@ -1,0 +1,7 @@
+---
+- name: Install packages
+  package:
+    name: '{{ item }}'
+    state: 'latest'
+  become: True
+  with_items: '{{ packages }}'
