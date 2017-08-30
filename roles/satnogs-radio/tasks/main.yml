@@ -1,9 +1,9 @@
 ---
-- name: Remove archive repositories keys
+- name: Add archive repositories keys
   apt_key:
     keyserver: 'pool.sks-keyservers.net'
     id: '{{ item }}'
-    state: 'absent'
+    state: 'present'
   become: True
   with_items:
     - '8B48AD6246925553'
