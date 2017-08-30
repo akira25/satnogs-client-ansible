@@ -1,2 +1,2 @@
 ---
-ansible_version_minimum: '2.3'
+version_minimum: '2.3'

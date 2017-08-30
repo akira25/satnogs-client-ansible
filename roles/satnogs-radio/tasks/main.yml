@@ -1,17 +1,17 @@
 ---
-- name: Add archive repositories keys
+- name: Remove archive repositories keys
   apt_key:
     keyserver: 'pool.sks-keyservers.net'
     id: '{{ item }}'
-    state: 'present'
+    state: 'absent'
   become: True
   with_items:
     - '8B48AD6246925553'
     - '7638D0442B90D010'
-- name: Add backports repository
+- name: Remove jessie backports repository
   apt_repository:
     repo: 'deb http://ftp.debian.org/debian jessie-backports main'
-    state: 'present'
+    state: 'absent'
   become: True
 - name: Install dependencies
   apt:
