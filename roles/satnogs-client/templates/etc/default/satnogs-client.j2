@@ -34,6 +34,7 @@
 {{ 'SATNOGS_DEV_ARGS="' ~ satnogs_dev_args ~ '"' if satnogs_dev_args is defined else None }}
 {{ 'ENABLE_IQ_DUMP="' ~ enable_iq_dump ~ '"' if enable_iq_dump is defined else None }}
 {{ 'IQ_DUMP_FILENAME="' ~ iq_dump_filename ~ '"' if iq_dump_filename is defined else None }}
+{{ 'ENABLE_DECODED_DATA="' ~ enable_decoded_data ~ '"' if enable_decoded_data is defined else None }}
 
 {{ 'RF_SW_CMD_OFF_INT="' ~ rf_sw_cmd_off_int ~ '"' if rf_sw_cmd_off_int is defined else None }}
 {{ 'RF_SW_CMD_OFF_CHAR_SEQ="' ~ rf_sw_cmd_off_char_seq ~ '"' if rf_sw_cmd_off_char_seq is defined else None }}
