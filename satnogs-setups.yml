@@ -1,0 +1,11 @@
+---
+- hosts: satnogs-setups
+  roles:
+    - role: common
+      tags:
+        - common
+    - role: satnogs-setup
+      tags:
+        - satnogs-setup
+  tags:
+    - satnogs-setups

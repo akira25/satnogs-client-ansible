@@ -1,0 +1,28 @@
+---
+- name: Configure satnogs-setup
+  template:
+    src: 'etc/default/satnogs-setup.j2'
+    dest: '/etc/default/satnogs-setup'
+    mode: 0644
+  become: True
+- name: Set up inventory
+  copy:
+    src: 'etc/ansible/hosts'
+    dest: '/etc/ansible/hosts'
+    mode: 0644
+  become: True
+- name: Create satnogs-setup share directory
+  file:
+    path: '/usr/local/share/satnogs-setup'
+    state: 'directory'
+    mode: 0755
+  become: True
+- name: Install satnogs-setup scripts
+  copy:
+    src: '{{ item.0 }}'
+    dest: '{{ item.1 }}'
+    mode: 0755
+  become: True
+  with_together:
+    - [ 'usr/local/bin/satnogs-setup', 'usr/local/share/satnogs-setup/bootstrap.sh', 'usr/local/share/satnogs-setup/setup.sh' ]
+    - [ '/usr/local/bin/satnogs-setup', '/usr/local/share/satnogs-setup/bootstrap.sh', '/usr/local/share/satnogs-setup/setup.sh' ]

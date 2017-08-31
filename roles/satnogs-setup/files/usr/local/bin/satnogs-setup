@@ -1,0 +1,13 @@
+#!/bin/sh
+
+PREFIX="/usr/local/share/satnogs-setup"
+BOOTSTRAP_SCRIPT="bootstrap.sh"
+SETUP_SCRIPT="setup.sh"
+
+if [ -x "${PREFIX}/${BOOTSTRAP_SCRIPT}" ]; then
+	"${PREFIX}/${BOOTSTRAP_SCRIPT}"
+fi
+
+if [ -x "${PREFIX}/${SETUP_SCRIPT}" ]; then
+	"${PREFIX}/${SETUP_SCRIPT}"
+fi

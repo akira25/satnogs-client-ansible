@@ -1,0 +1,13 @@
+localhost ansible_connection=local
+
+[satnogs-setups]
+localhost
+
+[satnogs-radios]
+localhost
+
+[hamlib-utils]
+localhost
+
+[satnogs-clients]
+localhost
