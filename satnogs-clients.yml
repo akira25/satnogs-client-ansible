@@ -7,5 +7,3 @@
     - role: satnogs-client
       tags:
         - satnogs-client
-  tags:
-    - satnogs-clients

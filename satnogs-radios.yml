@@ -7,5 +7,3 @@
     - role: satnogs-radio
       tags:
         - satnogs-radio
-  tags:
-    - satnogs-radios

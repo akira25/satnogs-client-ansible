@@ -7,5 +7,3 @@
     - role: satnogs-setup
       tags:
         - satnogs-setup
-  tags:
-    - satnogs-setups
