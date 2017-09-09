@@ -1,0 +1,226 @@
+#!/bin/sh
+#
+# SatNOGS client setup configuration script
+#
+# Copyright (C) 2017 Libre Space Foundation <https://libre.space/>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+BACKTITLE="SatNOGS client configuration"
+WIDTH="78"
+YAMLFILE_PATH="${1:-/etc/ansible/host_vars/localhost}"
+
+MAIN_MENU="Basic:Basic configuration options:menu
+Advanced:Advanced configuration options:menu
+Show:Show configuration file:show
+Quit:Exit $(basename "$0"):quit"
+
+BASIC_MENU="SATNOGS_API_TOKEN:Define API token:input
+SATNOGS_NETWORK_API_URL:Define network API URL:input
+SATNOGS_RX_DEVICE:Define RX device:input
+SATNOGS_STATION_ELEV:Define station elevation:input
+SATNOGS_STATION_ID:Define station ID:input
+SATNOGS_STATION_LAT:Define station latitude:input
+SATNOGS_STATION_LON:Define station longitude:input
+HAMLIB_UTILS_ROT_ENABLED:Enable Hamlib rotctld:yesno
+HAMLIB_UTILS_ROT_OPTS:Define Hamlib rotctld options:input"
+
+ADVANCED_MENU="$BASIC_MENU
+SATNOGS_PRE_OBSERVATION_SCRIPT:Define pre-observation script:input
+SATNOGS_POST_OBSERVATION_SCRIPT:Define post-observation script:input
+SATNOGS_APP_PATH:Define application data path:input
+SATNOGS_OUTPUT_PATH:Define output data path:input
+SATNOGS_COMPLETE_OUTPUT_PATH:Define completed data path:input
+SATNOGS_INCOMPLETE_OUTPUT_PATH:Define incompleted data path:input
+SATNOGS_REMOVE_RAW_FILES:Remove raw files:yesno
+SATNOGS_VERIFY_SSL:Verify SatNOGS network SSL certificate:yesno
+SATNOGS_SQLITE_URL:Define SQLite URI:input
+SATNOGS_ROT_IP:Define Hamlib rotctld IP:input
+SATNOGS_ROT_PORT:Define Hamlib rotctld port:input
+SATNOGS_RIG_IP:Define Hamlib rigctld IP:input
+SATNOGS_RIG_PORT:Define Hamlib rigctld port:input
+SATNOGS_ROT_THRESHOLD:Define Hamlib rotctld command threshold:input
+SATNOGS_DOPPLER_CORR_PER_SEC:Define rate of doppler correction (sec):input
+SATNOGS_LO_OFFSET:Define local oscillator offset:input
+SATNOGS_PPM_ERROR:Define PPM error:input
+SATNOGS_IF_GAIN:Define SatNOGS Radio IF Gain:input
+SATNOGS_RF_GAIN:Define SatNOGS Radio RF Gain:input
+SATNOGS_BB_GAIN:Define SatNOGS Radio BB Gain:input
+SATNOGS_ANTENNA:Define SatNOGS Radio Antenna:input
+SATNOGS_DEV_ARGS:Define SatNOGS Radio dev arguments:input
+ENABLE_IQ_DUMP:Enable IQ dump:yesno
+IQ_DUMP_FILENAME:Define IQ dump filename:input
+ENABLE_DECODED_DATA:Enable decoded data:yesno
+SATNOGS_RADIO_GR_SATNOGS_PACKAGE:Define gr-satnogs package:input
+HAMLIB_UTILS_RIG_ENABLED:Enable Hamlib rigctld:yesno
+HAMLIB_UTILS_RIG_OPTS:Define Hamlib rigctld options:input"
+
+to_lower() {
+	tr '[:upper:]' '[:lower:]'
+}
+
+to_upper() {
+	tr '[:lower:]' '[:upper:]'
+}
+
+get_tags_items_list() {
+	local menu="$1"
+	local variables
+
+	echo "$menu" | awk -e 'BEGIN { FS=":" } { printf("\"%s\" \"%s\" ", $1, $2) }'
+}
+
+get_item() {
+	local menu="$1"
+	local tag="$2"
+
+	echo "$(get_menu "$1" | awk -e 'BEGIN { FS=":" } /'"$tag"'/ { print $2 }')"
+}
+
+get_type() {
+	local menu="$1"
+	local tag="$2"
+
+	echo "$(get_menu "$1" | awk -e 'BEGIN { FS=":" } /'"$tag"'/ { print $3 }')"
+}
+
+get_menu() {
+	local menu="$1"
+
+	eval "echo \"\$$(echo "$menu" | to_upper)_MENU\""
+}
+
+get_variable() {
+	local file="$1"
+	local variable="$2"
+
+	if [ -f "$file" ]; then
+		awk -e 'BEGIN { FS=": *" } /^'"$variable"' *:/ { print $2 }' "$file"
+	fi
+}
+
+set_variable() {
+	local file="$1"
+	local variable="$2"
+	local value="$3"
+
+	if [ -z "$value" ]; then
+		if [ -f "$file" ]; then
+			sed -i '/^'"$variable"' *:.*/ d' "$file"
+		fi
+	else
+		if grep -q "^${variable} *:" "$file" 2>/dev/null; then
+			sed -i '/^'"$variable"' *:/ s/^'"$variable"' *:.*/'"${variable}: ${value}"'/' "$file"
+		else
+			echo "${variable}: ${value}" >> "$file"
+		fi
+	fi
+}
+
+menu() {
+	local title="$1"
+	local menu="$2"
+	local default="$3"
+	local menu_height="$(($(echo "$menu" | wc -l) + 1))"
+	local height="$(($menu_height + 9))"
+	local width="$WIDTH"
+
+	eval "dialog \
+		--clear \
+		--backtitle \"$BACKTITLE\" \
+		--title \"$title\" \
+		${default:+--default-item \"$default\"} \
+		--menu \"[UP], [DOWN] arrow keys to move\n[ENTER] to select\" $height $width $menu_height \
+		$(get_tags_items_list "$menu")"
+
+	if [ $? -eq 1 ]; then
+		echo "Back" 1>&2
+	fi
+}
+
+input() {
+	local inputbox="$1"
+	local init="$2"
+
+	dialog \
+		--clear \
+		--backtitle "$BACKTITLE" \
+		--title "Parameter definition" \
+		--inputbox "$inputbox" 0 "$WIDTH" "$2"
+	
+	if [ $? -eq 1 ]; then
+		echo "Cancel" 1>&2
+	fi
+}
+
+yesno() {
+	local yesno="$1"
+
+	dialog \
+		--clear \
+		--backtitle "$BACKTITLE" \
+		--title "Parameter definition" \
+		--yesno "$yesno" 6 "$WIDTH"
+	
+	if [ $? -eq 0 ]; then
+		echo "True" 1>&2
+	else
+		echo "False" 1>&2
+	fi
+}
+
+exec 3>&1
+
+tag="Main"
+while true; do
+
+	case $tag in
+		Back|Quit)
+			if [ "$menu" = "Main" ]; then
+				exit 0
+			fi
+			tag="Main"
+			;;
+		Show)
+			if [ -f "$YAMLFILE_PATH" ]; then
+				dialog \
+					--clear \
+					--backtitle "$BACKTITLE" \
+					--title "SatNOGS client configuration" \
+					--textbox "$YAMLFILE_PATH" 15 "$WIDTH"
+			fi
+			tag="Main"
+			;;
+		Basic|Advanced|Main)
+			menu="$tag"
+			tag="$(eval "menu \"$tag Menu\" \"\$$(echo "$tag" | to_upper)_MENU\" \"$item\" 2>&1 1>&3")"
+			item=""
+			;;
+		*)
+			type="$(get_type "$menu" "$tag")"
+			item="$(get_item "$menu" "$tag")"
+			variable="$(echo "$tag" | to_lower)"
+			init="$(get_variable "$YAMLFILE_PATH" "$variable")"
+			input="$(eval "$type \"$item\" \"$init\" 2>&1 1>&3")"
+			if [ "$input" != "Cancel" ]; then
+				set_variable "$YAMLFILE_PATH" "$variable" "$input"
+			fi
+			item="$tag"
+			tag="$menu"
+			;;
+	esac
+	
+done
+
+exec 3>&-

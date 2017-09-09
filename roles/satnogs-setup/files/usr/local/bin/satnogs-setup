@@ -20,9 +20,14 @@
 PREFIX="/usr/local/share/satnogs-setup"
 BOOTSTRAP_SCRIPT="bootstrap.sh"
 SETUP_SCRIPT="setup.sh"
+CONFIG_SCRIPT="config.sh"
 
 if [ -x "${PREFIX}/${BOOTSTRAP_SCRIPT}" ]; then
 	"${PREFIX}/${BOOTSTRAP_SCRIPT}"
+fi
+
+if [ -x "${PREFIX}/${CONFIG_SCRIPT}" ]; then
+	"${PREFIX}/${CONFIG_SCRIPT}"
 fi
 
 if [ -x "${PREFIX}/${SETUP_SCRIPT}" ]; then
