@@ -78,21 +78,21 @@ get_tags_items_list() {
 	local menu="$1"
 	local variables
 
-	echo "$menu" | awk -e 'BEGIN { FS=":" } { printf("\"%s\" \"%s\" ", $1, $2) }'
+	echo "$menu" | awk 'BEGIN { FS=":" } { printf("\"%s\" \"%s\" ", $1, $2) }'
 }
 
 get_item() {
 	local menu="$1"
 	local tag="$2"
 
-	echo "$(get_menu "$1" | awk -e 'BEGIN { FS=":" } /'"$tag"'/ { print $2 }')"
+	echo "$(get_menu "$1" | awk 'BEGIN { FS=":" } /'"$tag"'/ { print $2 }')"
 }
 
 get_type() {
 	local menu="$1"
 	local tag="$2"
 
-	echo "$(get_menu "$1" | awk -e 'BEGIN { FS=":" } /'"$tag"'/ { print $3 }')"
+	echo "$(get_menu "$1" | awk 'BEGIN { FS=":" } /'"$tag"'/ { print $3 }')"
 }
 
 get_menu() {
@@ -106,7 +106,7 @@ get_variable() {
 	local variable="$2"
 
 	if [ -f "$file" ]; then
-		awk -e 'BEGIN { FS=": *" } /^'"$variable"' *:/ { print $2 }' "$file"
+		awk 'BEGIN { FS=": *" } /^'"$variable"' *:/ { print $2 }' "$file"
 	fi
 }
 
