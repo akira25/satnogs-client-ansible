@@ -26,6 +26,8 @@
     dest: '/etc/default/hamlib-utils'
     mode: 0644
   become: True
+  tags:
+    - config
   notify:
     - Restart rigctld service
     - Restart rotctld service
@@ -51,9 +53,13 @@
     enabled: '{{ hamlib_utils_rig_enabled | default(False) }}'
     state: '{{ "started" if hamlib_utils_rig_enabled | default(False) else "stopped" }}'
   become: True
+  tags:
+    - config
 - name: Start/stop rotctld service
   service:
     name: 'rotctld'
     enabled: '{{ hamlib_utils_rot_enabled | default(False) }}'
     state: '{{ "started" if hamlib_utils_rot_enabled | default(False) else "stopped" }}'
   become: True
+  tags:
+    - config

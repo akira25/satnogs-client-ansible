@@ -37,6 +37,8 @@
     # TODO: Fix ownership
     mode: 0644
   become: True
+  tags:
+    - config
   notify:
     - Restart satnogs-client service
 - name: Add satnogs-client systemd service
