@@ -11,6 +11,18 @@
     dest: '/etc/ansible/hosts'
     mode: 0644
   become: True
+- name: Create host variables directory
+  file:
+    path: '/etc/ansible/host_vars'
+    state: 'directory'
+    mode: 0755
+  become: True
+- name: Create host variables file
+  file:
+    path: '/etc/ansible/host_vars/localhost'
+    state: 'touch'
+    mode: 0644
+  become: True
 - name: Create satnogs-setup share directory
   file:
     path: '/usr/local/share/satnogs-setup'
