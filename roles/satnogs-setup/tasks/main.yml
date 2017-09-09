@@ -23,6 +23,11 @@
     state: 'touch'
     mode: 0644
   become: True
+- name: Install dialog utility
+  package:
+    name: 'dialog'
+    state: 'latest'
+  become: True
 - name: Create satnogs-setup share directory
   file:
     path: '/usr/local/share/satnogs-setup'
