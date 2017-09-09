@@ -19,4 +19,5 @@
 
 . /etc/default/satnogs-setup
 
-ansible-pull -U "$SATNOGS_SETUP_ANSIBLE_URL" "$@"
+cd ~/.ansible/pull/$(hostname)
+ansible-playbook "$@" local.yml
