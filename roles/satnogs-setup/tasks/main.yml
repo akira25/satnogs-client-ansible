@@ -36,5 +36,5 @@
     mode: 0755
   become: True
   with_together:
-    - [ 'usr/local/bin/satnogs-setup', 'usr/local/share/satnogs-setup/bootstrap.sh', 'usr/local/share/satnogs-setup/setup.sh' ]
-    - [ '/usr/local/bin/satnogs-setup', '/usr/local/share/satnogs-setup/bootstrap.sh', '/usr/local/share/satnogs-setup/setup.sh' ]
+    - [ 'usr/local/bin/satnogs-setup', 'usr/local/share/satnogs-setup/bootstrap.sh', 'usr/local/share/satnogs-setup/setup.sh', 'usr/local/share/satnogs-setup/config.sh' ]
+    - [ '/usr/local/bin/satnogs-setup', '/usr/local/share/satnogs-setup/bootstrap.sh', '/usr/local/share/satnogs-setup/setup.sh', '/usr/local/share/satnogs-setup/config.sh' ]
