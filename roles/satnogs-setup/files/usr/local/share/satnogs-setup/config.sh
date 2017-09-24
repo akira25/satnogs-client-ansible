@@ -121,7 +121,7 @@ set_variable() {
 		fi
 	else
 		if grep -q "^${variable} *:" "$file" 2>/dev/null; then
-			sed -i '/^'"$variable"' *:/ s/^'"$variable"' *:.*/'"${variable}: ${value}"'/' "$file"
+			sed -i '/^'"$variable"' *:/ s%^'"$variable"' *:.*%'"${variable}: ${value}"'%' "$file"
 		else
 			echo "${variable}: ${value}" >> "$file"
 		fi
