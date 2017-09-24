@@ -135,6 +135,7 @@ menu() {
 	local menu_height="$(($(echo "$menu" | wc -l) + 1))"
 	local height="$(($menu_height + 9))"
 	local width="$WIDTH"
+	local res
 
 	eval "dialog \
 		--clear \
@@ -143,8 +144,8 @@ menu() {
 		${default:+--default-item \"$default\"} \
 		--menu \"[UP], [DOWN] arrow keys to move\n[ENTER] to select\" $height $width $menu_height \
 		$(get_tags_items_list "$menu")"
-
-	if [ $? -eq 1 ]; then
+	res=$?
+	if [ $res -eq 1 ] || [ $res -eq 255 ]; then
 		echo "Back" 1>&2
 	fi
 }
@@ -152,20 +153,22 @@ menu() {
 input() {
 	local inputbox="$1"
 	local init="$2"
+	local res
 
 	dialog \
 		--clear \
 		--backtitle "$BACKTITLE" \
 		--title "Parameter definition" \
 		--inputbox "$inputbox" 0 "$WIDTH" "$2"
-	
-	if [ $? -eq 1 ]; then
+	res=$?
+	if [ $res -eq 1 ] || [ $res -eq 255 ]; then
 		echo "Cancel" 1>&2
 	fi
 }
 
 yesno() {
 	local yesno="$1"
+	local res
 
 	dialog \
 		--clear \
@@ -173,10 +176,11 @@ yesno() {
 		--title "Parameter definition" \
 		--yesno "$yesno" 6 "$WIDTH"
 	
-	if [ $? -eq 0 ]; then
-		echo "True" 1>&2
-	else
+	res=$?
+	if [ $res -eq 1 ] || [ $res -eq 255 ]; then
 		echo "False" 1>&2
+	else
+		echo "True" 1>&2
 	fi
 }
 
