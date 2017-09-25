@@ -64,7 +64,8 @@ IQ_DUMP_FILENAME:Define IQ dump filename:input
 ENABLE_DECODED_DATA:Enable decoded data:yesno
 SATNOGS_RADIO_GR_SATNOGS_PACKAGE:Define gr-satnogs package:input
 HAMLIB_UTILS_RIG_ENABLED:Enable Hamlib rigctld:yesno
-HAMLIB_UTILS_RIG_OPTS:Define Hamlib rigctld options:input"
+HAMLIB_UTILS_RIG_OPTS:Define Hamlib rigctld options:input
+SATNOGS_SETUP_ANSIBLE_URL:Define Ansible Git URL:input"
 
 to_lower() {
 	tr '[:upper:]' '[:lower:]'
