@@ -25,7 +25,7 @@
     version: '{{ satnogs_client_version if satnogs_client_url is undefined else omit }}'
     virtualenv: '/var/lib/{{ satnogs_client_user }}'
     editable: False
-    state: 'present'
+    state: 'forcereinstall'
   become: True
   become_user: '{{ satnogs_client_user }}'
   notify:
