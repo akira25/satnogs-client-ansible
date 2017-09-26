@@ -107,7 +107,7 @@ get_variable() {
 	local variable="$2"
 
 	if [ -f "$file" ]; then
-		awk 'BEGIN { FS=": *" } /^'"$variable"' *:/ { print $2 }' "$file"
+		awk 'BEGIN { FS="'"$variable"' *: *" } /^'"$variable"' *:/ { print $2 }' "$file"
 	fi
 }
 
