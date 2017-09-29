@@ -1,5 +1,5 @@
 ---
-- include: satnogs-setups.yml
-- include: satnogs-clients.yml
-- include: satnogs-radios.yml
-- include: hamlib-utils.yml
+- import_playbook: satnogs-setups.yml
+- import_playbook: satnogs-clients.yml
+- import_playbook: satnogs-radios.yml
+- import_playbook: hamlib-utils.yml
