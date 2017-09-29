@@ -53,7 +53,7 @@ satnogs_station_lon: '23.725'
 #satnogs_dev_args: Null
 #enable_iq_dump: 0
 #iq_dump_filename: Null
-#enable_decoded_data: 0
+#disable_decoded_data: 0
 
 #rf_sw_cmd_off_int: Null
 #rf_sw_cmd_off_char_seq: Null

@@ -61,7 +61,7 @@ SATNOGS_ANTENNA:Define SatNOGS Radio Antenna:input
 SATNOGS_DEV_ARGS:Define SatNOGS Radio dev arguments:input
 ENABLE_IQ_DUMP:Enable IQ dump:yesno
 IQ_DUMP_FILENAME:Define IQ dump filename:input
-ENABLE_DECODED_DATA:Enable decoded data:yesno
+DISABLE_DECODED_DATA:Disable decoded data:yesno
 SATNOGS_RADIO_GR_SATNOGS_PACKAGE:Define gr-satnogs package:input
 HAMLIB_UTILS_RIG_ENABLED:Enable Hamlib rigctld:yesno
 HAMLIB_UTILS_RIG_OPTS:Define Hamlib rigctld options:input
