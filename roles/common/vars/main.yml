@@ -1,5 +1,5 @@
 ---
-version_minimum: '2.3'
+version_minimum: '2.4'
 distribution: 'Debian'
 distribution_release: 'stretch'
 packages:
