@@ -25,6 +25,10 @@
     virtualenv: '/var/lib/{{ satnogs_client_user }}'
     editable: False
     state: 'absent'
+  retries: 5
+  delay: 3
+  register: res
+  until: res.changed
   become: True
   become_user: '{{ satnogs_client_user }}'
 - name: Install satnogs-client
@@ -34,6 +38,10 @@
     virtualenv: '/var/lib/{{ satnogs_client_user }}'
     editable: False
     state: 'present'
+  retries: 5
+  delay: 3
+  register: res
+  until: res.changed
   become: True
   become_user: '{{ satnogs_client_user }}'
   notify:
