@@ -118,16 +118,12 @@ set_variable() {
 	local variable="$2"
 	local value="$3"
 
-	if [ -z "$value" ]; then
-		if [ -f "$file" ]; then
-			sed -i '/^'"$variable"' *:.*/ d' "$file"
-		fi
-	else
-		if grep -q "^${variable} *:" "$file" 2>/dev/null; then
-			sed -i '/^'"$variable"' *:/ s%^'"$variable"' *:.*%'"${variable}: ${value}"'%' "$file"
-		else
-			echo "${variable}: ${value}" >> "$file"
-		fi
+	if [ -f "$file" ]; then
+		sed -i '/^'"$variable"' *:.*/ d' "$file"
+	fi
+	if [ -n "$value" ]; then
+		echo "${variable}: ${value}" >> "$file"
+		sort -o "$file" "$file"
 	fi
 }
 
