@@ -140,7 +140,7 @@ menu() {
 	local width="$WIDTH"
 	local res
 
-	eval "dialog \
+	eval "whiptail \
 		--clear \
 		--backtitle \"$BACKTITLE\" \
 		--title \"$title\" \
@@ -158,7 +158,7 @@ input() {
 	local init="$2"
 	local res
 
-	dialog \
+	whiptail \
 		--clear \
 		--backtitle "$BACKTITLE" \
 		--title "Parameter definition" \
@@ -173,7 +173,7 @@ yesno() {
 	local yesno="$1"
 	local res
 
-	dialog \
+	whiptail \
 		--clear \
 		--backtitle "$BACKTITLE" \
 		--title "Parameter definition" \
@@ -201,7 +201,7 @@ while true; do
 			;;
 		Show)
 			if [ -f "$YAMLFILE_PATH" ]; then
-				dialog \
+				whiptail \
 					--clear \
 					--backtitle "$BACKTITLE" \
 					--title "SatNOGS client configuration" \
