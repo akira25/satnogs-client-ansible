@@ -135,9 +135,6 @@ menu() {
 	local title="$1"
 	local menu="$2"
 	local default="$3"
-	local menu_height="$(($(echo "$menu" | wc -l) + 1))"
-	local height="$(($menu_height + 9))"
-	local width="$WIDTH"
 	local res
 
 	eval "whiptail \
@@ -145,7 +142,7 @@ menu() {
 		--backtitle \"$BACKTITLE\" \
 		--title \"$title\" \
 		${default:+--default-item \"$default\"} \
-		--menu \"[UP], [DOWN] arrow keys to move\n[ENTER] to select\" $height $width $menu_height \
+		--menu \"[UP], [DOWN] arrow keys to move\n[ENTER] to select\" 0 0 0 \
 		$(get_tags_items_list "$menu")"
 	res=$?
 	if [ $res -eq 1 ] || [ $res -eq 255 ]; then
@@ -162,7 +159,7 @@ input() {
 		--clear \
 		--backtitle "$BACKTITLE" \
 		--title "Parameter definition" \
-		--inputbox "$inputbox" 0 "$WIDTH" "$2"
+		--inputbox "$inputbox" 0 "$WIDTH" -- "$2"
 	res=$?
 	if [ $res -eq 1 ] || [ $res -eq 255 ]; then
 		echo "Cancel" 1>&2
@@ -177,7 +174,7 @@ yesno() {
 		--clear \
 		--backtitle "$BACKTITLE" \
 		--title "Parameter definition" \
-		--yesno "$yesno" 6 "$WIDTH"
+		--yesno "$yesno" 0 0
 	
 	res=$?
 	if [ $res -eq 1 ] || [ $res -eq 255 ]; then
@@ -205,7 +202,7 @@ while true; do
 					--clear \
 					--backtitle "$BACKTITLE" \
 					--title "SatNOGS client configuration" \
-					--textbox "$YAMLFILE_PATH" 15 "$WIDTH"
+					--textbox "$YAMLFILE_PATH" 0 0
 			fi
 			tag="Main"
 			;;
