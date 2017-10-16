@@ -37,7 +37,7 @@
   retries: 5
   delay: 3
   register: res
-  until: res.changed
+  until: res.changed is defined and res.changed
   become: True
   become_user: '{{ satnogs_client_user }}'
   notify:
