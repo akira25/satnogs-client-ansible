@@ -26,7 +26,7 @@ INSTALL_STAMP="$HOME/.satnogs/.installed"
 MAIN_MENU="Basic:Basic configuration options:menu
 Advanced:Advanced configuration options:menu
 Show:Show configuration file:show
-Update:Update satnogs-setup:update
+Update:Update configuration tool:update
 Reset:Reset configuration:reset
 About:Information about satnogs-setup:about"
 
