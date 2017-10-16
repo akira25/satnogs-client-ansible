@@ -72,7 +72,8 @@
   notify:
     - Restart satnogs-client service
 - name: Start satnogs-client service
-  service:
+  systemd:
+    daemon_reload: True
     name: 'satnogs-client'
     enabled: True
     state: 'started'
