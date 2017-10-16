@@ -32,3 +32,4 @@ else
 	echo "Applying configuration..."
 	ansible-playbook "$@" -t config local.yml
 fi
+exec satnogs-setup

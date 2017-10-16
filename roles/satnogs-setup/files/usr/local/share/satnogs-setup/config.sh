@@ -28,6 +28,7 @@ Advanced:Advanced configuration options:menu
 Show:Show configuration file:show
 Update:Update configuration tool:update
 Reset:Reset configuration:reset
+Apply:Apply configuration:apply
 About:Information about satnogs-setup:about"
 
 BASIC_MENU="SATNOGS_API_TOKEN:Define API token:input
@@ -135,7 +136,6 @@ menu() {
 	local title="$1"
 	local menu="$2"
 	local default="$3"
-	local cancel="$4"
 	local res
 
 	eval "whiptail \
@@ -143,7 +143,7 @@ menu() {
 		--backtitle \"$BACKTITLE\" \
 		--title \"$title\" \
 		--ok-button \"Ok\" \
-		--cancel-button \"$cancel\" \
+		--cancel-button \"Back\" \
 		--default-item \"$default\" \
 		--menu \"[UP], [DOWN] arrow keys to move\n[ENTER] to select\" 0 0 0 \
 		$(get_tags_items_list "$menu")"
@@ -199,8 +199,8 @@ while true; do
 	case $tag in
 		Back)
 			if [ "$menu" = "Main" ]; then
-				break
 				exec 3>&-
+				exit 0
 			fi
 			tag="Main"
 			;;
@@ -215,14 +215,9 @@ while true; do
 			fi
 			tag="Main"
 			;;
-		Basic|Advanced)
+		Basic|Advanced|Main)
 			menu="$tag"
-			tag="$(eval "menu \"$tag Menu\" \"\$$(echo "$tag" | to_upper)_MENU\" \"$item\" \"Back\" 2>&1 1>&3")"
-			item=""
-			;;
-		Main)
-			menu="$tag"
-			tag="$(eval "menu \"Main Menu\" \"\$MAIN_MENU\" \"$item\" \"Finish\" 2>&1 1>&3")"
+			tag="$(eval "menu \"$tag Menu\" \"\$$(echo "$tag" | to_upper)_MENU\" \"$item\" 2>&1 1>&3")"
 			item=""
 			;;
 		Update)
@@ -232,6 +227,10 @@ while true; do
 		Reset)
 			rm -f "$BOOTSTRAP_STAMP" "$INSTALL_STAMP" "$YAMLFILE_PATH"
 			exec satnogs-setup
+			;;
+		Apply)
+			exec 3>&-
+			break
 			;;
 		About)
 			whiptail \
