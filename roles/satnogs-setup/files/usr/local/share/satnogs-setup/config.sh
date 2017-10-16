@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-BACKTITLE="SatNOGS client configuration"
+BACKTITLE="SatNOGS client configuration | Currently installed: gr-satnogs-$(dpkg-query --show -f='${Version}' gr-satnogs), satnogs-client-$(/var/lib/satnogs/bin/pip show satnogsclient | awk '/^Version: / { print $2 }')"
 WIDTH="78"
 YAMLFILE_PATH="${1:-/etc/ansible/host_vars/localhost}"
 BOOTSTRAP_STAMP="$HOME/.satnogs/.bootstrapped"
@@ -182,7 +182,7 @@ yesno() {
 		--yes-button "Yes" \
 		--no-button "No" \
 		--yesno "$yesno" 0 0
-	
+
 	res=$?
 	if [ $res -eq 1 ] || [ $res -eq 255 ]; then
 		echo "False" 1>&2
@@ -255,7 +255,7 @@ while true; do
 			tag="$menu"
 			;;
 	esac
-	
+
 done
 
 exec 3>&-
