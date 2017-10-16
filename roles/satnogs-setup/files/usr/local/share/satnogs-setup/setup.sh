@@ -19,5 +19,16 @@
 
 . /etc/default/satnogs-setup
 
-cd ~/.ansible/pull/$(hostname)
-ansible-playbook "$@" local.yml
+ANSIBLE_DIR="$HOME/.satnogs/ansible"
+STAMP="$HOME/.satnogs/.installed"
+
+cd "$ANSIBLE_DIR"
+if [ ! -f "$STAMP" ]; then
+	echo "Updating software and applying configuration. This may take a while..."
+	if ansible-playbook "$@" local.yml; then
+		touch "$STAMP"
+	fi
+else
+	echo "Applying configuration..."
+	ansible-playbook "$@" -t config local.yml
+fi

@@ -22,20 +22,14 @@ BOOTSTRAP_SCRIPT="bootstrap.sh"
 SETUP_SCRIPT="setup.sh"
 CONFIG_SCRIPT="config.sh"
 
-if [ -x "${PREFIX}/${BOOTSTRAP_SCRIPT}" ] && [ "$1" != "-n" ]; then
-	"${PREFIX}/${BOOTSTRAP_SCRIPT}"
+if [ -x "${PREFIX}/${BOOTSTRAP_SCRIPT}" ]; then
+	. "${PREFIX}/${BOOTSTRAP_SCRIPT}"
 fi
 
 if [ -x "${PREFIX}/${CONFIG_SCRIPT}" ]; then
-	"${PREFIX}/${CONFIG_SCRIPT}"
+	. "${PREFIX}/${CONFIG_SCRIPT}"
 fi
 
 if [ -x "${PREFIX}/${SETUP_SCRIPT}" ]; then
-	if [ "$1" != "-n" ]; then
-		echo "Updating software and applying configuration. This may take a while..."
-		"${PREFIX}/${SETUP_SCRIPT}"
-	else
-		echo "Applying configuration..."
-		"${PREFIX}/${SETUP_SCRIPT}" -t config
-	fi
+	. "${PREFIX}/${SETUP_SCRIPT}"
 fi

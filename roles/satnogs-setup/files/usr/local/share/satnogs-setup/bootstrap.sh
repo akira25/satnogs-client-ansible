@@ -19,4 +19,11 @@
 
 . /etc/default/satnogs-setup
 
-ansible-pull -U "$SATNOGS_SETUP_ANSIBLE_URL" "$@" satnogs-setups.yml
+ANSIBLE_DIR="$HOME/.satnogs/ansible"
+STAMP="$HOME/.satnogs/.bootstrapped"
+
+if [ ! -f "$STAMP" ]; then
+	if ansible-pull -d "$ANSIBLE_DIR" -U "$SATNOGS_SETUP_ANSIBLE_URL" "$@" satnogs-setups.yml; then
+		touch "$STAMP"
+	fi
+fi

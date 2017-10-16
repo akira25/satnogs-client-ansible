@@ -20,11 +20,15 @@
 BACKTITLE="SatNOGS client configuration"
 WIDTH="78"
 YAMLFILE_PATH="${1:-/etc/ansible/host_vars/localhost}"
+BOOTSTRAP_STAMP="$HOME/.satnogs/.bootstrapped"
+INSTALL_STAMP="$HOME/.satnogs/.installed"
 
 MAIN_MENU="Basic:Basic configuration options:menu
 Advanced:Advanced configuration options:menu
 Show:Show configuration file:show
-Quit:Exit $(basename "$0"):quit"
+Update:Update satnogs-setup:update
+Reset:Reset configuration:reset
+About:Information about satnogs-setup:about"
 
 BASIC_MENU="SATNOGS_API_TOKEN:Define API token:input
 SATNOGS_NETWORK_API_URL:Define network API URL:input
@@ -131,13 +135,16 @@ menu() {
 	local title="$1"
 	local menu="$2"
 	local default="$3"
+	local cancel="$4"
 	local res
 
 	eval "whiptail \
 		--clear \
 		--backtitle \"$BACKTITLE\" \
 		--title \"$title\" \
-		${default:+--default-item \"$default\"} \
+		--ok-button \"Ok\" \
+		--cancel-button \"$cancel\" \
+		--default-item \"$default\" \
 		--menu \"[UP], [DOWN] arrow keys to move\n[ENTER] to select\" 0 0 0 \
 		$(get_tags_items_list "$menu")"
 	res=$?
@@ -155,6 +162,8 @@ input() {
 		--clear \
 		--backtitle "$BACKTITLE" \
 		--title "Parameter definition" \
+		--ok-button "Ok" \
+		--cancel-button "Cancel" \
 		--inputbox "$inputbox" 0 "$WIDTH" -- "$2"
 	res=$?
 	if [ $res -eq 1 ] || [ $res -eq 255 ]; then
@@ -170,6 +179,8 @@ yesno() {
 		--clear \
 		--backtitle "$BACKTITLE" \
 		--title "Parameter definition" \
+		--yes-button "Yes" \
+		--no-button "No" \
 		--yesno "$yesno" 0 0
 	
 	res=$?
@@ -186,9 +197,10 @@ tag="Main"
 while true; do
 
 	case $tag in
-		Back|Quit)
+		Back)
 			if [ "$menu" = "Main" ]; then
-				exit 0
+				break
+				exec 3>&-
 			fi
 			tag="Main"
 			;;
@@ -198,14 +210,37 @@ while true; do
 					--clear \
 					--backtitle "$BACKTITLE" \
 					--title "SatNOGS client configuration" \
+					--ok-button "Ok" \
 					--textbox "$YAMLFILE_PATH" 0 0
 			fi
 			tag="Main"
 			;;
-		Basic|Advanced|Main)
+		Basic|Advanced)
 			menu="$tag"
-			tag="$(eval "menu \"$tag Menu\" \"\$$(echo "$tag" | to_upper)_MENU\" \"$item\" 2>&1 1>&3")"
+			tag="$(eval "menu \"$tag Menu\" \"\$$(echo "$tag" | to_upper)_MENU\" \"$item\" \"Back\" 2>&1 1>&3")"
 			item=""
+			;;
+		Main)
+			menu="$tag"
+			tag="$(eval "menu \"Main Menu\" \"\$MAIN_MENU\" \"$item\" \"Finish\" 2>&1 1>&3")"
+			item=""
+			;;
+		Update)
+			rm -f "$BOOTSTRAP_STAMP" "$INSTALL_STAMP"
+			exec satnogs-setup
+			;;
+		Reset)
+			rm -f "$BOOTSTRAP_STAMP" "$INSTALL_STAMP" "$YAMLFILE_PATH"
+			exec satnogs-setup
+			;;
+		About)
+			whiptail \
+				--clear \
+				--backtitle "$BACKTITLE" \
+				--title "SatNOGS client configuration" \
+				--ok-button "Ok" \
+				--msgbox "satnogs-setup is a tool for configuring SatNOGS client system" 0 0
+			tag="Main"
 			;;
 		*)
 			type="$(get_type "$menu" "$tag")"
