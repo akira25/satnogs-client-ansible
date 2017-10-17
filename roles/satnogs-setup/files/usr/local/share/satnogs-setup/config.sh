@@ -142,7 +142,7 @@ menu() {
 		--clear \
 		--backtitle \"$BACKTITLE\" \
 		--title \"$title\" \
-		--ok-button \"Ok\" \
+		--ok-button \"Select\" \
 		--cancel-button \"Back\" \
 		--default-item \"$default\" \
 		--menu \"[UP], [DOWN] arrow keys to move\n[ENTER] to select\" 0 0 0 \
