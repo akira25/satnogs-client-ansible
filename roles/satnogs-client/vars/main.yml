@@ -9,3 +9,41 @@ satnogs_client_packages:
   - 'git'
   - 'gnuplot'
 satnogs_client_state_dir: '/tmp/.satnogs'
+satnogs_client_settings:
+  - satnogs_api_token
+  - satnogs_network_api_url
+  - satnogs_rx_device
+  - satnogs_station_elev
+  - satnogs_station_id
+  - satnogs_station_lat
+  - satnogs_station_lon
+  - satnogs_pre_observation_script
+  - satnogs_post_observation_script
+  - satnogs_app_path
+  - satnogs_output_path
+  - satnogs_complete_output_path
+  - satnogs_incomplete_output_path
+  - satnogs_remove_raw_files
+  - satnogs_verify_ssl
+  - satnogs_sqlite_url
+  - satnogs_rot_ip
+  - satnogs_rot_port
+  - satnogs_rig_ip
+  - satnogs_rig_port
+  - satnogs_rot_threshold
+  - satnogs_serial_port
+  - satnogs_doppler_corr_per_sec
+  - satnogs_lo_offset
+  - satnogs_ppm_error
+  - satnogs_if_gain
+  - satnogs_rf_gain
+  - satnogs_bb_gain
+  - satnogs_antenna
+  - satnogs_dev_args
+  - enable_iq_dump
+  - iq_dump_filename
+  - disable_decoded_data
+  - rf_sw_cmd_off_int
+  - rf_sw_cmd_off_char_seq
+  - rf_sw_cmd_on_int
+  - rf_sw_cmd_on_char_seq

@@ -1,42 +1,5 @@
-{{ 'SATNOGS_API_TOKEN="' ~ satnogs_api_token ~ '"' if satnogs_api_token is defined else None }}
-{{ 'SATNOGS_NETWORK_API_URL="' ~ satnogs_network_api_url ~ '"' if satnogs_network_api_url is defined else None }}
-{{ 'SATNOGS_RX_DEVICE="' ~ satnogs_rx_device ~ '"' if satnogs_rx_device  is defined else None }}
-{{ 'SATNOGS_STATION_ELEV="' ~ satnogs_station_elev ~ '"' if satnogs_station_elev is defined else None }}
-{{ 'SATNOGS_STATION_ID="' ~ satnogs_station_id ~ '"' if satnogs_station_id is defined else None }}
-{{ 'SATNOGS_STATION_LAT="' ~ satnogs_station_lat ~ '"' if satnogs_station_lat is defined else None }}
-{{ 'SATNOGS_STATION_LON="' ~ satnogs_station_lon ~ '"' if satnogs_station_lon is defined else None }}
-
-{{ 'SATNOGS_PRE_OBSERVATION_SCRIPT="' ~ satnogs_pre_observation_script ~ '"' if satnogs_pre_observation_script is defined else None }}
-{{ 'SATNOGS_POST_OBSERVATION_SCRIPT="' ~ satnogs_post_observation_script ~ '"' if satnogs_post_observation_script is defined else None }}
-{{ 'SATNOGS_APP_PATH="' ~ satnogs_app_path ~ '"' if satnogs_app_path is defined else None }}
-{{ 'SATNOGS_OUTPUT_PATH="' ~ satnogs_output_path ~ '"' if satnogs_output_path is defined else None }}
-{{ 'SATNOGS_COMPLETE_OUTPUT_PATH="' ~ satnogs_complete_output_path ~ '"' if satnogs_complete_output_path is defined else None }}
-{{ 'SATNOGS_INCOMPLETE_OUTPUT_PATH="' ~ satnogs_incomplete_output_path ~ '"' if satnogs_incomplete_output_path is defined else None }}
-{{ 'SATNOGS_REMOVE_RAW_FILES="' ~ satnogs_remove_raw_files ~ '"' if satnogs_remove_raw_files is defined else None }}
-{{ 'SATNOGS_VERIFY_SSL="' ~ satnogs_verify_ssl ~ '"' if satnogs_verify_ssl is defined else None }}
-{{ 'SATNOGS_SQLITE_URL="' ~ satnogs_sqlite_url ~ '"' if satnogs_sqlite_url is defined else None }}
-
-{{ 'SATNOGS_ROT_IP="' ~ satnogs_rot_ip ~ '"' if satnogs_rot_ip is defined else None }}
-{{ 'SATNOGS_ROT_PORT="' ~ satnogs_rot_port ~ '"' if satnogs_rot_port is defined else None }}
-{{ 'SATNOGS_RIG_IP="' ~ satnogs_rig_ip ~ '"' if satnogs_rig_ip is defined else None }}
-{{ 'SATNOGS_RIG_PORT="' ~ satnogs_rig_port ~ '"' if satnogs_rig_port is defined else None }}
-{{ 'SATNOGS_ROT_THRESHOLD="' ~ satnogs_rot_threshold ~ '"' if satnogs_rot_threshold is defined else None }}
-
-{{ 'SATNOGS_SERIAL_PORT="' ~ satnogs_serial_port ~ '"' if satnogs_serial_port is defined else None }}
-
-{{ 'SATNOGS_DOPPLER_CORR_PER_SEC="' ~ satnogs_doppler_corr_per_sec ~ '"' if satnogs_doppler_corr_per_sec is defined else None }}
-{{ 'SATNOGS_LO_OFFSET="' ~ satnogs_lo_offset ~ '"' if satnogs_lo_offset is defined else None }}
-{{ 'SATNOGS_PPM_ERROR="' ~ satnogs_ppm_error ~ '"' if satnogs_ppm_error is defined else None }}
-{{ 'SATNOGS_IF_GAIN="' ~ satnogs_if_gain ~ '"' if satnogs_if_gain is defined else None }}
-{{ 'SATNOGS_RF_GAIN="' ~ satnogs_rf_gain ~ '"' if satnogs_rf_gain is defined else None }}
-{{ 'SATNOGS_BB_GAIN="' ~ satnogs_bb_gain ~ '"' if satnogs_bb_gain is defined else None }}
-{{ 'SATNOGS_ANTENNA="' ~ satnogs_antenna ~ '"' if satnogs_antenna is defined else None }}
-{{ 'SATNOGS_DEV_ARGS="' ~ satnogs_dev_args ~ '"' if satnogs_dev_args is defined else None }}
-{{ 'ENABLE_IQ_DUMP="' ~ enable_iq_dump ~ '"' if enable_iq_dump is defined else None }}
-{{ 'IQ_DUMP_FILENAME="' ~ iq_dump_filename ~ '"' if iq_dump_filename is defined else None }}
-{{ 'DISABLE_DECODED_DATA="' ~ disable_decoded_data ~ '"' if disable_decoded_data is defined else None }}
-
-{{ 'RF_SW_CMD_OFF_INT="' ~ rf_sw_cmd_off_int ~ '"' if rf_sw_cmd_off_int is defined else None }}
-{{ 'RF_SW_CMD_OFF_CHAR_SEQ="' ~ rf_sw_cmd_off_char_seq ~ '"' if rf_sw_cmd_off_char_seq is defined else None }}
-{{ 'RF_SW_CMD_ON_INT="' ~ rf_sw_cmd_on_int ~ '"' if rf_sw_cmd_on_int is defined else None }}
-{{ 'RF_SW_CMD_ON_CHAR_SEQ="' ~ rf_sw_cmd_on_char_seq ~ '"' if rf_sw_cmd_on_char_seq is defined else None }}
+{% for s in satnogs_client_settings %}
+{% if vars[s] is defined %}
+{{ s|upper }}="{{ vars[s] }}"
+{% endif %}
+{% endfor %}
