@@ -93,14 +93,14 @@ get_item() {
 	local menu="$1"
 	local tag="$2"
 
-	echo "$(get_menu "$1" | awk 'BEGIN { FS=":" } /'"$tag"'/ { print $2 }')"
+	get_menu "$1" | awk 'BEGIN { FS=":" } /'"$tag"'/ { print $2 }'
 }
 
 get_type() {
 	local menu="$1"
 	local tag="$2"
 
-	echo "$(get_menu "$1" | awk 'BEGIN { FS=":" } /'"$tag"'/ { print $3 }')"
+	get_menu "$1" | awk 'BEGIN { FS=":" } /'"$tag"'/ { print $3 }'
 }
 
 get_menu() {
