@@ -85,7 +85,6 @@ to_upper() {
 
 get_tags_items_list() {
 	local menu="$1"
-	local variables
 
 	echo "$menu" | awk 'BEGIN { FS=":" } { printf("\"%s\" \"%s\" ", $1, $2) }'
 }
