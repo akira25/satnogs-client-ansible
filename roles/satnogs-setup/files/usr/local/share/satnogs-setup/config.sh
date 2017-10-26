@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-BACKTITLE="SatNOGS client configuration | Installed: satnogs-client-ansible-$(cd $HOME/.satnogs/ansible; git show -s --format=%cd --date='format:%Y%m%d%H%M'), satnogs-client-$(/var/lib/satnogs/bin/pip show satnogsclient | awk '/^Version: / { print $2 }'), gr-satnogs-$(dpkg-query --show -f='${Version}' gr-satnogs)"
+BACKTITLE="SatNOGS client configuration | Installed: satnogs-client-ansible-$(cd $HOME/.satnogs/ansible && git show -s --format=%cd --date='format:%Y%m%d%H%M'), satnogs-client-$(/var/lib/satnogs/bin/pip show satnogsclient | awk '/^Version: / { print $2 }'), gr-satnogs-$(dpkg-query --show -f='${Version}' gr-satnogs)"
 WIDTH="78"
 YAMLFILE_PATH="${1:-/etc/ansible/host_vars/localhost}"
 BOOTSTRAP_STAMP="$HOME/.satnogs/.bootstrapped"
