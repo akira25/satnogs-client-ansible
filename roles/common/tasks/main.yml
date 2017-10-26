@@ -9,3 +9,5 @@
     msg: 'This role requires {{ distribution }} {{ distribution_release }}.'
 - import_tasks: apt.yml
 - import_tasks: packages.yml
+- import_tasks: zram.yml
+  when: ansible_memtotal_mb < zram_memtotal_min

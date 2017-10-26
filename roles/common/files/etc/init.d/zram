@@ -1,0 +1,46 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          zram
+# Required-Start:    $syslog $remote_fs
+# Required-Stop:     $syslog $remote_fs
+# Should-Start:      $local_fs
+# Should-Stop:       $local_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:
+# Short-Description: Use compressed RAM as in-memory swap
+# Description:       This init.d script sets up ZRAM swap
+### END INIT INFO
+
+. /lib/lsb/init-functions
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+DESC="ZRAM setup"
+NAME=zram
+SCRIPTNAME=/etc/init.d/"$NAME"
+
+case "$1" in
+	start)
+		log_daemon_msg "Starting ${NAME} swap setup..."
+		/sbin/modprobe zram
+		/sbin/zramctl -s "$(/usr/bin/awk '/MemTotal:/ { print $2 }' /proc/meminfo)K" /dev/zram0
+		/sbin/mkswap /dev/zram0
+		/sbin/swapon -p 100 /dev/zram0
+		log_end_msg $?
+		;;
+	stop|default-stop)
+		log_daemon_msg "Stopping ${NAME} swap setup ..."
+		/sbin/swapoff /dev/zram0
+		/sbin/zramctl -r /dev/zram0
+		/sbin/modprobe -r zram
+		log_end_msg $?
+		;;
+	restart|reload|force-reload|status)
+		log_daemon_msg "No daemon to (force-)re[start|load] or status check in ${NAME}"
+		log_end_msg 0
+		;;
+	*)
+		log_action_msg "Usage: $SCRIPTNAME {start|stop}"
+		exit 1
+		;;
+esac
+exit 0

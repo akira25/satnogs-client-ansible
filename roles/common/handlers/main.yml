@@ -1,0 +1,7 @@
+---
+- name: Start ZRAM service
+  service:
+    name: 'zram'
+    state: 'started'
+    enabled: True
+  become: True

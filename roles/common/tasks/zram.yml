@@ -1,0 +1,15 @@
+---
+- name: Disable swap file
+  service:
+    name: 'dphys-swapfile'
+    state: stopped
+    enabled: False
+  become: True
+- name: Add ZRAM init script
+  copy:
+    src: 'etc/init.d/zram'
+    dest: '/etc/init.d/zram'
+    mode: 0755
+  become: True
+  notify:
+    - Start ZRAM service

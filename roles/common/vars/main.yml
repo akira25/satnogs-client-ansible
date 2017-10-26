@@ -4,3 +4,4 @@ distribution: 'Debian'
 distribution_release: 'stretch'
 packages:
   - 'acl'
+zram_memtotal_min: 2048
