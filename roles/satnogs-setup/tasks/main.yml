@@ -5,6 +5,8 @@
     dest: '/etc/default/satnogs-setup'
     mode: 0644
   become: True
+  tags:
+    - config
 - name: Set up inventory
   copy:
     src: 'etc/ansible/hosts'
