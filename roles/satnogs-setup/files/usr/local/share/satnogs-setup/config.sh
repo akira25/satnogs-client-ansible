@@ -22,6 +22,7 @@ WIDTH="78"
 YAMLFILE_PATH="${1:-/etc/ansible/host_vars/localhost}"
 BOOTSTRAP_STAMP="$HOME/.satnogs/.bootstrapped"
 INSTALL_STAMP="$HOME/.satnogs/.installed"
+CONFIGURED_STAMP="$HOME/.satnogs/.configured"
 
 MAIN_MENU="Basic:Basic configuration options:menu
 Advanced:Advanced configuration options:menu
@@ -199,8 +200,25 @@ while true; do
 	case $tag in
 		Back)
 			if [ "$menu" = "Main" ]; then
-				exec 3>&-
-				exit 0
+				if [ ! -f "$CONFIGURED_STAMP" ]; then
+					whiptail \
+						--clear \
+						--backtitle "$BACKTITLE" \
+						--title "Exit without applying" \
+						--yes-button "Yes" \
+						--no-button "No" \
+						--defaultno \
+						--yesno "Are you sure you want to exit without applying configuration?" 0 0
+
+					res=$?
+					if [ $res -ne 1 ] && [ $res -ne 255 ]; then
+						exec 3>&-
+						exit 0
+					fi
+				else
+					exec 3>&-
+					exit 0
+				fi
 			fi
 			tag="Main"
 			;;
@@ -221,14 +239,15 @@ while true; do
 			item=""
 			;;
 		Update)
-			rm -f "$BOOTSTRAP_STAMP" "$INSTALL_STAMP"
+			rm -f "$BOOTSTRAP_STAMP" "$INSTALL_STAMP" "$CONFIGURED_STAMP"
 			exec satnogs-setup
 			;;
 		Reset)
-			rm -f "$BOOTSTRAP_STAMP" "$INSTALL_STAMP" "$YAMLFILE_PATH"
+			rm -f "$BOOTSTRAP_STAMP" "$INSTALL_STAMP" "$CONFIGURED_STAMP" "$YAMLFILE_PATH"
 			exec satnogs-setup
 			;;
 		Apply)
+			touch "$CONFIGURED_STAMP"
 			exec 3>&-
 			break
 			;;
@@ -249,6 +268,7 @@ while true; do
 			input="$(eval "$type \"$item\" \"$init\" 2>&1 1>&3")"
 			if [ "$input" != "Cancel" ]; then
 				set_variable "$YAMLFILE_PATH" "$variable" "$input"
+				rm -f "$CONFIGURED_STAMP"
 			fi
 			item="$tag"
 			tag="$menu"
