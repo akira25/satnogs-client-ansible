@@ -1,1 +1,1 @@
-satnogs_radio_gr_satnogs_package: 'https://gitlab.com/librespacefoundation/satnogs/gr-satnogs-package/builds/artifacts/master/raw/build/debian/output/{{ satnogs_radio_package_arch[ansible_architecture] }}/gr-satnogs_{{ satnogs_radio_package_arch[ansible_architecture] }}.deb?job=nightly'
+satnogs_radio_gr_satnogs_package: 'https://gitlab.com/librespacefoundation/satnogs/gr-satnogs-package/-/jobs/artifacts/1.2-1/raw/build/debian/output/{{ satnogs_radio_package_arch[ansible_architecture] }}/gr-satnogs_1.2-1_{{ satnogs_radio_package_arch[ansible_architecture] }}.deb?job=release'
