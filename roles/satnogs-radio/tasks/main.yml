@@ -19,6 +19,11 @@
     state: 'latest'
   become: True
   with_items: '{{ satnogs_radio_packages }}'
+- name: Uninstall gr-satnogs
+  apt:
+    name: 'gr-satnogs'
+    state: 'absent'
+  become: True
 - name: Install gr-satnogs
   apt:
     deb: '{{ satnogs_radio_gr_satnogs_package }}'
