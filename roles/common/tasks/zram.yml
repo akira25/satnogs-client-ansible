@@ -1,9 +1,17 @@
 ---
+- name: Check if dphys-swapfile package is installed
+  package:
+    name: 'dphys-swapfile'
+    state: 'present'
+  check_mode: True
+  register: dphys_swapfile_package
+  become: True
 - name: Disable swap file
   service:
     name: 'dphys-swapfile'
     state: stopped
     enabled: False
+  when: not dphys_swapfile_package.changed
   become: True
 - name: Add ZRAM init script
   copy:
