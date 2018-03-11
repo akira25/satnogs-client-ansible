@@ -4,4 +4,6 @@ distribution: 'Debian'
 distribution_release: 'stretch'
 packages:
   - 'acl'
+  - 'build-essential'
+  - 'sudo'
 zram_memtotal_min: 2048
