@@ -1,4 +1,21 @@
 ---
+- name: Install Ansible repository keys
+  apt_key:
+    keyserver: 'keyserver.ubuntu.com'
+    id: '93C4A3FD7BB9C367'
+    state: 'present'
+  become: True
+- name: Install Ansible repository
+  apt_repository:
+    repo: 'deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main'
+    state: 'present'
+    mode: 0644
+  become: True
+- name: Install Ansible package
+  package:
+    name: 'ansible'
+    state: 'present'
+  become: True
 - name: Configure satnogs-setup
   template:
     src: 'etc/default/satnogs-setup.j2'
