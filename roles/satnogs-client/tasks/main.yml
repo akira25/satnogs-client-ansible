@@ -14,7 +14,7 @@
 - name: Install dependencies
   package:
     name: '{{ item }}'
-    state: 'latest'
+    state: 'present'
   become: True
   with_items: '{{ satnogs_client_packages }}'
   notify:

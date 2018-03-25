@@ -16,7 +16,7 @@
 - name: Install dependencies
   apt:
     name: '{{ item }}'
-    state: 'latest'
+    state: 'present'
   become: True
   with_items: '{{ satnogs_radio_packages }}'
 - name: Uninstall gr-satnogs

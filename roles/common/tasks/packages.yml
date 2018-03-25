@@ -2,6 +2,6 @@
 - name: Install packages
   package:
     name: '{{ item }}'
-    state: 'latest'
+    state: 'present'
   become: True
   with_items: '{{ packages }}'

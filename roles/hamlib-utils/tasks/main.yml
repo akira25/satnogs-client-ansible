@@ -15,7 +15,7 @@
 - name: Install hamlib utilities
   package:
     name: 'libhamlib-utils'
-    state: 'latest'
+    state: 'present'
   become: True
   notify:
     - Restart rigctld service
