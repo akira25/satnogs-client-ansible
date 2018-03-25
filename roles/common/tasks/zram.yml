@@ -13,6 +13,8 @@
     enabled: False
   when: not dphys_swapfile_package.changed
   become: True
+  tags:
+    - skip_ansible_lint
 - name: Add ZRAM init script
   copy:
     src: 'etc/init.d/zram'
