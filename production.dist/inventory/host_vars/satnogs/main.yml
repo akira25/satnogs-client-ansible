@@ -18,7 +18,7 @@
 # SatNOGS client configuration
 #
 satnogs_api_token: '0123456789abcdef0123456789abcdef01234567'
-satnogs_network_api_url: 'https://network-dev.satnogs.org/api/'
+satnogs_network_api_url: 'https://network.satnogs.org/api/'
 satnogs_rx_device: 'rtlsdr'
 satnogs_station_elev: '100'
 satnogs_station_id: '9999'
