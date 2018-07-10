@@ -8,6 +8,12 @@ satnogs_client_packages:
   - 'libssl-dev'
   - 'git'
   - 'gnuplot'
+  - 'python-apscheduler'
+  - 'python-sqlalchemy'
+  - 'python-requests'
+  - 'python-dateutil'
+  - 'python-ephem'
+  - 'python-tz'
 satnogs_client_state_dir: '/tmp/.satnogs'
 satnogs_client_settings:
   - satnogs_api_token
