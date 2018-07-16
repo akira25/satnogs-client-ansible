@@ -37,7 +37,6 @@ Apply:Apply configuration:apply
 About:Information about satnogs-setup:about"
 
 BASIC_MENU="SATNOGS_API_TOKEN:Define API token:input
-SATNOGS_NETWORK_API_URL:Define network API URL:input
 SATNOGS_RX_DEVICE:Define RX device:input
 SATNOGS_STATION_ELEV:Define station elevation:input
 SATNOGS_STATION_ID:Define station ID:input
@@ -47,6 +46,7 @@ HAMLIB_UTILS_ROT_ENABLED:Enable Hamlib rotctld:yesno
 HAMLIB_UTILS_ROT_OPTS:Define Hamlib rotctld options:input"
 
 ADVANCED_MENU="$BASIC_MENU
+SATNOGS_NETWORK_API_URL:Define network API URL:input
 SATNOGS_PRE_OBSERVATION_SCRIPT:Define pre-observation script:input
 SATNOGS_POST_OBSERVATION_SCRIPT:Define post-observation script:input
 SATNOGS_APP_PATH:Define application data path:input
