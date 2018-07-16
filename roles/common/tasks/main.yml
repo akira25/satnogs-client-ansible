@@ -1,7 +1,7 @@
 ---
 - name: Check Ansible version
   assert:
-    that: ansible_version.full | version_compare(version_minimum, '>=')
+    that: ansible_version.full is version(version_minimum, '>=')
     msg: 'Detected Ansible {{ ansible_version.full }}. This role requires Ansible {{ version_minimum }} or greater.'
 - name: Check distribution
   assert:
