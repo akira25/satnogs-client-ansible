@@ -2,7 +2,7 @@
 #
 # SatNOGS client setup configuration script
 #
-# Copyright (C) 2017 Libre Space Foundation <https://libre.space/>
+# Copyright (C) 2017-2018 Libre Space Foundation <https://libre.space/>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,7 +17,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-BACKTITLE="SatNOGS client configuration | Installed: satnogs-client-ansible-$(cd $HOME/.satnogs/ansible && git show -s --format=%cd --date='format:%Y%m%d%H%M'), satnogs-client-$(/var/lib/satnogs/bin/pip show satnogsclient | awk '/^Version: / { print $2 }'), gr-satnogs-$(dpkg-query --show -f='${Version}' gr-satnogs)"
+VERSION_SATNOGS_CLIENT_ANSIBLE="$(cd $HOME/.satnogs/ansible && git show -s --format=%cd --date='format:%Y%m%d%H%M')"
+VERSION_SATNOGS_CLIENT="$(/var/lib/satnogs/bin/pip show satnogsclient 2>/dev/null | awk '/^Version: / { print $2 }')"
+VERSION_GR_SATNOGS="$(dpkg-query --show -f='${Version}' gr-satnogs 2>/dev/null)"
+
+BACKTITLE="SatNOGS client configuration | Installed: satnogs-client-ansible-${VERSION_SATNOGS_CLIENT_ANSIBLE}${VERSION_SATNOGS_CLIENT:+, satnogs-client-$VERSION_SATNOGS_CLIENT}${VERSION_GR_SATNOGS:+, gr-satnogs-$VERSION_GR_SATNOGS}"
 WIDTH="78"
 YAMLFILE_PATH="${1:-/etc/ansible/host_vars/localhost}"
 BOOTSTRAP_STAMP="$HOME/.satnogs/.bootstrapped"
