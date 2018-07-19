@@ -15,11 +15,12 @@ If you are running [the Raspbian
 image](https://wiki.satnogs.org/Raspberry_Pi_3#Raspbian) and need to
 test local changes, follow these steps:
 
-- edit the local cache of the playbooks at /root/.ansible
+- edit the local cache of the playbooks at /root/.satnogs/ansible
 - run the playbooks like so:
 
 ```
-/usr/local/share/satnogs-setup/setup.sh
+sudo rm /root/.satnogs/.installed
+sudo /usr/local/share/satnogs-setup/setup.sh
 ```
 
 Any arguments provided to `setup.sh` will be passed on to
