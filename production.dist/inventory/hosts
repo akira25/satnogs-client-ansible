@@ -11,3 +11,6 @@ satnogs
 
 [satnogs-clients]
 satnogs
+
+[snmpd-daemons]
+satnogs

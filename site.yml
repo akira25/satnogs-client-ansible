@@ -3,3 +3,4 @@
 - import_playbook: satnogs-clients.yml
 - import_playbook: satnogs-radios.yml
 - import_playbook: hamlib-utils.yml
+- import_playbook: snmpd.yml
