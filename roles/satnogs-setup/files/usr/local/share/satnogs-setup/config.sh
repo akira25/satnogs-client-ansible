@@ -77,7 +77,10 @@ HAMLIB_UTILS_RIG_ENABLED:Enable Hamlib rigctld:yesno
 HAMLIB_UTILS_RIG_OPTS:Define Hamlib rigctld options:input
 SATNOGS_CLIENT_VERSION:Define SatNOGS client version:input
 SATNOGS_CLIENT_URL:Define SatNOGS client Git URL:input
-SATNOGS_SETUP_ANSIBLE_URL:Define Ansible Git URL:input"
+SATNOGS_SETUP_ANSIBLE_URL:Define Ansible Git URL:input
+SNMPD_ENABLED:Enable SNMPD:yesno
+SNMPD_AGENTADDRESS:Define SNMPD agentAddress:input
+SNMPD_ROCOMMUNITY:Define SNMPD rocommunity:input"
 
 to_lower() {
 	tr '[:upper:]' '[:lower:]'

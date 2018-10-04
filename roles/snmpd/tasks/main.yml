@@ -1,36 +1,43 @@
 ---
+- name: Install snmpd
+  package:
+    name: 'snmpd'
+    state: 'present'
+  become: True
 - name: Install raspberry sensor script
-  get_url:
-    url: https://raw.githubusercontent.com/librenms/librenms-agent/master/snmp/raspberry.sh
+  copy:
+    src: usr/local/bin/rasberry-sensors.sh
     dest: /usr/local/bin/rasberry-sensors.sh
     mode: 0755
-  when: hostvars[inventory_hostname].ansible_lsb.id == 'Raspbian'
+  when: ansible_lsb.id == 'Raspbian'
   become: True
 - name: Setup snmpd rpi script
   lineinfile:
     path: /etc/snmp/snmpd.conf
     line: 'extend raspberry /usr/local/bin/rasberry-sensors.sh'
-  when: hostvars[inventory_hostname].ansible_lsb.id == 'Raspbian'
+  when: ansible_lsb.id == 'Raspbian'
   become: True
 - name: Setup snmpd listen configuration
   lineinfile:
     path: /etc/snmp/snmpd.conf
     regexp: '^agentAddress .*'
-    line: 'agentAddress {{ snmpd_listen_addr_opts | default() }}'
+    line: 'agentAddress {{ snmpd_agentaddress | default() }}'
+    when: snmpd_agentaddress is defined
   become: True
 - name: Setup snmpd rocommunity configuration
   lineinfile:
     path: /etc/snmp/snmpd.conf
-    regexp: '^ rocommunity .*'
-    line: ' rocommunity {{ snmpd_rocommunity_opts | default() }}'
+    regexp: '^( )*rocommunity .*'
+    line: 'rocommunity {{ snmpd_rocommunity | default() }}'
+    when: snmpd_rocommunity is defined
   become: True
   notify:
     - Restart snmpd service
 - name: Add snmp user to sudoers
   lineinfile:
     path: /etc/sudoers
-    line: 'Debian-snmp ALL=(ALL) NOPASSWD: /etc/snmp/raspberry.sh, /usr/bin/vcgencmd*'
-  when: hostvars[inventory_hostname].ansible_lsb.id == 'Raspbian'
+    line: 'Debian-snmp ALL=(ALL) NOPASSWD: /usr/local/bin/rasberry-sensors.sh, /usr/bin/vcgencmd*'
+  when: ansible_lsb.id == 'Raspbian'
   become: True
   notify:
     - Restart snmpd service

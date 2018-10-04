@@ -1,7 +1,6 @@
 ---
 - name: Restart snmpd service
-  systemd:
-    daemon_reload: True
+  service:
     name: 'snmpd'
     enabled: '{{ snmpd_enabled | default(False) }}'
     state: 'restarted'

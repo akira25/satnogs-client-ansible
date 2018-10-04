@@ -74,5 +74,9 @@ satnogs_station_lon: '23.725'
 #hamlib_utils_rig_opts: '-m 1'
 hamlib_utils_rot_enabled: True
 hamlib_utils_rot_opts: '-m 1'
-snmpd_listen_addr_opts: udp:0.0.0.0:161
-snmpd_rocommunity_opts: public  default
+
+#
+# SNMPD configuration
+#
+#snmpd_agentaddress: 'udp:0.0.0.0:161'
+#snmpd_rocommunity: 'public default'
