@@ -1,5 +1,5 @@
 ---
-- hosts: snmpd-daemons
+- hosts: snmpds
   roles:
     - role: common
       tags:
