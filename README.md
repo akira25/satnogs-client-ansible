@@ -31,3 +31,9 @@ the run to only the satnogs-client playbook, you can run:
 ```
 /usr/local/share/satnogs-setup/setup.sh --tags satnogs-client
 ```
+
+## gr-satnogs release process
+
+1. Tag version in [gr-satnogs](https://gitlab.com/librespacefoundation/satnogs/gr-satnogs/)
+2. Update changelog in [gr-satnogs-package](https://gitlab.com/librespacefoundation/satnogs/gr-satnogs-package), which triggers a new gr-satnogs package build
+3. Update `satnogs_radio_gr_satnogs_package` variable in [role satnogs-radio defaults](roles/satnogs-radio/defaults/main.yml)
