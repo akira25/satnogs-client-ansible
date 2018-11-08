@@ -63,7 +63,7 @@ SATNOGS_RIG_PORT:Define Hamlib rigctld port:input
 SATNOGS_ROT_THRESHOLD:Define Hamlib rotctld command threshold:input
 SATNOGS_DOPPLER_CORR_PER_SEC:Define rate of doppler correction (sec):input
 SATNOGS_LO_OFFSET:Define local oscillator offset:input
-SATNOGS_PPM_ERROR:Define PPM error:input
+SATNOGS_PPM_ERROR:Define PPM error (integer):input
 SATNOGS_IF_GAIN:Define SatNOGS Radio IF Gain:input
 SATNOGS_RF_GAIN:Define SatNOGS Radio RF Gain:input
 SATNOGS_BB_GAIN:Define SatNOGS Radio BB Gain:input
