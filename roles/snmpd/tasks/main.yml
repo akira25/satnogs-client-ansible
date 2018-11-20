@@ -20,16 +20,16 @@
 - name: Setup snmpd listen configuration
   lineinfile:
     path: /etc/snmp/snmpd.conf
-    regexp: '^agentAddress .*'
-    line: 'agentAddress {{ snmpd_agentaddress | default() }}'
-    when: snmpd_agentaddress is defined
+    regexp: '^( )*agentAddress .*'
+    line: 'agentAddress {{ snmpd_agentaddress }}'
+  when: snmpd_agentaddress is defined
   become: True
 - name: Setup snmpd rocommunity configuration
   lineinfile:
     path: /etc/snmp/snmpd.conf
     regexp: '^( )*rocommunity .*'
-    line: 'rocommunity {{ snmpd_rocommunity | default() }}'
-    when: snmpd_rocommunity is defined
+    line: 'rocommunity {{ snmpd_rocommunity }}'
+  when: snmpd_rocommunity is defined
   become: True
   notify:
     - Restart snmpd service
