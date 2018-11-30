@@ -232,6 +232,7 @@ while true; do
 					--backtitle "$BACKTITLE" \
 					--title "SatNOGS client configuration" \
 					--ok-button "Ok" \
+					--scrolltext \
 					--textbox "$YAMLFILE_PATH" 0 0
 			fi
 			tag="Main"
