@@ -80,3 +80,10 @@ hamlib_utils_rot_opts: '-m 1'
 #
 #snmpd_agentaddress: 'udp:0.0.0.0:161'
 #snmpd_rocommunity: 'public default'
+
+#
+# Waterfall settings
+#
+satnogs_waterfall_autorange: True
+satnogs_waterfall_min_value: -100
+satnogs_waterfall_max_value: -50
