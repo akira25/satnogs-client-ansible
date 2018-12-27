@@ -5,3 +5,6 @@
     state: 'present'
   become: True
   with_items: '{{ packages }}'
+  register: res
+  until: res is success
+  retries: 3

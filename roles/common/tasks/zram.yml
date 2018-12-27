@@ -6,6 +6,8 @@
   check_mode: True
   register: dphys_swapfile_package
   become: True
+  until: dphys_swapfile_package
+  retries: 3
 - name: Disable swap file
   service:
     name: 'dphys-swapfile'

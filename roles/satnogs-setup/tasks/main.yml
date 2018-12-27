@@ -5,17 +5,26 @@
     id: '93C4A3FD7BB9C367'
     state: 'present'
   become: True
+  register: res
+  until: res is success
+  retries: 3
 - name: Install Ansible repository
   apt_repository:
     repo: 'deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main'
     state: 'present'
     mode: 0644
   become: True
+  register: res
+  until: res is success
+  retries: 3
 - name: Install Ansible package
   package:
     name: 'ansible'
     state: 'present'
   become: True
+  register: res
+  until: res is success
+  retries: 3
 - name: Configure satnogs-setup
   template:
     src: 'etc/default/satnogs-setup.j2'
@@ -55,5 +64,7 @@
     mode: 0755
   become: True
   with_together:
-    - [ 'usr/local/bin/satnogs-setup', 'usr/local/share/satnogs-setup/bootstrap.sh', 'usr/local/share/satnogs-setup/setup.sh', 'usr/local/share/satnogs-setup/config.sh' ]
-    - [ '/usr/local/bin/satnogs-setup', '/usr/local/share/satnogs-setup/bootstrap.sh', '/usr/local/share/satnogs-setup/setup.sh', '/usr/local/share/satnogs-setup/config.sh' ]
+    - [ 'usr/local/bin/satnogs-setup', 'usr/local/share/satnogs-setup/bootstrap.sh',
+    'usr/local/share/satnogs-setup/setup.sh', 'usr/local/share/satnogs-setup/config.sh' ]
+    - [ '/usr/local/bin/satnogs-setup', '/usr/local/share/satnogs-setup/bootstrap.sh',
+    '/usr/local/share/satnogs-setup/setup.sh', '/usr/local/share/satnogs-setup/config.sh' ]

@@ -16,6 +16,9 @@
     name: '{{ item }}'
     state: 'present'
   become: True
+  register: res
+  until: res is success
+  retries: 3
   with_items: '{{ satnogs_client_packages }}'
   notify:
     - Restart satnogs-client service
@@ -28,6 +31,9 @@
     path: '/var/lib/{{ satnogs_client_user }}/{{ item }}'
     state: 'absent'
   when: res_no_global.stat.exists and res_no_global.stat.isreg
+  register: res
+  until: res is success
+  retries: 3
   with_items:
     - 'bin'
     - 'include'

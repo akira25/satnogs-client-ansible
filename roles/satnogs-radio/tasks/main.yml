@@ -5,6 +5,9 @@
     id: '{{ item }}'
     state: 'present'
   become: True
+  register: res
+  until: res is success
+  retries: 3
   with_items:
     - '8B48AD6246925553'
     - '7638D0442B90D010'
@@ -13,11 +16,17 @@
     repo: 'deb http://ftp.debian.org/debian jessie-backports main'
     state: 'absent'
   become: True
+  register: res
+  until: res is success
+  retries: 3
 - name: Install dependencies
   apt:
     name: '{{ item }}'
     state: 'present'
   become: True
+  register: res
+  until: res is success
+  retries: 3
   with_items: '{{ satnogs_radio_packages }}'
 - name: Uninstall gr-satnogs
   apt:
@@ -29,6 +38,9 @@
     deb: '{{ satnogs_radio_gr_satnogs_package }}'
     state: 'present'
   become: True
+  register: res
+  until: res is success
+  retries: 3
 - name: Blacklist SDR modules
   kernel_blacklist:
     name: '{{ item }}'

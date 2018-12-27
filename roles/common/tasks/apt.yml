@@ -5,3 +5,6 @@
     cache_valid_time: 3600
   when: ansible_os_family == 'Debian'
   become: True
+  register: res
+  until: res is success
+  retries: 3

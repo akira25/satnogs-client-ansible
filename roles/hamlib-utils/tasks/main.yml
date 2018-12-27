@@ -17,6 +17,9 @@
     name: 'libhamlib-utils'
     state: 'present'
   become: True
+  register: res
+  until: res is success
+  retries: 3
   notify:
     - Restart rigctld service
     - Restart rotctld service
