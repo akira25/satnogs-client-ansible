@@ -1,13 +1,8 @@
-image: debian:stretch
-build:
-  stage: build
+stages:
+  - test
+test:
+  stage: test
+  image: librespace/ansible
   script:
-    - apt-get update
-    - apt-get -y install gnupg
-    - echo "deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main" > /etc/apt/sources.list.d/ansible.list
-    - apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
-    - apt-get update
-    - apt-get -y install ansible python-pip
-    - pip install ansible-lint
     - ansible-playbook -i production.dist/inventory --syntax-check -vvv site.yml
     - ansible-lint site.yml
