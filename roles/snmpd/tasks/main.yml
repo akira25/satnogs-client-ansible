@@ -4,6 +4,9 @@
     name: 'snmpd'
     state: 'present'
   become: True
+  register: res
+  until: res is success
+  retries: 3
 - name: Install raspberry sensor script
   copy:
     src: usr/local/bin/rasberry-sensors.sh
