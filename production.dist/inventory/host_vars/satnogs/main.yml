@@ -84,6 +84,6 @@ hamlib_utils_rot_opts: '-m 1'
 #
 # Waterfall settings
 #
-satnogs_waterfall_autorange: True
-satnogs_waterfall_min_value: -100
-satnogs_waterfall_max_value: -50
+# satnogs_waterfall_autorange: True
+# satnogs_waterfall_min_value: -100
+# satnogs_waterfall_max_value: -50
