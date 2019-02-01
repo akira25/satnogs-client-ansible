@@ -11,3 +11,6 @@ localhost
 
 [satnogs-clients]
 localhost
+
+[snmpds]
+localhost
