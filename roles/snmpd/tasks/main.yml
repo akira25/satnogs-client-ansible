@@ -50,8 +50,6 @@
     line: 'Debian-snmp ALL=(ALL) NOPASSWD: /usr/local/bin/rasberry-sensors.sh, /usr/bin/vcgencmd*'
   when: ansible_lsb.id == 'Raspbian'
   become: True
-  notify:
-    - Restart snmpd service
 - name: Start/stop snmpd service
   service:
     name: 'snmpd'
