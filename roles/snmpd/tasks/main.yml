@@ -53,8 +53,7 @@
   notify:
     - Restart snmpd service
 - name: Start/stop snmpd service
-  systemd:
-    daemon_reload: True
+  service:
     name: 'snmpd'
     enabled: '{{ snmpd_enabled | default(False) }}'
     state: '{{ "started" if snmpd_enabled | default(False) else "stopped" }}'
