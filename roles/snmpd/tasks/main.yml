@@ -16,12 +16,22 @@
     mode: 0755
   when: ansible_lsb.id == 'Raspbian'
   become: True
-- name: Setup snmpd rpi script
+- name: Extend SNMP with VideoCore script OID
   lineinfile:
     path: /etc/snmp/snmpd.conf
     line: 'extend raspberry /usr/local/bin/rasberry-sensors.sh'
   when: ansible_lsb.id == 'Raspbian'
   become: True
+  notify:
+    - Restart snmpd service
+- name: Allow access to VideoCore script OID
+  lineinfile:
+    path: /etc/snmp/snmpd.conf
+    line: 'view systemonly included .1.3.6.1.4.1.8072.1.3.2'
+  when: ansible_lsb.id == 'Raspbian'
+  become: True
+  notify:
+    - Restart snmpd service
 - name: Setup snmpd listen configuration
   lineinfile:
     path: /etc/snmp/snmpd.conf
