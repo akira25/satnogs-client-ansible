@@ -9,22 +9,50 @@
   retries: 3
   notify:
     - Restart snmpd service
-- name: Install raspberry sensor script
-  copy:
-    src: usr/local/bin/rasberry-sensors.sh
-    dest: /usr/local/bin/rasberry-sensors.sh
-    mode: 0755
-  when: ansible_lsb.id == 'Raspbian'
-  become: True
-- name: Extend SNMP with VideoCore script OID
-  lineinfile:
-    path: /etc/snmp/snmpd.conf
-    line: 'extend raspberry /usr/local/bin/rasberry-sensors.sh'
+- name: Make snmp user member of video group
+  user:
+    name: 'Debian-snmp'
+    groups:
+      - 'video'
+    append: True
+    state: 'present'
   when: ansible_lsb.id == 'Raspbian'
   become: True
   notify:
     - Restart snmpd service
-- name: Allow access to VideoCore script OID
+- name: Remove rasberry-sensors.sh script
+  file:
+    path: /usr/local/bin/rasberry-sensors.sh
+    state: absent
+  when: ansible_lsb.id == 'Raspbian'
+  become: True
+- name: Install raspi-sensors script
+  copy:
+    src: usr/local/bin/raspi-sensors
+    dest: /usr/local/bin/raspi-sensors
+    mode: 0755
+  when: ansible_lsb.id == 'Raspbian'
+  become: True
+- name: Extend SNMP with raspi-sensors script OID
+  blockinfile:
+    path: /etc/snmp/snmpd.conf
+    block: |
+      extend temp /usr/local/bin/raspi-sensors temp
+      extend volts_core /usr/local/bin/raspi-sensors volts core
+      extend volts_sdram_c /usr/local/bin/raspi-sensors volts sdram_c
+      extend volts_sdram_i /usr/local/bin/raspi-sensors volts sdram_i
+      extend volts_sdram_p /usr/local/bin/raspi-sensors volts sdram_p
+      extend codec_h264 /usr/local/bin/raspi-sensors codec h264
+      extend codec_mpg2 /usr/local/bin/raspi-sensors codec mpg2
+      extend codec_wvc1 /usr/local/bin/raspi-sensors codec wvc1
+      extend codec_mpg4 /usr/local/bin/raspi-sensors codec mpg4
+      extend codec_mjpg /usr/local/bin/raspi-sensors codec mjpg
+      extend codec_wmv9 /usr/local/bin/raspi-sensors codec wmv9
+  when: ansible_lsb.id == 'Raspbian'
+  become: True
+  notify:
+    - Restart snmpd service
+- name: Allow access to raspi-sensors script OID
   lineinfile:
     path: /etc/snmp/snmpd.conf
     line: 'view systemonly included .1.3.6.1.4.1.8072.1.3.2'
@@ -59,10 +87,11 @@
     - config
   notify:
     - Restart snmpd service
-- name: Add snmp user to sudoers
+- name: Remove snmp user from sudoers
   lineinfile:
     path: /etc/sudoers
     line: 'Debian-snmp ALL=(ALL) NOPASSWD: /usr/local/bin/rasberry-sensors.sh, /usr/bin/vcgencmd*'
+    state: 'absent'
   when: ansible_lsb.id == 'Raspbian'
   become: True
 - name: Start/stop snmpd service
