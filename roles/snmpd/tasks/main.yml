@@ -7,6 +7,8 @@
   register: res
   until: res is success
   retries: 3
+  notify:
+    - Restart snmpd service
 - name: Install raspberry sensor script
   copy:
     src: usr/local/bin/rasberry-sensors.sh
@@ -27,6 +29,8 @@
     line: 'agentAddress {{ snmpd_agentaddress }}'
   when: snmpd_agentaddress is defined
   become: True
+  notify:
+    - Restart snmpd service
 - name: Setup snmpd rocommunity configuration
   lineinfile:
     path: /etc/snmp/snmpd.conf
