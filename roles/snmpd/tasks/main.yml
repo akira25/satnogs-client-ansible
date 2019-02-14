@@ -25,7 +25,7 @@
 - name: Setup snmpd listen configuration
   lineinfile:
     path: /etc/snmp/snmpd.conf
-    regexp: '^\s*agentAddress .*'
+    regexp: '^\s*agentAddress\s'
     line: 'agentAddress {{ snmpd_agentaddress }}'
   when: snmpd_agentaddress is defined
   become: True
@@ -36,9 +36,14 @@
 - name: Setup snmpd rocommunity configuration
   lineinfile:
     path: /etc/snmp/snmpd.conf
-    regexp: '^\s*rocommunity .*'
-    line: 'rocommunity {{ snmpd_rocommunity }}'
+    regexp: '{{ item.regexp }}'
+    line: '{{ item.line }}'
   when: snmpd_rocommunity is defined
+  with_items:
+    - regexp: '^\s*rocommunity\s'
+      line: 'rocommunity {{ snmpd_rocommunity }}'
+    - regexp: '^\s*rocommunity6\s'
+      line: 'rocommunity6 {{ snmpd_rocommunity }}'
   become: True
   tags:
     - config
