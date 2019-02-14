@@ -25,6 +25,19 @@ Vagrant.configure("2") do |config|
     # Execute Ansible provisioning
     debian.vm.provision "ansible" do |ansible|
       ansible.playbook = "site.yml"
+      ansible.host_vars = {
+        "debian" => {
+          "hamlib_utils_rot_enabled" => true,
+          "hamlib_utils_rot_opts" => "-m 1",
+          "satnogs_api_token" => "0123456789abcdef0123456789abcdef01234567",
+          "satnogs_rx_device" => "rtlsdr",
+          "satnogs_station_elev" => "100",
+          "satnogs_station_id" => "99999",
+          "satnogs_station_lat" => "10",
+          "satnogs_station_lon" => "10",
+          "snmpd_enabled" => true
+        }
+      }
       ansible.groups = {
         "satnogs-setups" => ["debian"],
         "satnogs-radios" => ["debian"],
