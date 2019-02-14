@@ -3,5 +3,5 @@
   service:
     name: 'snmpd'
     enabled: '{{ snmpd_enabled | default(False) }}'
-    state: 'restarted'
+    state: '{{ "restarted" if snmpd_enabled | default(False) else "stopped" }}'
   become: True
