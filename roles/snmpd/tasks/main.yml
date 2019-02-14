@@ -29,6 +29,8 @@
     line: 'agentAddress {{ snmpd_agentaddress }}'
   when: snmpd_agentaddress is defined
   become: True
+  tags:
+    - config
   notify:
     - Restart snmpd service
 - name: Setup snmpd rocommunity configuration
@@ -38,6 +40,8 @@
     line: 'rocommunity {{ snmpd_rocommunity }}'
   when: snmpd_rocommunity is defined
   become: True
+  tags:
+    - config
   notify:
     - Restart snmpd service
 - name: Add snmp user to sudoers
