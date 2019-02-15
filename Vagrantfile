@@ -35,7 +35,8 @@ Vagrant.configure("2") do |config|
           "satnogs_station_id" => "99999",
           "satnogs_station_lat" => "10",
           "satnogs_station_lon" => "10",
-          "snmpd_enabled" => true
+          "snmpd_enabled" => true,
+          "gpsd_enabled" => true
         }
       }
       ansible.groups = {
