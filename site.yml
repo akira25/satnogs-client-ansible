@@ -4,3 +4,4 @@
 - import_playbook: satnogs-radios.yml
 - import_playbook: hamlib-utils.yml
 - import_playbook: snmpd.yml
+- import_playbook: gpsd.yml
