@@ -15,6 +15,7 @@ satnogs_client_packages:
   - 'python-tz'
   - 'python-matplotlib'
   - 'python-numpy'
+  - 'python-gps'
 satnogs_client_state_dir: '/tmp/.satnogs'
 satnogs_client_settings:
   - satnogs_api_token
