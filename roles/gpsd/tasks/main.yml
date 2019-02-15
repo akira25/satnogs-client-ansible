@@ -1,0 +1,19 @@
+---
+- name: Install gpsd
+  package:
+    name: 'gpsd'
+    state: 'present'
+  become: True
+- name: Install gpsd clients
+  package:
+    name: 'gpsd-clients'
+    state: 'present'
+  become: True
+- name: Start/stop gpsd service
+  service:
+    name: 'gpsd'
+    enabled: '{{ gpsd_enabled | default(False) }}'
+    state: '{{ "started" if gpsd_enabled | default(False) else "stopped" }}'
+  become: True
+  tags:
+    - config

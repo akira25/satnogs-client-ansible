@@ -43,7 +43,8 @@ Vagrant.configure("2") do |config|
         "satnogs-radios" => ["debian"],
         "hamlib-utils" => ["debian"],
         "satnogs-clients" => ["debian"],
-        "snmpds" => ["debian"]
+        "snmpds" => ["debian"],
+        "gpsds" => ["debian"]
       }
     end
   end

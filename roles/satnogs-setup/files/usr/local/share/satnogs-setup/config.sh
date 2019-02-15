@@ -80,7 +80,8 @@ SATNOGS_CLIENT_URL:Define SatNOGS client Git URL:input
 SATNOGS_SETUP_ANSIBLE_URL:Define Ansible Git URL:input
 SNMPD_ENABLED:Enable snmpd:yesno
 SNMPD_AGENTADDRESS:Define snmpd agentAddress:input
-SNMPD_ROCOMMUNITY:Define snmpd rocommunity:input"
+SNMPD_ROCOMMUNITY:Define snmpd rocommunity:input
+GPSD_ENABLED:Enable GPSD for mobile stations:yesno"
 
 to_lower() {
 	tr '[:upper:]' '[:lower:]'
