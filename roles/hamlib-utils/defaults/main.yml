@@ -1,0 +1,2 @@
+---
+hamlib_utils_rot_opts: '-T 127.0.0.1 -m 1'

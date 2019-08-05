@@ -73,7 +73,7 @@ satnogs_station_lon: '23.725'
 #hamlib_utils_rig_enabled: False
 #hamlib_utils_rig_opts: '-m 1'
 hamlib_utils_rot_enabled: True
-hamlib_utils_rot_opts: '-m 1'
+hamlib_utils_rot_opts: '-T 127.0.0.1 -m 1'
 
 #
 # SNMPD configuration
