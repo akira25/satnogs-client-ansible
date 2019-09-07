@@ -11,6 +11,7 @@
   with_items:
     - '8B48AD6246925553'
     - '7638D0442B90D010'
+  when: ansible_os_family == 'Debian'
 - name: Remove jessie backports repository
   apt_repository:
     repo: 'deb http://ftp.debian.org/debian jessie-backports main'
@@ -19,23 +20,17 @@
   register: res
   until: res is success
   retries: 3
-- name: Install dependencies
-  apt:
-    name: '{{ item }}'
-    state: 'present'
-  become: True
-  register: res
-  until: res is success
-  retries: 3
-  with_items: '{{ satnogs_radio_packages }}'
-- name: Uninstall gr-satnogs
-  apt:
-    name: 'gr-satnogs'
-    state: 'absent'
+- name: Pin packages
+  template:
+    src: 'etc/apt/preferences.d/satnogs.j2'
+    dest: '/etc/apt/preferences.d/satnogs'
+    mode: 0644
   become: True
 - name: Install gr-satnogs
   apt:
-    deb: '{{ satnogs_radio_gr_satnogs_package }}'
+    name:
+      - 'gr-satnogs'
+      - 'libgnuradio-satnogs'
     state: 'present'
   become: True
   register: res

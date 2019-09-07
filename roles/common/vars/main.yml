@@ -1,7 +1,19 @@
 ---
 version_minimum: '2.4'
-distribution: 'Debian'
-distribution_release: 'stretch'
+lsb_compatibility:
+  - id: 'Debian'
+    codename: 'stretch'
+  - id: 'Debian'
+    codename: 'buster'
+  - id: 'Raspbian'
+    codename: 'stretch'
+  - id: 'Raspbian'
+    codename: 'buster'
+repository_path:
+  debian_stretch: 'Debian_9.0'
+  debian_buster: 'Debian_10'
+  raspbian_stretch: 'Raspbian_9.0'
+  raspbian_buster: 'Raspbian_10'
 packages:
   - 'acl'
   - 'build-essential'

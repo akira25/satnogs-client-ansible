@@ -8,3 +8,41 @@
   register: res
   until: res is success
   retries: 3
+- name: Install required package for APT
+  package:
+    name: 'gpg'
+    state: 'present'
+  when: ansible_os_family == 'Debian'
+  become: True
+  register: res
+  until: res is success
+  retries: 3
+- name: Install repository keys
+  apt_key:
+    url: '{{ apt_key_url }}'
+    id: '{{ apt_key_id }}'
+    state: 'present'
+  when: ansible_os_family == 'Debian'
+  become: True
+  register: res
+  until: res is success
+  retries: 3
+- name: Install repository
+  apt_repository:
+    repo: '{{ apt_repository }}'
+    state: 'present'
+    mode: 0644
+  when: ansible_os_family == 'Debian'
+  become: True
+  register: res
+  until: res is success
+  retries: 3
+- name: Update APT cache
+  apt:
+    update_cache: True
+    cache_valid_time: 3600
+  when: ansible_os_family == 'Debian'
+  become: True
+  register: res
+  until: res is success
+  retries: 3
