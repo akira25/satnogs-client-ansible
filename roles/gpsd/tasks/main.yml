@@ -4,11 +4,17 @@
     name: 'gpsd'
     state: 'present'
   become: True
+  register: res
+  until: res is success
+  retries: 3
 - name: Install gpsd clients
   package:
     name: 'gpsd-clients'
     state: 'present'
   become: True
+  register: res
+  until: res is success
+  retries: 3
 - name: Start/stop gpsd service
   service:
     name: 'gpsd'
