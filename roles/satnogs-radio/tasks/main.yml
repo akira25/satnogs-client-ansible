@@ -26,6 +26,23 @@
     dest: '/etc/apt/preferences.d/satnogs'
     mode: 0644
   become: True
+- name: Check if libgnuradio-satnogs is installed
+  package:
+    name: 'libgnuradio-satnogs'
+    state: 'present'
+  check_mode: True
+  register: libgnuradio_satnogs_package
+  become: True
+  until: libgnuradio_satnogs_package is success
+  retries: 3
+- name: Uninstall gr-satnogs
+  package:
+    name: 'gr-satnogs'
+    state: 'absent'
+  become: True
+  when: libgnuradio_satnogs_package.changed
+  tags:
+    - skip_ansible_lint
 - name: Install gr-satnogs
   apt:
     name:
