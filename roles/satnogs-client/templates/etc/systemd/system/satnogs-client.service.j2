@@ -5,10 +5,12 @@ After=redis-server.service
 
 [Service]
 EnvironmentFile=-/etc/default/satnogs-client
+{% if ansible_lsb.id in ["Debian", "Raspbian"] and ansible_lsb.codename == "stretch" %}
 {% if ansible_architecture in ["armv6l", "armv7l"] %}
 Environment=LD_PRELOAD=/usr/lib/arm-linux-gnueabihf/libuhd.so.003
 {% elif ansible_architecture == "x86_64" %}
 Environment=LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libuhd.so.003
+{% endif %}
 {% endif %}
 ExecStart=/var/lib/{{ satnogs_client_user }}/bin/satnogs-client
 Restart=on-failure
