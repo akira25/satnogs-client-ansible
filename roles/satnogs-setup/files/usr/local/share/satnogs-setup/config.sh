@@ -179,7 +179,7 @@ input() {
 		--title "Parameter definition" \
 		--ok-button "Ok" \
 		--cancel-button "Cancel" \
-		--inputbox "$inputbox" 0 "$WIDTH" -- "$2"
+		--inputbox "$inputbox" 0 "$WIDTH" -- "$init"
 	res=$?
 	if [ $res -eq 1 ] || [ $res -eq 255 ]; then
 		echo "Cancel" 1>&2
