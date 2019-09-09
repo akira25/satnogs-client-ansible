@@ -48,8 +48,15 @@
     state: 'absent'
   become: True
   with_items: '{{ satnogs_radio_blacklist_modules }}'
-- name: Download UHD images
+- name: Download UHD images for stretch
   command: '/usr/bin/uhd_images_downloader'
   args:
     creates: '/usr/share/uhd/images/{{ satnogs_radio_uhd_images_tag }}.tag'
   become: True
+  when: ansible_lsb.id in ["Debian", "Raspbian"] and ansible_lsb.codename == "stretch"
+- name: Download UHD images for buster
+  command: '/usr/bin/uhd_images_downloader'
+  args:
+    creates: '/usr/share/uhd/images/inventory.json'
+  become: True
+  when: ansible_lsb.id in ["Debian", "Raspbian"] and ansible_lsb.codename == "buster"
