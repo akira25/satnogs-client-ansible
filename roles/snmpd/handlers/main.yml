@@ -2,6 +2,6 @@
 - name: Restart snmpd service
   service:
     name: 'snmpd'
-    enabled: '{{ snmpd_enabled | default(False) }}'
-    state: '{{ "restarted" if snmpd_enabled | default(False) else "stopped" }}'
-  become: True
+    enabled: '{{ snmpd_enabled | default(false) }}'
+    state: '{{ "restarted" if snmpd_enabled | default(false) else "stopped" }}'
+  become: true

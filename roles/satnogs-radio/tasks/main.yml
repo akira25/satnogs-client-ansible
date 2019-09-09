@@ -4,7 +4,7 @@
     keyserver: 'pool.sks-keyservers.net'
     id: '{{ item }}'
     state: 'present'
-  become: True
+  become: true
   register: res
   until: res is success
   retries: 3
@@ -16,7 +16,7 @@
   apt_repository:
     repo: 'deb http://ftp.debian.org/debian jessie-backports main'
     state: 'absent'
-  become: True
+  become: true
   register: res
   until: res is success
   retries: 3
@@ -25,21 +25,21 @@
     src: 'etc/apt/preferences.d/satnogs.j2'
     dest: '/etc/apt/preferences.d/satnogs'
     mode: 0644
-  become: True
+  become: true
 - name: Check if libgnuradio-satnogs is installed
   package:
     name: 'libgnuradio-satnogs'
     state: 'present'
-  check_mode: True
+  check_mode: true
   register: libgnuradio_satnogs_package
-  become: True
+  become: true
   until: libgnuradio_satnogs_package is success
   retries: 3
 - name: Uninstall gr-satnogs
   package:
     name: 'gr-satnogs'
     state: 'absent'
-  become: True
+  become: true
   when: libgnuradio_satnogs_package.changed
   tags:
     - skip_ansible_lint
@@ -49,7 +49,7 @@
       - 'gr-satnogs'
       - 'libgnuradio-satnogs'
     state: 'present'
-  become: True
+  become: true
   register: res
   until: res is success
   retries: 3
@@ -57,23 +57,23 @@
   kernel_blacklist:
     name: '{{ item }}'
     state: 'present'
-  become: True
+  become: true
   with_items: '{{ satnogs_radio_blacklist_modules }}'
 - name: Unload SDR modules
   modprobe:
     name: '{{ item }}'
     state: 'absent'
-  become: True
+  become: true
   with_items: '{{ satnogs_radio_blacklist_modules }}'
 - name: Download UHD images for stretch
   command: '/usr/bin/uhd_images_downloader'
   args:
     creates: '/usr/share/uhd/images/{{ satnogs_radio_uhd_images_tag }}.tag'
-  become: True
+  become: true
   when: ansible_lsb.id in ["Debian", "Raspbian"] and ansible_lsb.codename == "stretch"
 - name: Download UHD images for buster
   command: '/usr/bin/uhd_images_downloader'
   args:
     creates: '/usr/share/uhd/images/inventory.json'
-  become: True
+  become: true
   when: ansible_lsb.id in ["Debian", "Raspbian"] and ansible_lsb.codename == "buster"

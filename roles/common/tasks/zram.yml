@@ -3,18 +3,18 @@
   package:
     name: 'dphys-swapfile'
     state: 'present'
-  check_mode: True
+  check_mode: true
   register: dphys_swapfile_package
-  become: True
+  become: true
   until: dphys_swapfile_package is success
   retries: 3
 - name: Disable swap file
   service:
     name: 'dphys-swapfile'
     state: stopped
-    enabled: False
+    enabled: false
   when: not dphys_swapfile_package.changed
-  become: True
+  become: true
   tags:
     - skip_ansible_lint
 - name: Add ZRAM init script
@@ -22,6 +22,6 @@
     src: 'etc/init.d/zram'
     dest: '/etc/init.d/zram'
     mode: 0755
-  become: True
+  become: true
   notify:
     - Start ZRAM service

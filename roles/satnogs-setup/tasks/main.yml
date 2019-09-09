@@ -4,7 +4,7 @@
     keyserver: 'keyserver.ubuntu.com'
     id: '93C4A3FD7BB9C367'
     state: 'present'
-  become: True
+  become: true
   register: res
   until: res is success
   retries: 3
@@ -13,7 +13,7 @@
     repo: 'deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main'
     state: 'present'
     mode: 0644
-  become: True
+  become: true
   register: res
   until: res is success
   retries: 3
@@ -21,7 +21,7 @@
   package:
     name: 'ansible'
     state: 'present'
-  become: True
+  become: true
   register: res
   until: res is success
   retries: 3
@@ -30,7 +30,7 @@
     src: 'etc/default/satnogs-setup.j2'
     dest: '/etc/default/satnogs-setup'
     mode: 0644
-  become: True
+  become: true
   tags:
     - config
 - name: Set up inventory
@@ -38,31 +38,31 @@
     src: 'etc/ansible/hosts'
     dest: '/etc/ansible/hosts'
     mode: 0644
-  become: True
+  become: true
 - name: Create host variables directory
   file:
     path: '/etc/ansible/host_vars'
     state: 'directory'
     mode: 0755
-  become: True
+  become: true
 - name: Create host variables file
   file:
     path: '/etc/ansible/host_vars/localhost'
     state: 'touch'
     mode: 0644
-  become: True
+  become: true
 - name: Create satnogs-setup share directory
   file:
     path: '/usr/local/share/satnogs-setup'
     state: 'directory'
     mode: 0755
-  become: True
+  become: true
 - name: Install satnogs-setup scripts
   copy:
     src: '{{ item.0 }}'
     dest: '{{ item.1 }}'
     mode: 0755
-  become: True
+  become: true
   with_together:
     - [ 'usr/local/bin/satnogs-setup', 'usr/local/share/satnogs-setup/bootstrap.sh',
     'usr/local/share/satnogs-setup/setup.sh', 'usr/local/share/satnogs-setup/config.sh' ]

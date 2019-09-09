@@ -3,5 +3,5 @@
   service:
     name: 'zram'
     state: 'started'
-    enabled: True
-  become: True
+    enabled: true
+  become: true

@@ -6,16 +6,16 @@
     shell: '/bin/false'
     groups:
       - 'plugdev'
-    system: True
+    system: true
     state: 'present'
-  become: True
+  become: true
   notify:
     - Restart satnogs-client service
 - name: Install dependencies
   package:
     name: '{{ item }}'
     state: 'present'
-  become: True
+  become: true
   register: res
   until: res is success
   retries: 3
@@ -44,24 +44,24 @@
   pip:
     name: '{{ satnogs_client_name }}'
     virtualenv: '/var/lib/{{ satnogs_client_user }}'
-    virtualenv_site_packages: True
-    editable: False
+    virtualenv_site_packages: true
+    editable: false
     state: 'absent'
-  become: True
+  become: true
   become_user: '{{ satnogs_client_user }}'
 - name: Install satnogs-client
   pip:
     name: '{{ satnogs_client_url | default(satnogs_client_name) }}'
     version: '{{ satnogs_client_version if satnogs_client_url is undefined else omit }}'
     virtualenv: '/var/lib/{{ satnogs_client_user }}'
-    virtualenv_site_packages: True
-    editable: False
+    virtualenv_site_packages: true
+    editable: false
     state: 'present'
   retries: 5
   delay: 3
   register: res
   until: res.changed is defined and res.changed
-  become: True
+  become: true
   become_user: '{{ satnogs_client_user }}'
   notify:
     - Restart satnogs-client service
@@ -71,7 +71,7 @@
     dest: '/etc/default/satnogs-client'
     # TODO: Fix ownership
     mode: 0644
-  become: True
+  become: true
   tags:
     - config
   notify:
@@ -81,7 +81,7 @@
     src: 'etc/systemd/system/satnogs-client.service.j2'
     dest: '/etc/systemd/system/satnogs-client.service'
     mode: 0644
-  become: True
+  become: true
   notify:
     - Restart satnogs-client service
 - name: Use tmpfs for state directory
@@ -91,13 +91,13 @@
     fstype: 'tmpfs'
     opts: 'rw,nosuid,noexec,nodev,noatime'
     state: 'mounted'
-  become: True
+  become: true
   notify:
     - Restart satnogs-client service
 - name: Start satnogs-client service
   systemd:
-    daemon_reload: True
+    daemon_reload: true
     name: 'satnogs-client'
-    enabled: True
+    enabled: true
     state: 'started'
-  become: True
+  become: true

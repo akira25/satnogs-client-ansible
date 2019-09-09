@@ -3,7 +3,7 @@
   package:
     name: 'snmpd'
     state: 'present'
-  become: True
+  become: true
   register: res
   until: res is success
   retries: 3
@@ -14,10 +14,10 @@
     name: 'Debian-snmp'
     groups:
       - 'video'
-    append: True
+    append: true
     state: 'present'
   when: ansible_lsb.id == 'Raspbian'
-  become: True
+  become: true
   notify:
     - Restart snmpd service
 - name: Remove rasberry-sensors.sh script
@@ -25,14 +25,14 @@
     path: /usr/local/bin/rasberry-sensors.sh
     state: absent
   when: ansible_lsb.id == 'Raspbian'
-  become: True
+  become: true
 - name: Install raspi-sensors script
   copy:
     src: usr/local/bin/raspi-sensors
     dest: /usr/local/bin/raspi-sensors
     mode: 0755
   when: ansible_lsb.id == 'Raspbian'
-  become: True
+  become: true
 - name: Extend SNMP with raspi-sensors script OID
   blockinfile:
     path: /etc/snmp/snmpd.conf
@@ -49,7 +49,7 @@
       extend codec_mjpg /usr/local/bin/raspi-sensors codec mjpg
       extend codec_wmv9 /usr/local/bin/raspi-sensors codec wmv9
   when: ansible_lsb.id == 'Raspbian'
-  become: True
+  become: true
   notify:
     - Restart snmpd service
 - name: Allow access to raspi-sensors script OID
@@ -57,7 +57,7 @@
     path: /etc/snmp/snmpd.conf
     line: 'view systemonly included .1.3.6.1.4.1.8072.1.3.2'
   when: ansible_lsb.id == 'Raspbian'
-  become: True
+  become: true
   notify:
     - Restart snmpd service
 - name: Setup snmpd listen configuration
@@ -66,7 +66,7 @@
     regexp: '^\s*agentAddress\s'
     line: 'agentAddress {{ snmpd_agentaddress }}'
   when: snmpd_agentaddress is defined
-  become: True
+  become: true
   tags:
     - config
   notify:
@@ -82,7 +82,7 @@
       line: 'rocommunity {{ snmpd_rocommunity }}'
     - regexp: '^\s*rocommunity6\s'
       line: 'rocommunity6 {{ snmpd_rocommunity }}'
-  become: True
+  become: true
   tags:
     - config
   notify:
@@ -93,12 +93,12 @@
     line: 'Debian-snmp ALL=(ALL) NOPASSWD: /usr/local/bin/rasberry-sensors.sh, /usr/bin/vcgencmd*'
     state: 'absent'
   when: ansible_lsb.id == 'Raspbian'
-  become: True
+  become: true
 - name: Start/stop snmpd service
   service:
     name: 'snmpd'
-    enabled: '{{ snmpd_enabled | default(False) }}'
-    state: '{{ "started" if snmpd_enabled | default(False) else "stopped" }}'
-  become: True
+    enabled: '{{ snmpd_enabled | default(false) }}'
+    state: '{{ "started" if snmpd_enabled | default(false) else "stopped" }}'
+  become: true
   tags:
     - config

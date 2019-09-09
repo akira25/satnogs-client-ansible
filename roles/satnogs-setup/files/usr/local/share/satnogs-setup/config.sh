@@ -200,9 +200,9 @@ yesno() {
 
 	res=$?
 	if [ $res -eq 1 ] || [ $res -eq 255 ]; then
-		echo "False" 1>&2
+		echo "false" 1>&2
 	else
-		echo "True" 1>&2
+		echo "true" 1>&2
 	fi
 }
 

@@ -6,9 +6,9 @@
     shell: '/bin/false'
     groups:
       - 'dialout'
-    system: True
+    system: true
     state: 'present'
-  become: True
+  become: true
   notify:
     - Restart rigctld service
     - Restart rotctld service
@@ -16,7 +16,7 @@
   package:
     name: 'libhamlib-utils'
     state: 'present'
-  become: True
+  become: true
   register: res
   until: res is success
   retries: 3
@@ -28,7 +28,7 @@
     src: 'etc/default/hamlib-utils.j2'
     dest: '/etc/default/hamlib-utils'
     mode: 0644
-  become: True
+  become: true
   tags:
     - config
   notify:
@@ -39,7 +39,7 @@
     src: 'etc/systemd/system/rigctld.service.j2'
     dest: '/etc/systemd/system/rigctld.service'
     mode: 0644
-  become: True
+  become: true
   notify:
     - Restart rigctld service
 - name: Add rotctld systemd service
@@ -47,24 +47,24 @@
     src: 'etc/systemd/system/rotctld.service.j2'
     dest: '/etc/systemd/system/rotctld.service'
     mode: 0644
-  become: True
+  become: true
   notify:
     - Restart rotctld service
 - name: Start/stop rigctld service
   systemd:
-    daemon_reload: True
+    daemon_reload: true
     name: 'rigctld'
-    enabled: '{{ hamlib_utils_rig_enabled | default(False) }}'
-    state: '{{ "started" if hamlib_utils_rig_enabled | default(False) else "stopped" }}'
-  become: True
+    enabled: '{{ hamlib_utils_rig_enabled | default(false) }}'
+    state: '{{ "started" if hamlib_utils_rig_enabled | default(false) else "stopped" }}'
+  become: true
   tags:
     - config
 - name: Start/stop rotctld service
   systemd:
-    daemon_reload: True
+    daemon_reload: true
     name: 'rotctld'
-    enabled: '{{ hamlib_utils_rot_enabled | default(False) }}'
-    state: '{{ "started" if hamlib_utils_rot_enabled | default(False) else "stopped" }}'
-  become: True
+    enabled: '{{ hamlib_utils_rot_enabled | default(false) }}'
+    state: '{{ "started" if hamlib_utils_rot_enabled | default(false) else "stopped" }}'
+  become: true
   tags:
     - config
