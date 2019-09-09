@@ -16,7 +16,6 @@ repository_path:
   raspbian_buster: 'Raspbian_10'
 packages:
   - 'acl'
-  - 'build-essential'
   - 'rng-tools'
   - 'sudo'
 zram_memtotal_min: 2048
