@@ -1,5 +1,5 @@
 ---
-- hosts: satnogs_setups
+- hosts: satnogs-setups
   roles:
     - role: common
       tags:

@@ -1,5 +1,5 @@
 ---
-- hosts: hamlib_utils
+- hosts: hamlib-utils
   roles:
     - role: common
       tags:
