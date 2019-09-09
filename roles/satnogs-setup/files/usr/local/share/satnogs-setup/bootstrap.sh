@@ -2,7 +2,7 @@
 #
 # SatNOGS client setup bootstrap script
 #
-# Copyright (C) 2017 Libre Space Foundation <https://libre.space/>
+# Copyright (C) 2017-2019 Libre Space Foundation <https://libre.space/>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,5 +25,7 @@ STAMP="$HOME/.satnogs/.bootstrapped"
 if [ ! -f "$STAMP" ]; then
 	if ansible-pull -d "$ANSIBLE_DIR" -U "$SATNOGS_SETUP_ANSIBLE_URL" ${SATNOGS_SETUP_ANSIBLE_BRANCH:+-C "$SATNOGS_SETUP_ANSIBLE_BRANCH"} "$@" satnogs-setups.yml; then
 		touch "$STAMP"
+	else
+		read -r -p "Press enter to continue..." _temp
 	fi
 fi
