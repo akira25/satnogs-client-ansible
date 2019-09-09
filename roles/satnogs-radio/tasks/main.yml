@@ -11,7 +11,7 @@
   with_items:
     - '8B48AD6246925553'
     - '7638D0442B90D010'
-  when: ansible_os_family == 'Debian'
+  when: ansible_lsb.id in ["Debian", "Raspbian"] and ansible_lsb.codename == "stretch"
 - name: Remove jessie backports repository
   apt_repository:
     repo: 'deb http://ftp.debian.org/debian jessie-backports main'
