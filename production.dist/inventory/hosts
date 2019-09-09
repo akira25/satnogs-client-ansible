@@ -1,19 +1,26 @@
-satnogs ansible_host=10.20.30.40 ansible_user=pi ansible_ssh_pass=raspberry
-
-[satnogs-setups]
-satnogs
-
-[satnogs-radios]
-satnogs
-
-[hamlib-utils]
-satnogs
-
-[satnogs-clients]
-satnogs
-
-[snmpds]
-satnogs
-
-[gpsds]
-satnogs
+---
+all:
+  hosts:
+    satnogs:
+      ansible_host: '10.20.30.40'
+      ansible_user: 'pi'
+      ansible_ssh_pass: 'raspberry'
+      ansible_ssh_pipelining: true
+satnogs_setups:
+  hosts:
+    satnogs:
+satnogs_radios:
+  hosts:
+    satnogs:
+hamlib_utils:
+  hosts:
+    satnogs:
+satnogs_clients:
+  hosts:
+    satnogs:
+snmpds:
+  hosts:
+    satnogs:
+gpsds:
+  hosts:
+    satnogs:

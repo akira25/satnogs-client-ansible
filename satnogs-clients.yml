@@ -1,5 +1,5 @@
 ---
-- hosts: satnogs-clients
+- hosts: satnogs_clients
   roles:
     - role: common
       tags:

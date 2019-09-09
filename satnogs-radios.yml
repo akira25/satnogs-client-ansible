@@ -1,5 +1,5 @@
 ---
-- hosts: satnogs-radios
+- hosts: satnogs_radios
   roles:
     - role: common
       tags:
