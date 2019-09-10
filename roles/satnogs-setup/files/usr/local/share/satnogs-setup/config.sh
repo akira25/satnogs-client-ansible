@@ -159,7 +159,7 @@ menu() {
 		--ok-button \"Select\" \
 		--cancel-button \"Back\" \
 		--default-item \"$default\" \
-		--menu \"[UP], [DOWN] arrow keys to move\n[ENTER] to select\" 0 0 0 \
+		--menu \"[UP], [DOWN] arrow keys to move\\n[ENTER] to select\" 0 0 0 \
 		$(get_tags_items_list "$menu")"
 	res=$?
 	if [ $res -eq 1 ] || [ $res -eq 255 ]; then
