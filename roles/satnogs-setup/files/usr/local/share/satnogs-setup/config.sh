@@ -85,10 +85,10 @@ SATNOGS_SETUP_ANSIBLE_BRANCH:Define Ansible Git branch:input
 SNMPD_ENABLED:Enable snmpd:yesno
 SNMPD_AGENTADDRESS:Define snmpd agentAddress:input
 SNMPD_ROCOMMUNITY:Define snmpd rocommunity:input
-GPSD_ENABLED:Enable GPSD for mobile stations:yesno
-SATNOGS_WATERFALL_AUTORANGE:Adjust waterfall power range based on received signal:yesno
-SATNOGS_WATERFALL_MIN_VALUE:Waterfall power min value (Typically -100):input
-SATNOGS_WATERFALL_MAX_VALUE:Waterfall power max value (Typically -50):input"
+GPSD_ENABLED:Enable GPSd:yesno
+SATNOGS_WATERFALL_AUTORANGE:Enable waterfall power range adjustment:yesno
+SATNOGS_WATERFALL_MIN_VALUE:Define waterfall minimum power:input
+SATNOGS_WATERFALL_MAX_VALUE:Define Waterfall maximum power:input"
 
 to_lower() {
 	tr '[:upper:]' '[:lower:]'
