@@ -33,5 +33,5 @@ else
 	ansible-playbook "$@" -t config local.yml
 fi
 echo "Press enter to continue..."
-read -r
+read -r _temp
 exec satnogs-setup

@@ -27,6 +27,6 @@ if [ ! -f "$STAMP" ]; then
 		touch "$STAMP"
 	else
 		echo "Press enter to continue..."
-		read -r
+		read -r _temp
 	fi
 fi
