@@ -99,34 +99,34 @@ to_upper() {
 }
 
 get_tags_items_list() {
-	local menu="$1"
+	menu="$1"
 
 	echo "$menu" | awk 'BEGIN { FS=":" } { printf("\"%s\" \"%s\" ", $1, $2) }'
 }
 
 get_item() {
-	local menu="$1"
-	local tag="$2"
+	menu="$1"
+	tag="$2"
 
 	get_menu "$1" | awk 'BEGIN { FS=":" } /'"$tag"'/ { print $2 }'
 }
 
 get_type() {
-	local menu="$1"
-	local tag="$2"
+	menu="$1"
+	tag="$2"
 
 	get_menu "$1" | awk 'BEGIN { FS=":" } /'"$tag"'/ { print $3 }'
 }
 
 get_menu() {
-	local menu="$1"
+	menu="$1"
 
 	eval "echo \"\$$(echo "$menu" | to_upper)_MENU\""
 }
 
 get_variable() {
-	local file="$1"
-	local variable="$2"
+	file="$1"
+	variable="$2"
 
 	if [ -f "$file" ]; then
 		awk 'BEGIN { FS="'"$variable"' *: *" } /^'"$variable"' *:/ { print $2 }' "$file"
@@ -134,9 +134,9 @@ get_variable() {
 }
 
 set_variable() {
-	local file="$1"
-	local variable="$2"
-	local value="$3"
+	file="$1"
+	variable="$2"
+	value="$3"
 
 	if [ -f "$file" ]; then
 		sed -i '/^'"$variable"' *:.*/ d' "$file"
@@ -148,10 +148,9 @@ set_variable() {
 }
 
 menu() {
-	local title="$1"
-	local menu="$2"
-	local default="$3"
-	local res
+	title="$1"
+	menu="$2"
+	default="$3"
 
 	eval "whiptail \
 		--clear \
@@ -169,9 +168,8 @@ menu() {
 }
 
 input() {
-	local inputbox="$1"
-	local init="$2"
-	local res
+	inputbox="$1"
+	init="$2"
 
 	whiptail \
 		--clear \
@@ -187,8 +185,7 @@ input() {
 }
 
 yesno() {
-	local yesno="$1"
-	local res
+	yesno="$1"
 
 	whiptail \
 		--clear \
