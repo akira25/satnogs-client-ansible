@@ -1,17 +1,27 @@
 ###
-# SatNOGS client ansible configuration
+# SatNOGS client Ansible configuration example
 #
+# Note: These are NOT the default values!
+
 
 #
-# SatNOGS setup script
-#
-#satnogs_setup_ansible_url: 'https://gitlab.com/librespacefoundation/satnogs/satnogs-client-ansible.git'
+# Common configuration
+# apt_repository: 'deb http://download.opensuse.org/repositories/home:/librespace:/satnogs/Raspbian_10 ./'
+# apt_key_url: 'http://download.opensuse.org/repositories/home:/librespace:/satnogs/Raspbian_10/Release.key'
+# apt_key_id: '8BD3901736A40B6C'
+
 
 #
-# SatNOGS client package
+# SatNOGS setup script configuration
 #
-#satnogs_client_url: 'git+https://gitlab.com/librespacefoundation/satnogs/satnogs-client.git@0'
-#satnogs_client_version: '0.4.1'
+# satnogs_setup_ansible_url: 'https://gitlab.com/librespacefoundation/satnogs/satnogs-client-ansible.git'
+# satnogs_setup_ansible_branch: 'stable'
+
+#
+# SatNOGS client package configuration
+#
+# satnogs_client_url: 'git+https://gitlab.com/librespacefoundation/satnogs/satnogs-client.git@0'
+# satnogs_client_version: '0.9'
 
 
 #
@@ -25,65 +35,63 @@ satnogs_station_id: '9999'
 satnogs_station_lat: '37.971'
 satnogs_station_lon: '23.725'
 
-#satnogs_pre_observation_script: Null
-#satnogs_post_observation_script:  Null
-#satnogs_app_path: '/tmp/.satnogs'
-#satnogs_output_path: '/tmp/.satnogs/data'
-#satnogs_complete_output_path: '/tmp/.satnogs/data/complete'
-#satnogs_incomplete_output_path: '/tmp/.satnogs/data/incomplete'
-#satnogs_remove_raw_files: 'True'
-#satnogs_verify_ssl: 'True'
-#satnogs_sqlite_url: 'sqlite:///jobs.sqlite'
+# satnogs_pre_observation_script: Null
+# satnogs_post_observation_script:  Null
+# satnogs_app_path: '/tmp/.satnogs'
+# satnogs_output_path: '/tmp/.satnogs/data'
+# satnogs_complete_output_path: '/tmp/.satnogs/data/complete'
+# satnogs_incomplete_output_path: '/tmp/.satnogs/data/incomplete'
+# satnogs_remove_raw_files: 'True'
+# satnogs_verify_ssl: 'True'
+# satnogs_sqlite_url: 'sqlite:///jobs.sqlite'
 
-#satnogs_rot_ip: '127.0.0.1'
-#satnogs_rot_port: '4533'
-#satnogs_rig_ip: '127.0.0.1'
-#satnogs_rig_port: '4532'
-#satnogs_rot_threshold: '4'
+# satnogs_rot_ip: '127.0.0.1'
+# satnogs_rot_port: '4533'
+# satnogs_rig_ip: '127.0.0.1'
+# satnogs_rig_port: '4532'
+# satnogs_rot_threshold: '4'
 
-#satnogs_serial_port: Null
+# satnogs_serial_port: Null
 
-#satnogs_doppler_corr_per_sec: Null
-#satnogs_lo_offset: Null
-#satnogs_ppm_error: Null
-#satnogs_if_gain: Null
-#satnogs_rf_gain: Null
-#satnogs_bb_gain: Null
-#satnogs_antenna: Null
-#satnogs_dev_args: Null
-#enable_iq_dump: 0
-#iq_dump_filename: Null
-#disable_decoded_data: 0
+# satnogs_doppler_corr_per_sec: Null
+# satnogs_lo_offset: Null
+# satnogs_ppm_error: Null
+# satnogs_if_gain: Null
+# satnogs_rf_gain: Null
+# satnogs_bb_gain: Null
+# satnogs_antenna: Null
+# satnogs_dev_args: Null
+# enable_iq_dump: 0
+# iq_dump_filename: Null
+# disable_decoded_data: 0
 
-#rf_sw_cmd_off_int: Null
-#rf_sw_cmd_off_char_seq: Null
-#rf_sw_cmd_on_int: Null
-#rf_sw_cmd_on_char_seq: Null
+# rf_sw_cmd_off_int: Null
+# rf_sw_cmd_off_char_seq: Null
+# rf_sw_cmd_on_int: Null
+# rf_sw_cmd_on_char_seq: Null
+
+# satnogs_waterfall_autorange: True
+# satnogs_waterfall_min_value: -100
+# satnogs_waterfall_max_value: -50
 
 
 #
 # SatNOGS radio configuration
 #
-#satnogs_radio_gr_satnogs_package: 'https://gitlab.com/librespacefoundation/satnogs/gr-satnogs-package/-/jobs/artifacts/1.2-1/raw/build/debian/output/{{ satnogs_radio_package_arch[ansible_architecture] }}/gr-satnogs_1.2-1_{{ satnogs_radio_package_arch[ansible_architecture] }}.deb?job=release'
+# satnogs_radio_gr_satnogs_version: '1.5.1-1'
 
 
 #
 # Hamlib configuration
 #
-#hamlib_utils_rig_enabled: False
-#hamlib_utils_rig_opts: '-m 1'
-hamlib_utils_rot_enabled: True
+# hamlib_utils_rig_enabled: False
+# hamlib_utils_rig_opts: 'T 127.0.0.1 -m 1'
+hamlib_utils_rot_enabled: true
 hamlib_utils_rot_opts: '-T 127.0.0.1 -m 1'
+
 
 #
 # SNMPD configuration
 #
-#snmpd_agentaddress: 'udp:0.0.0.0:161'
-#snmpd_rocommunity: 'public default'
-
-#
-# Waterfall settings
-#
-# satnogs_waterfall_autorange: True
-# satnogs_waterfall_min_value: -100
-# satnogs_waterfall_max_value: -50
+# snmpd_agentaddress: 'udp:0.0.0.0:161'
+# snmpd_rocommunity: 'public default'
