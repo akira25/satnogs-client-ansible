@@ -7,3 +7,11 @@
     - role: satnogs-client
       tags:
         - satnogs-client
+- hosts: satnogs_clients
+  roles:
+    - role: common
+      tags:
+        - common
+    - role: satnogs-client
+      tags:
+        - satnogs-client
