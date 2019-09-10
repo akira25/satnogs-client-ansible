@@ -17,9 +17,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-VERSION_SATNOGS_CLIENT_ANSIBLE="$(cd $HOME/.satnogs/ansible && git show -s --format=%cd --date='format:%Y%m%d%H%M')"
-VERSION_SATNOGS_CLIENT="$(/var/lib/satnogs/bin/pip show satnogsclient 2>/dev/null | awk '/^Version: / { print $2 }')"
-VERSION_GR_SATNOGS="$(dpkg-query --show -f='${Version}' gr-satnogs 2>/dev/null)"
+VERSION_SATNOGS_CLIENT_ANSIBLE=$(cd "$HOME/.satnogs/ansible" && git show -s --format=%cd --date='format:%Y%m%d%H%M')
+VERSION_SATNOGS_CLIENT=$(/var/lib/satnogs/bin/pip show satnogsclient 2>/dev/null | awk '/^Version: / { print $2 }')
+VERSION_GR_SATNOGS=$(dpkg-query --show -f='${Version}' gr-satnogs 2>/dev/null)
 
 BACKTITLE="SatNOGS client configuration | Installed: satnogs-client-ansible-${VERSION_SATNOGS_CLIENT_ANSIBLE}${VERSION_SATNOGS_CLIENT:+, satnogs-client-$VERSION_SATNOGS_CLIENT}${VERSION_GR_SATNOGS:+, gr-satnogs-$VERSION_GR_SATNOGS}"
 WIDTH="78"
@@ -250,7 +250,7 @@ while true; do
 			;;
 		Basic|Advanced|Main)
 			menu="$tag"
-			tag="$(eval "menu \"$tag Menu\" \"\$$(echo "$tag" | to_upper)_MENU\" \"$item\" 2>&1 1>&3")"
+			tag=$(eval "menu \"$tag Menu\" \"\$$(echo "$tag" | to_upper)_MENU\" \"$item\" 2>&1 1>&3")
 			item=""
 			;;
 		Update)
@@ -276,11 +276,11 @@ while true; do
 			tag="Main"
 			;;
 		*)
-			type="$(get_type "$menu" "$tag")"
-			item="$(get_item "$menu" "$tag")"
-			variable="$(echo "$tag" | to_lower)"
-			init="$(get_variable "$YAMLFILE_PATH" "$variable")"
-			input="$(eval "$type \"$item\" \"$init\" 2>&1 1>&3")"
+			type=$(get_type "$menu" "$tag")
+			item=$(get_item "$menu" "$tag")
+			variable=$(echo "$tag" | to_lower)
+			init=$(get_variable "$YAMLFILE_PATH" "$variable")
+			input=$(eval "$type \"$item\" \"$init\" 2>&1 1>&3")
 			if [ "$input" != "Cancel" ]; then
 				set_variable "$YAMLFILE_PATH" "$variable" "$input"
 				rm -f "$CONFIGURED_STAMP"
