@@ -32,5 +32,6 @@ else
 	echo "Applying configuration..."
 	ansible-playbook "$@" -t config local.yml
 fi
-read -r -p "Press enter to continue..." _temp
+echo "Press enter to continue..."
+read -r
 exec satnogs-setup

@@ -26,6 +26,7 @@ if [ ! -f "$STAMP" ]; then
 	if ansible-pull -d "$ANSIBLE_DIR" -U "$SATNOGS_SETUP_ANSIBLE_URL" ${SATNOGS_SETUP_ANSIBLE_BRANCH:+-C "$SATNOGS_SETUP_ANSIBLE_BRANCH"} "$@" satnogs-setups.yml; then
 		touch "$STAMP"
 	else
-		read -r -p "Press enter to continue..." _temp
+		echo "Press enter to continue..."
+		read -r
 	fi
 fi
