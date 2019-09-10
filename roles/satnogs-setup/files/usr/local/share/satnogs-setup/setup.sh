@@ -22,7 +22,7 @@
 ANSIBLE_DIR="$HOME/.satnogs/ansible"
 STAMP="$HOME/.satnogs/.installed"
 
-cd "$ANSIBLE_DIR"
+cd "$ANSIBLE_DIR" || exit 1
 if [ ! -f "$STAMP" ]; then
 	echo "Updating software and applying configuration. This may take a while..."
 	if ansible-playbook "$@" local.yml; then
