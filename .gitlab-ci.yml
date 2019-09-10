@@ -1,7 +1,15 @@
+---
 stages:
-  - test
-test:
-  stage: test
+  - static
+static_yaml:
+  stage: static
+  image: python:3
+  before_script:
+    - pip install yamllint==1.15.0
+  script:
+    - 'yamllint -s .'
+static_ansible:
+  stage: static
   image: librespace/ansible
   script:
     - ansible-playbook -i production.dist/inventory --syntax-check -vvv site.yml

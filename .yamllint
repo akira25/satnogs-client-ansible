@@ -1,0 +1,11 @@
+---
+extends: default
+
+yaml-files:
+- '*.yaml'
+- '*.yml'
+- 'hosts'
+
+rules:
+  line-length:
+    max: 120

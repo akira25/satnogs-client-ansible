@@ -1,4 +1,4 @@
 ---
-apt_repository: 'deb http://download.opensuse.org/repositories/home:/librespace:/satnogs/{{ repository_path[ansible_lsb.id.lower() ~ "_" ~ ansible_lsb.codename.lower()] }} ./'
-apt_key_url: 'http://download.opensuse.org/repositories/home:/librespace:/satnogs/{{ repository_path[ansible_lsb.id.lower() ~ "_" ~ ansible_lsb.codename.lower()] }}/Release.key'
+apt_repository: 'deb http://download.opensuse.org/repositories/home:/librespace:/satnogs/{{ repository_path[ansible_lsb.id.lower() ~ "_" ~ ansible_lsb.codename.lower()] }} ./'  # yamllint disable-line rule:line-length
+apt_key_url: 'http://download.opensuse.org/repositories/home:/librespace:/satnogs/{{ repository_path[ansible_lsb.id.lower() ~ "_" ~ ansible_lsb.codename.lower()] }}/Release.key'  # yamllint disable-line rule:line-length
 apt_key_id: '8BD3901736A40B6C'
