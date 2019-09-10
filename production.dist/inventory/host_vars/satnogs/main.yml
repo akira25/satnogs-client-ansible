@@ -95,3 +95,9 @@ hamlib_utils_rot_opts: '-T 127.0.0.1 -m 1'
 #
 # snmpd_agentaddress: 'udp:0.0.0.0:161'
 # snmpd_rocommunity: 'public default'
+
+
+#
+# GPSd configuration
+#
+# gpsd_enabled: False
