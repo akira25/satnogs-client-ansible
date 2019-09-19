@@ -9,6 +9,17 @@ How to install:
 * Run `ansible-playbook -i production/inventory site.yml`
 * Enjoy!
 
+## Supported distributions and releases
+
+This Ansible playbook supports the following distributions and releases:
+
+* Raspbian
+  * Buster
+  * Stretch
+* Debian
+  * Buster
+  * Stretch
+
 ## Testing local changes in Raspbian
 
 If you are running [the Raspbian
