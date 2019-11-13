@@ -1,5 +1,5 @@
 ---
-satnogs_client_name: 'satnogsclient'
+satnogs_client_name: "{{ 'satnogsclient' if satnogs_client_version is version('1.0', '<') else 'satnogs-client' }}"
 satnogs_client_user: 'satnogs'
 satnogs_client_packages:
   - 'virtualenv'
