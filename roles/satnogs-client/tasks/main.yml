@@ -42,7 +42,7 @@
     - 'share'
 - name: Uninstall satnogs-client
   pip:
-    name: '{{ satnogs_client_name }}'
+    name: '{{ satnogs_client_names }}'
     virtualenv: '/var/lib/{{ satnogs_client_user }}'
     virtualenv_site_packages: true
     editable: false
