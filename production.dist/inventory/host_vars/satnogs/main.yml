@@ -87,8 +87,8 @@ satnogs_station_lon: '23.725'
 #
 # hamlib_utils_rig_disabled: false
 # hamlib_utils_rig_opts: '-T 127.0.0.1 -m 1'
-hamlib_utils_rot_enabled: true
-hamlib_utils_rot_opts: '-T 127.0.0.1 -m 1'
+# hamlib_utils_rot_enabled: true
+# hamlib_utils_rot_opts: '-T 127.0.0.1 -m 1'
 
 
 #
