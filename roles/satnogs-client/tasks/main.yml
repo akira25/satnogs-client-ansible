@@ -11,10 +11,10 @@
   become: true
   notify:
     - Restart satnogs-client service
-- name: Install dependencies
+- name: Install or remove system dependencies
   package:
-    name: '{{ item }}'
-    state: 'present'
+    name: '{{ item.name }}'
+    state: '{{ item.state | default(omit) }}'
   become: true
   register: res
   until: res is success
@@ -40,15 +40,22 @@
     - 'lib'
     - 'local'
     - 'share'
-- name: Uninstall satnogs-client
+- name: Install or remove PyPI dependencies
   pip:
-    name: '{{ satnogs_client_names }}'
+    name: '{{ item.name }}'
     virtualenv: '/var/lib/{{ satnogs_client_user }}'
     virtualenv_site_packages: true
     editable: false
-    state: 'absent'
+    extra_args: '{{ "--no-deps" if (item.state | default("present")) != "absent" else omit }}'
+    state: '{{ item.state | default(omit) }}'
   become: true
   become_user: '{{ satnogs_client_user }}'
+  register: res
+  until: res is success
+  retries: 3
+  with_items: '{{ satnogs_client_pypi }}'
+  notify:
+    - Restart satnogs-client service
 - name: Install satnogs-client
   pip:
     name: '{{ satnogs_client_url | default(satnogs_client_name) }}'
@@ -56,11 +63,11 @@
     virtualenv: '/var/lib/{{ satnogs_client_user }}'
     virtualenv_site_packages: true
     editable: false
-    state: 'present'
-  retries: 5
-  delay: 3
+    extra_args: '--no-deps'
+    state: '{{ "present" if satnogs_client_url is undefined else "forcereinstall" }}'
+  retries: 3
   register: res
-  until: res.changed is defined and res.changed
+  until: res is success
   become: true
   become_user: '{{ satnogs_client_user }}'
   notify:
