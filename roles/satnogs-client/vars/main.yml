@@ -1,8 +1,5 @@
 ---
-satnogs_client_names:
-  - 'satnogsclient'
-  - 'satnogs-client'
-satnogs_client_name: "{{ 'satnogsclient' if satnogs_client_version is version('1.0', '<') else 'satnogs-client' }}"
+satnogs_client_name: 'satnogs-client'
 satnogs_client_user: 'satnogs'
 satnogs_client_pypi:
   - name: 'satnogsclient'
@@ -12,12 +9,17 @@ satnogs_client_pypi:
 satnogs_client_packages:
   - name: 'virtualenv'
   - name: 'python-dev'
+    state: 'absent'
   - name: 'redis-server'
+    state: 'absent'
   - name: 'libffi-dev'
+    state: 'absent'
   - name: 'libssl-dev'
+    state: 'absent'
   - name: 'git'
   - name: 'python-apscheduler'
   - name: 'python-sqlalchemy'
+    state: 'absent'
   - name: 'python-requests'
   - name: 'python-dateutil'
   - name: 'python-ephem'
