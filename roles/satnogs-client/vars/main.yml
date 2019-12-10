@@ -7,8 +7,8 @@ satnogs_client_user: 'satnogs'
 satnogs_client_pypi:
   - name: 'satnogsclient'
     state: 'absent'
-  - name: 'python-dotenv'
-  - name: 'validators'
+  - name: 'python-dotenv==0.10.3'
+  - name: 'validators==0.14.1'
 satnogs_client_packages:
   - name: 'virtualenv'
   - name: 'python-dev'
