@@ -76,7 +76,7 @@ SATNOGS_RADIO_GR_SATNOGS_VERSION:Define gr-satnogs package version:input
 APT_REPOSITORY:Define package repository:input
 APT_KEY_URL:Define package repository key URL:input
 APT_KEY_ID:Define package repository key ID:input
-HAMLIB_UTILS_RIG_ENABLED:Enable Hamlib rigctld:yesno
+HAMLIB_UTILS_RIG_DISABLED:Disable Hamlib rigctld:yesno
 HAMLIB_UTILS_RIG_OPTS:Define Hamlib rigctld options:input
 SATNOGS_CLIENT_VERSION:Define SatNOGS client version:input
 SATNOGS_CLIENT_URL:Define SatNOGS client Git URL:input

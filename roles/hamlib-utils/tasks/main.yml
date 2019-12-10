@@ -54,8 +54,8 @@
   systemd:
     daemon_reload: true
     name: 'rigctld'
-    enabled: '{{ hamlib_utils_rig_enabled | default(false) }}'
-    state: '{{ "started" if hamlib_utils_rig_enabled | default(false) else "stopped" }}'
+    enabled: '{{ not hamlib_utils_rig_disabled | default(false) }}'
+    state: '{{ "started" if not hamlib_utils_rig_disabled | default(false) else "stopped" }}'
   become: true
   tags:
     - config

@@ -3,8 +3,8 @@
   systemd:
     daemon_reload: true
     name: 'rigctld'
-    enabled: '{{ hamlib_utils_rig_enabled | default(false) }}'
-    state: '{{ "restarted" if hamlib_utils_rig_enabled | default(false) else "stopped" }}'
+    enabled: '{{ not hamlib_utils_rig_disbled | default(false) }}'
+    state: '{{ "restarted" if not hamlib_utils_rig_disbled | default(false) else "stopped" }}'
   become: true
 - name: Restart rotctld service
   systemd:
