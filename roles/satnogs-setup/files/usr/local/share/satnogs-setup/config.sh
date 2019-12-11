@@ -252,7 +252,7 @@ while true; do
 					--title "SatNOGS client configuration" \
 					--ok-button "Ok" \
 					--scrolltext \
-					--textbox "$YAMLFILE_PATH" 0 0
+					--textbox "$YAMLFILE_PATH" 20 0
 				set -e
 			fi
 			tag="Main"
