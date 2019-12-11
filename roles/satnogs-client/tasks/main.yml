@@ -25,6 +25,7 @@
 - name: Check for virtualenv with no access to global site-packages
   stat:
     path: '/var/lib/{{ satnogs_client_user }}/lib/python2.7/no-global-site-packages.txt'
+  become: true
   register: res_no_global
 - name: Remove virtualenv
   file:
@@ -40,6 +41,7 @@
     - 'lib'
     - 'local'
     - 'share'
+  become: true
 - name: Install or remove PyPI dependencies
   pip:
     name: '{{ item.name }}'
