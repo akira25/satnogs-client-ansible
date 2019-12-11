@@ -30,7 +30,7 @@ if [ ! -f "$STAMP" ]; then
 	fi
 else
 	echo "Applying configuration..."
-	ansible-playbook "$@" -t config local.yml
+	ansible-playbook "$@" -t config local.yml || :
 fi
 echo "Press enter to continue..."
 read -r _temp

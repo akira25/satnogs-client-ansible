@@ -17,9 +17,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-VERSION_SATNOGS_CLIENT_ANSIBLE=$(cd "$HOME/.satnogs/ansible" && git show -s --format=%cd --date='format:%Y%m%d%H%M')
+VERSION_SATNOGS_CLIENT_ANSIBLE=$(cd "$HOME/.satnogs/ansible" && git show -s --format=%cd --date='format:%Y%m%d%H%M' || :)
 VERSION_SATNOGS_CLIENT=$(/var/lib/satnogs/bin/pip show satnogs-client 2>/dev/null | awk '/^Version: / { print $2 }')
-VERSION_GR_SATNOGS=$(dpkg-query --show -f='${Version}' gr-satnogs 2>/dev/null)
+VERSION_GR_SATNOGS=$(dpkg-query --show -f='${Version}' gr-satnogs 2>/dev/null || :)
 
 BACKTITLE="SatNOGS client configuration | Installed: satnogs-client-ansible-${VERSION_SATNOGS_CLIENT_ANSIBLE}${VERSION_SATNOGS_CLIENT:+, satnogs-client-$VERSION_SATNOGS_CLIENT}${VERSION_GR_SATNOGS:+, gr-satnogs-$VERSION_GR_SATNOGS}"
 WIDTH="78"
@@ -154,6 +154,7 @@ menu() {
 	menu="$2"
 	default="$3"
 
+	set +e
 	eval "whiptail \
 		--clear \
 		--backtitle \"$BACKTITLE\" \
@@ -164,6 +165,7 @@ menu() {
 		--menu \"[UP], [DOWN] arrow keys to move\\n[ENTER] to select\" 0 0 0 \
 		$(get_tags_items_list "$menu")"
 	res=$?
+	set -e
 	if [ $res -eq 1 ] || [ $res -eq 255 ]; then
 		echo "Back" 1>&2
 	fi
@@ -173,6 +175,7 @@ input() {
 	inputbox="$1"
 	init="$2"
 
+	set +e
 	whiptail \
 		--clear \
 		--backtitle "$BACKTITLE" \
@@ -181,6 +184,7 @@ input() {
 		--cancel-button "Cancel" \
 		--inputbox "$inputbox" 0 "$WIDTH" -- "$init"
 	res=$?
+	set -e
 	if [ $res -eq 1 ] || [ $res -eq 255 ]; then
 		echo "Cancel" 1>&2
 	fi
@@ -189,6 +193,7 @@ input() {
 yesno() {
 	yesno="$1"
 
+	set +e
 	whiptail \
 		--clear \
 		--backtitle "$BACKTITLE" \
@@ -198,6 +203,7 @@ yesno() {
 		--yesno "$yesno" 0 0
 
 	res=$?
+	set -e
 	if [ $res -eq 1 ] || [ $res -eq 255 ]; then
 		echo "false" 1>&2
 	else
@@ -214,6 +220,7 @@ while true; do
 		Back)
 			if [ "$menu" = "Main" ]; then
 				if [ ! -f "$CONFIGURED_STAMP" ]; then
+					set +e
 					whiptail \
 						--clear \
 						--backtitle "$BACKTITLE" \
@@ -224,6 +231,7 @@ while true; do
 						--yesno "Are you sure you want to exit without applying configuration?" 0 0
 
 					res=$?
+					set -e
 					if [ $res -ne 1 ] && [ $res -ne 255 ]; then
 						exec 3>&-
 						exit 0
@@ -237,6 +245,7 @@ while true; do
 			;;
 		Show)
 			if [ -f "$YAMLFILE_PATH" ]; then
+				set +e
 				whiptail \
 					--clear \
 					--backtitle "$BACKTITLE" \
@@ -244,6 +253,7 @@ while true; do
 					--ok-button "Ok" \
 					--scrolltext \
 					--textbox "$YAMLFILE_PATH" 0 0
+				set -e
 			fi
 			tag="Main"
 			;;
@@ -295,12 +305,14 @@ while true; do
 			break
 			;;
 		About)
+			set +e
 			whiptail \
 				--clear \
 				--backtitle "$BACKTITLE" \
 				--title "SatNOGS client configuration" \
 				--ok-button "Ok" \
 				--msgbox "satnogs-setup is a tool for configuring SatNOGS client system" 0 0
+			set -e
 			tag="Main"
 			;;
 		*)
