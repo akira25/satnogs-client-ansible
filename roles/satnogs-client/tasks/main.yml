@@ -22,6 +22,11 @@
   with_items: '{{ satnogs_client_packages }}'
   notify:
     - Restart satnogs-client service
+- name: Get virtualenv Python version  # noqa 306
+  shell: '/var/lib/{{ satnogs_client_user }}/bin/python --version 2>&1 | awk ''/^Python/ { print $2 }'''
+  become: true
+  register: res_python_version
+  changed_when: false
 - name: Check for virtualenv with no access to global site-packages
   stat:
     path: '/var/lib/{{ satnogs_client_user }}/lib/python2.7/no-global-site-packages.txt'
@@ -31,7 +36,7 @@
   file:
     path: '/var/lib/{{ satnogs_client_user }}/{{ item }}'
     state: 'absent'
-  when: res_no_global.stat.exists and res_no_global.stat.isreg
+  when: (res_no_global.stat.exists and res_no_global.stat.isreg) or res_python_version.stdout != ansible_python_version
   register: res
   until: res is success
   retries: 3
