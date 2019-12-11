@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 #
 # SatNOGS client setup configuration script
 #
