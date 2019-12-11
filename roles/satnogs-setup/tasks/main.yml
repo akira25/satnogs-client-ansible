@@ -66,11 +66,13 @@
   with_together:
     -
       - 'usr/local/bin/satnogs-setup'
+      - 'usr/local/bin/satnogs-upgrade'
       - 'usr/local/share/satnogs-setup/bootstrap.sh'
       - 'usr/local/share/satnogs-setup/setup.sh'
       - 'usr/local/share/satnogs-setup/config.sh'
     -
       - '/usr/local/bin/satnogs-setup'
+      - '/usr/local/bin/satnogs-upgrade'
       - '/usr/local/share/satnogs-setup/bootstrap.sh'
       - '/usr/local/share/satnogs-setup/setup.sh'
       - '/usr/local/share/satnogs-setup/config.sh'

@@ -31,6 +31,7 @@ CONFIGURED_STAMP="$HOME/.satnogs/.configured"
 MAIN_MENU="Basic:Basic configuration options:menu
 Advanced:Advanced configuration options:menu
 Show:Show configuration file:show
+Upgrade:Upgrade system packages:upgrade
 Update:Update configuration tool:update
 Reset:Reset configuration:reset
 Apply:Apply configuration:apply
@@ -82,6 +83,7 @@ SATNOGS_CLIENT_VERSION:Define SatNOGS client version:input
 SATNOGS_CLIENT_URL:Define SatNOGS client Git URL:input
 SATNOGS_SETUP_ANSIBLE_URL:Define Ansible Git URL:input
 SATNOGS_SETUP_ANSIBLE_BRANCH:Define Ansible Git branch:input
+SATNOGS_SETUP_RELEASE_UPGRADE_ENABLED:Enable release upgrades:yesno
 SNMPD_ENABLED:Enable snmpd:yesno
 SNMPD_AGENTADDRESS:Define snmpd agentAddress:input
 SNMPD_ROCOMMUNITY:Define snmpd rocommunity:input
@@ -252,6 +254,35 @@ while true; do
 			;;
 		Update)
 			rm -f "$BOOTSTRAP_STAMP" "$INSTALL_STAMP" "$CONFIGURED_STAMP"
+			exec satnogs-setup
+			;;
+		Upgrade)
+			exec 3>&-
+			if satnogs-upgrade; then
+				echo "Press enter to continue..."
+				read -r _temp
+				exec 3>&1
+				set +e
+				whiptail \
+					--clear \
+					--backtitle "$BACKTITLE" \
+					--title "System reboot is required" \
+					--yes-button "Yes" \
+					--no-button "No" \
+					--defaultno \
+					--yesno "Do you want to reboot the system now?" 0 0
+
+				res=$?
+				set -e
+				if [ $res -ne 1 ] && [ $res -ne 255 ]; then
+					exec 3>&-
+					sync
+					reboot
+				fi
+			else
+				echo "Press enter to continue..."
+				read -r _temp
+			fi
 			exec satnogs-setup
 			;;
 		Reset)

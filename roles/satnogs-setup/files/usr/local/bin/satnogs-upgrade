@@ -1,0 +1,76 @@
+#!/bin/sh -e
+#
+# SatNOGS client system upgrade script
+#
+# Copyright (C) 2019 Libre Space Foundation <https://libre.space/>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+. /etc/default/satnogs-setup
+
+LATEST_CODENAME="buster"
+SED_SOURCES_SUBS="s/stretch/buster/
+s/Raspbian_9\\.0/Raspbian_10/
+s/Debian_9\\.0/Debian_10/"
+
+status=1
+
+upgrade() {
+	apt-get -y update
+	if LC_ALL=C apt-get -y -q -s dist-upgrade | grep -q "^The following packages will be upgraded:$" ; then
+		apt-get -y dist-upgrade
+		apt-get -y autoremove
+		apt-get -y autoclean
+		status=0
+	fi
+}
+
+release_upgrade() {
+	for _sub in $SED_SOURCES_SUBS; do
+		sed -i "$_sub" /etc/apt/sources.list.d/*.list /etc/apt/sources.list
+	done
+	apt-get -y update
+	apt-get -y dist-upgrade
+	apt-get -y autoremove
+	apt-get -y autoclean
+	status=0
+}
+
+upgrade
+if [ "$SATNOGS_SETUP_RELEASE_UPGRADE_ENABLED" -eq 1 ] && [ "$(lsb_release -c -s)" != "$LATEST_CODENAME" ]; then
+	echo "A new distribution release is available!
+WARNING: Release upgrades can consume a lot of time, network data and storage!
+Do you want to upgrade release now? [YES/no]"
+	while [ -z "$rel_upgrade" ]; do
+		read -r _temp
+		case "$_temp" in
+			YES)
+				rel_upgrade=1
+				break
+				;;
+			[Nn][Oo])
+				rel_upgrade=0
+				break
+				;;
+			*)
+				echo "Please answer 'YES' or 'no'."
+				;;
+		esac
+	done
+	if [ "$rel_upgrade" -eq 1 ]; then
+		release_upgrade
+	fi
+fi
+
+exit $status

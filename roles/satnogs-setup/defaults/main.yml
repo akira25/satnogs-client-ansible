@@ -1,3 +1,4 @@
 ---
 satnogs_setup_ansible_url: 'https://gitlab.com/librespacefoundation/satnogs/satnogs-client-ansible.git'
 satnogs_setup_ansible_branch: 'stable'
+satnogs_setup_release_upgrade_enabled: false
