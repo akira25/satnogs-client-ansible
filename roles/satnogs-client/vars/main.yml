@@ -70,3 +70,6 @@ satnogs_client_settings:
   - rf_sw_cmd_off_char_seq
   - rf_sw_cmd_on_int
   - rf_sw_cmd_on_char_seq
+  - satnogs_soapy_rx_device
+  - satnogs_rx_samp_rate
+  - satnogs_rx_bandwidth

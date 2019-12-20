@@ -68,8 +68,11 @@ SATNOGS_PPM_ERROR:Define PPM error (integer):input
 SATNOGS_IF_GAIN:Define SatNOGS Radio IF Gain:input
 SATNOGS_RF_GAIN:Define SatNOGS Radio RF Gain:input
 SATNOGS_BB_GAIN:Define SatNOGS Radio BB Gain:input
+SATNOGS_RX_BANDWIDTH:Define SatNOGS Radio RF Bandwidth (Hz):input
 SATNOGS_ANTENNA:Define SatNOGS Radio Antenna:input
-SATNOGS_DEV_ARGS:Define SatNOGS Radio dev arguments:input
+SATNOGS_SOAPY_RX_DEVICE:Define Soapy RX device:input
+SATNOGS_RX_SAMP_RATE:Define RX sampling rate:input
+SATNOGS_DEV_ARGS:Define SatNOGS Radio device arguments:input
 ENABLE_IQ_DUMP:Enable IQ dump:yesno
 IQ_DUMP_FILENAME:Define IQ dump filename:input
 DISABLE_DECODED_DATA:Disable decoded data:yesno

@@ -66,6 +66,10 @@ satnogs_station_lon: '23.725'
 # iq_dump_filename: Null
 # disable_decoded_data: 0
 
+# satnogs_soapy_rx_device: 'driver=rtlsdr'
+# satnogs_rx_samp_rate: '1e6'
+# satnogs_rx_bandwidth: '2e5'
+
 # rf_sw_cmd_off_int: Null
 # rf_sw_cmd_off_char_seq: Null
 # rf_sw_cmd_on_int: Null
