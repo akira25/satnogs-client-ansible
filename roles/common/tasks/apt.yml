@@ -27,16 +27,20 @@
   register: res
   until: res is success
   retries: 3
+- name: Remove old repository
+  file:
+    path: '{{ item }}'
+    state: 'absent'
+  with_fileglob:
+    - '/etc/apt/sources.list.d/download_opensuse_org_repositories_home_librespace_satnogs*.list'
+  become: true
 - name: Install repository
-  apt_repository:
-    repo: '{{ apt_repository }}'
-    state: 'present'
+  template:
+    src: 'etc/apt/sources.list.d/{{ apt_repository_file }}.j2'
+    dest: '/etc/apt/sources.list.d/{{ apt_repository_file }}'
     mode: 0644
   when: ansible_os_family == 'Debian'
   become: true
-  register: res
-  until: res is success
-  retries: 3
 - name: Update APT cache
   apt:
     update_cache: true
