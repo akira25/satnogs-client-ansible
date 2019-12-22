@@ -73,3 +73,4 @@ satnogs_client_settings:
   - satnogs_soapy_rx_device
   - satnogs_rx_samp_rate
   - satnogs_rx_bandwidth
+  - satnogs_log_level

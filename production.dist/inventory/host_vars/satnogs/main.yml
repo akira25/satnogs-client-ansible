@@ -79,6 +79,7 @@ satnogs_station_lon: '23.725'
 # satnogs_waterfall_min_value: -100
 # satnogs_waterfall_max_value: -50
 
+# satnogs_log_level: DEBUG
 
 #
 # SatNOGS radio configuration

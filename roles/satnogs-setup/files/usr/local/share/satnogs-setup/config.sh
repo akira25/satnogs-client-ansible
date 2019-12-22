@@ -93,7 +93,8 @@ SNMPD_ROCOMMUNITY:Define snmpd rocommunity:input
 GPSD_ENABLED:Enable GPSd:yesno
 SATNOGS_WATERFALL_AUTORANGE:Enable waterfall power range adjustment:yesno
 SATNOGS_WATERFALL_MIN_VALUE:Define waterfall minimum power:input
-SATNOGS_WATERFALL_MAX_VALUE:Define Waterfall maximum power:input"
+SATNOGS_WATERFALL_MAX_VALUE:Define Waterfall maximum power:input
+SATNOGS_LOG_LEVEL:Define SatNOGS client log level:input"
 
 to_lower() {
 	tr '[:upper:]' '[:lower:]'
