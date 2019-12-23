@@ -27,11 +27,11 @@ s/Debian_9\\.0/Debian_10/"
 status=1
 
 upgrade() {
-	apt-get -y update
+	apt-get update
 	if LC_ALL=C apt-get -y -q -s dist-upgrade | grep -q "^The following packages will be upgraded:$" ; then
-		apt-get -y dist-upgrade
-		apt-get -y autoremove
-		apt-get -y autoclean
+		apt-get dist-upgrade
+		apt-get autoremove
+		apt-get autoclean
 		status=0
 	fi
 }
@@ -40,10 +40,10 @@ release_upgrade() {
 	for _sub in $SED_SOURCES_SUBS; do
 		sed -i "$_sub" /etc/apt/sources.list.d/*.list /etc/apt/sources.list
 	done
-	apt-get -y update
-	apt-get -y dist-upgrade
-	apt-get -y autoremove
-	apt-get -y autoclean
+	apt-get update
+	apt-get dist-upgrade
+	apt-get autoremove
+	apt-get autoclean
 	status=0
 }
 
