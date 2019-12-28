@@ -31,6 +31,7 @@ satnogs_client_packages:
   - name: 'python-concurrent.futures'
   - name: 'python-decorator'
   - name: 'python-funcsigs'
+  - name: 'python-libhamlib2'
 satnogs_client_state_dir: '/tmp/.satnogs'
 satnogs_client_settings:
   - satnogs_api_token
