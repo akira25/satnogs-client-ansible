@@ -1,17 +1,11 @@
 ---
 - hosts: satnogs-radios
   roles:
-    - role: common
-      tags:
-        - common
     - role: satnogs-radio
       tags:
         - satnogs-radio
 - hosts: satnogs_radios
   roles:
-    - role: common
-      tags:
-        - common
     - role: satnogs-radio
       tags:
         - satnogs-radio
