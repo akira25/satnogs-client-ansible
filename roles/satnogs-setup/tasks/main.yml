@@ -25,6 +25,43 @@
   register: res
   until: res is success
   retries: 3
+- name: Install or remove satnogs-config system dependencies
+  package:
+    name: '{{ item.name }}'
+    state: '{{ item.state | default(omit) }}'
+  become: true
+  register: res
+  until: res is success
+  retries: 3
+  with_items: '{{ satnogs_setup_satnogs_config_packages }}'
+- name: Install or remove PyPI dependencies
+  pip:
+    name: '{{ item.name }}'
+    virtualenv: '{{ satnogs_setup_satnogs_config_venv }}'
+    virtualenv_site_packages: true
+    virtualenv_python: 'python3'
+    editable: false
+    extra_args: '{{ "--no-deps" if (item.state | default("present")) != "absent" else omit }}'
+    state: '{{ item.state | default(omit) }}'
+  become: true
+  register: res
+  until: res is success
+  retries: 3
+  with_items: '{{ satnogs_setup_satnogs_config_pypi }}'
+- name: Install satnogs-config
+  pip:
+    name: '{{ satnogs_setup_satnogs_config_name }}'
+    version: '{{ satnogs_setup_satnogs_config_version }}'
+    virtualenv: '{{ satnogs_setup_satnogs_config_venv }}'
+    virtualenv_site_packages: true
+    virtualenv_python: 'python3'
+    editable: false
+    extra_args: '--no-deps'
+    state: 'present'
+  retries: 3
+  register: res
+  until: res is success
+  become: true
 - name: Configure satnogs-setup
   template:
     src: 'etc/default/satnogs-setup.j2'

@@ -1,0 +1,10 @@
+---
+satnogs_setup_satnogs_config_venv: '/var/lib/satnogs-config'
+satnogs_setup_satnogs_config_name: 'satnogs-config'
+satnogs_setup_satnogs_config_config_file: '/etc/ansible/host_vars/localhost'
+satnogs_setup_satnogs_config_packages:
+  - name: 'virtualenv'
+  - name: 'python3-dialog'
+  - name: 'python3-yaml'
+satnogs_setup_satnogs_config_pypi:
+  - name: 'python-dotenv==0.10.3'

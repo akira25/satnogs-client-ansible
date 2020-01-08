@@ -2,7 +2,7 @@
 #
 # SatNOGS client setup setup script
 #
-# Copyright (C) 2017-2019 Libre Space Foundation <https://libre.space/>
+# Copyright (C) 2017-2020 Libre Space Foundation <https://libre.space/>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,18 +20,26 @@
 . /etc/default/satnogs-setup
 
 ANSIBLE_DIR="$HOME/.satnogs/ansible"
-STAMP="$HOME/.satnogs/.installed"
+BOOTSTRAP_STAMP="$HOME/.satnogs/.bootstrapped"
+INSTALL_STAMP="$HOME/.satnogs/.installed"
 
-cd "$ANSIBLE_DIR" || exit 1
-if [ ! -f "$STAMP" ]; then
-	echo "Updating software and applying configuration. This may take a while..."
-	if ansible-playbook "$@" local.yml; then
-		touch "$STAMP"
+if [ -f "$BOOTSTRAP_STAMP" ]; then
+	cd "$ANSIBLE_DIR" || exit 1
+	if [ -s "$INSTALL_STAMP" ]; then
+		echo "Applying configuration..."
+		tags="$(cat "$INSTALL_STAMP")"
 	fi
-else
-	echo "Applying configuration..."
-	ansible-playbook "$@" -t config local.yml || :
+	if [ ! -f "$INSTALL_STAMP" ]; then
+		echo "Updating software and applying configuration. This may take a while..."
+		tags="all"
+	fi
+	if [ -n "$tags" ]; then
+		if ansible-playbook "$@" -t "$tags" local.yml; then
+			cat /dev/null > "$INSTALL_STAMP"
+		fi
+		echo "Press enter to continue..."
+		# shellcheck disable=SC2034
+		read -r _temp
+	fi
 fi
-echo "Press enter to continue..."
-read -r _temp
 exec satnogs-setup
