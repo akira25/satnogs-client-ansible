@@ -26,6 +26,8 @@
     dest: '/etc/apt/preferences.d/satnogs'
     mode: 0644
   become: true
+  tags:
+    - software
 - name: Check if libgnuradio-satnogs is installed
   package:
     name: 'libgnuradio-satnogs'
@@ -51,6 +53,8 @@
   register: res
   until: res is success
   retries: 3
+  tags:
+    - software
 - name: Blacklist SDR modules
   kernel_blacklist:
     name: '{{ item }}'

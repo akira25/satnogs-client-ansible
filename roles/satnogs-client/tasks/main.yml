@@ -79,6 +79,8 @@
   become_user: '{{ satnogs_client_user }}'
   notify:
     - Restart satnogs-client service
+  tags:
+    - software
 - name: Install satnogs-client configuration
   template:
     src: 'etc/default/satnogs-client.j2'

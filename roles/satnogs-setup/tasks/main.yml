@@ -62,6 +62,8 @@
   register: res
   until: res is success
   become: true
+  tags:
+    - software
 - name: Configure satnogs-setup
   template:
     src: 'etc/default/satnogs-setup.j2'
@@ -69,7 +71,7 @@
     mode: 0644
   become: true
   tags:
-    - config
+    - software
 - name: Set up inventory
   copy:
     src: 'etc/ansible/hosts'

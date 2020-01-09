@@ -27,6 +27,8 @@
   register: res
   until: res is success
   retries: 3
+  tags:
+    - software
 - name: Remove old repository
   file:
     path: '{{ item }}'
@@ -41,6 +43,8 @@
     mode: 0644
   when: ansible_os_family == 'Debian'
   become: true
+  tags:
+    - software
 - name: Update APT cache
   apt:
     update_cache: true
@@ -50,3 +54,5 @@
   register: res
   until: res is success
   retries: 3
+  tags:
+    - software
