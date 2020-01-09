@@ -1,5 +1,4 @@
 ---
-- import_playbook: commons.yml
 - import_playbook: satnogs-setups.yml
 - import_playbook: satnogs-clients.yml
 - import_playbook: satnogs-radios.yml

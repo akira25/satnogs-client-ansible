@@ -24,7 +24,7 @@ BOOTSTRAP_STAMP="$HOME/.satnogs/.bootstrapped"
 INSTALL_STAMP="$HOME/.satnogs/.installed"
 
 if [ ! -f "$BOOTSTRAP_STAMP" ]; then
-	if ansible-pull -d "$ANSIBLE_DIR" -U "$SATNOGS_SETUP_ANSIBLE_URL" ${SATNOGS_SETUP_ANSIBLE_BRANCH:+-C "$SATNOGS_SETUP_ANSIBLE_BRANCH"} "$@" satnogs-setups.yml; then
+	if ansible-pull -d "$ANSIBLE_DIR" -U "$SATNOGS_SETUP_ANSIBLE_URL" ${SATNOGS_SETUP_ANSIBLE_BRANCH:+-C "$SATNOGS_SETUP_ANSIBLE_BRANCH"} "$@" -t satnogs-setup; then
 		touch "$BOOTSTRAP_STAMP"
 		rm -f "$INSTALL_STAMP"
 	else

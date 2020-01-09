@@ -1,2 +1,36 @@
 ---
-- import_playbook: site.yml
+- hosts: localhost
+  roles:
+    - role: common
+      tags:
+        - common
+    - role: satnogs-setup
+      tags:
+        - satnogs-setup
+    - role: satnogs-setup
+      tags:
+        - satnogs-setup
+    - role: satnogs-client
+      tags:
+        - satnogs-client
+    - role: satnogs-client
+      tags:
+        - satnogs-client
+    - role: satnogs-radio
+      tags:
+        - satnogs-radio
+    - role: satnogs-radio
+      tags:
+        - satnogs-radio
+    - role: hamlib-utils
+      tags:
+        - hamlib-utils
+    - role: hamlib-utils
+      tags:
+        - hamlib-utils
+    - role: snmpd
+      tags:
+        - snmpd
+    - role: gpsd
+      tags:
+        - gpsd
