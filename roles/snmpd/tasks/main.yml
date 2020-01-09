@@ -68,7 +68,7 @@
   when: snmpd_agentaddress is defined
   become: true
   tags:
-    - config
+    - snmpd_config
   notify:
     - Restart snmpd service
 - name: Setup snmpd rocommunity configuration
@@ -84,7 +84,7 @@
       line: 'rocommunity6 {{ snmpd_rocommunity }}'
   become: true
   tags:
-    - config
+    - snmpd_config
   notify:
     - Restart snmpd service
 - name: Remove snmp user from sudoers
@@ -101,4 +101,4 @@
     state: '{{ "started" if snmpd_enabled | default(false) else "stopped" }}'
   become: true
   tags:
-    - config
+    - snmpd_config

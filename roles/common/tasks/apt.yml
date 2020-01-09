@@ -28,7 +28,7 @@
   until: res is success
   retries: 3
   tags:
-    - software
+    - apt_software
 - name: Remove old repository
   file:
     path: '{{ item }}'
@@ -55,4 +55,4 @@
   until: res is success
   retries: 3
   tags:
-    - software
+    - apt_software

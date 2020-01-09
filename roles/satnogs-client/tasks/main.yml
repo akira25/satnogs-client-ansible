@@ -80,7 +80,7 @@
   notify:
     - Restart satnogs-client service
   tags:
-    - software
+    - satnogs_client_software
 - name: Install satnogs-client configuration
   template:
     src: 'etc/default/satnogs-client.j2'
@@ -89,7 +89,7 @@
     mode: 0644
   become: true
   tags:
-    - config
+    - satnogs_client_config
   notify:
     - Restart satnogs-client service
 - name: Add satnogs-client systemd service

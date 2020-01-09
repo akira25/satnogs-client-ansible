@@ -27,7 +27,7 @@
     mode: 0644
   become: true
   tags:
-    - software
+    - satnogs_radio_software
 - name: Check if libgnuradio-satnogs is installed
   package:
     name: 'libgnuradio-satnogs'
@@ -54,7 +54,7 @@
   until: res is success
   retries: 3
   tags:
-    - software
+    - satnogs_radio_software
 - name: Blacklist SDR modules
   kernel_blacklist:
     name: '{{ item }}'

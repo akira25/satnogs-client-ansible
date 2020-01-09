@@ -30,7 +30,7 @@
     mode: 0644
   become: true
   tags:
-    - config
+    - hamlib_utils_config
   notify:
     - Restart rigctld service
     - Restart rotctld service
@@ -58,7 +58,7 @@
     state: '{{ "started" if not hamlib_utils_rig_disabled | default(false) else "stopped" }}'
   become: true
   tags:
-    - config
+    - hamlib_utils_config
 - name: Start/stop rotctld service
   systemd:
     daemon_reload: true
@@ -67,4 +67,4 @@
     state: '{{ "started" if hamlib_utils_rot_enabled | default(false) else "stopped" }}'
   become: true
   tags:
-    - config
+    - hamlib_utils_config

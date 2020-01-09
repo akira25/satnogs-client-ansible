@@ -22,4 +22,4 @@
     state: '{{ "started" if gpsd_enabled | default(false) else "stopped" }}'
   become: true
   tags:
-    - config
+    - gpsd_config
