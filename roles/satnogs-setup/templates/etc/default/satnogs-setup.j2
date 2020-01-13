@@ -1,5 +1,5 @@
 SATNOGS_SETUP_ANSIBLE_URL="{{ satnogs_setup_ansible_url }}"
-SATNOGS_SETUP_ANSIBLE_BRANCH="{{ satnogs_setup_ansible_branch }}"
+SATNOGS_SETUP_ANSIBLE_BRANCH="{{ satnogs_setup_ansible_branch_unstable if experimental | default(false) else satnogs_setup_ansible_branch }}"
 SATNOGS_SETUP_RELEASE_UPGRADE_ENABLED="{{ satnogs_setup_release_upgrade_enabled | ternary('1', '0') }}"
 SATNOGS_SETUP_SATNOGS_CONFIG="{{ satnogs_setup_satnogs_config_venv }}/bin/{{ satnogs_setup_satnogs_config_name }}"
 SATNOGS_SETUP_SATNOGS_CONFIG_CONFIG_FILE="{{ satnogs_setup_satnogs_config_config_file }}"
