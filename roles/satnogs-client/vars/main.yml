@@ -32,6 +32,7 @@ satnogs_client_packages:
   - name: 'python-decorator'
   - name: 'python-funcsigs'
   - name: 'python-libhamlib2'
+satnogs_client_url_unstable: 'git+https://gitlab.com/librespacefoundation/satnogs/satnogs-client.git@master'
 satnogs_client_state_dir: '/tmp/.satnogs'
 satnogs_client_settings:
   - satnogs_api_token
