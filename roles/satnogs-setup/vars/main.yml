@@ -1,4 +1,5 @@
 ---
+satnogs_setup_ansible_branch_unstable: 'master'
 satnogs_setup_satnogs_config_venv: '/var/lib/satnogs-config'
 satnogs_setup_satnogs_config_name: 'satnogs-config'
 satnogs_setup_satnogs_config_config_file: '/etc/ansible/host_vars/localhost'
