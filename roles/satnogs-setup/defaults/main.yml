@@ -3,4 +3,3 @@ satnogs_setup_ansible_url: '{{ satnogs_setup_ansible_url_unstable }}'
 satnogs_setup_ansible_branch: 'stable'
 satnogs_setup_release_upgrade_enabled: false
 satnogs_setup_satnogs_config_version: '0.2.1'
-satnogs_setup_satnogs_config_url_unstable: 'git+https://gitlab.com/librespacefoundation/satnogs/satnogs-config.git@master'
