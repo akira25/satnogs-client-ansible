@@ -48,7 +48,7 @@
 - name: Install packages
   apt:
     name: '{{ satnogs_radio_packages }}'
-    state: 'present'
+    state: '{{ "latest" if experimental else "present" }}'
   become: true
   register: res
   until: res is success
