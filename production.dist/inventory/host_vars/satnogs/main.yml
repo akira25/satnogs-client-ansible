@@ -20,6 +20,7 @@
 # satnogs_setup_ansible_branch: 'stable'
 # satnogs_setup_satnogs_config_url: 'git+https://gitlab.com/librespacefoundation/satnogs/satnogs-config.git@master'
 # satnogs_setup_satnogs_config_version: '0.1.2'
+# satnogs_setup_release_upgrade_enabled: true
 
 #
 # SatNOGS client package configuration
@@ -104,6 +105,7 @@ satnogs_station_lon: '23.725'
 #
 # snmpd_agentaddress: 'udp:0.0.0.0:161'
 # snmpd_rocommunity: 'public default'
+# snmpd_enabled: false
 
 
 #
