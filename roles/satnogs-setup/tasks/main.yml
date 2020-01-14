@@ -57,7 +57,7 @@
     virtualenv_python: 'python3'
     editable: false
     extra_args: '--no-deps'
-    state: '{{ "present" if satnogs_setup_satnogs_config_url is undefined and not experimental | default (false) else "forceinstall" }}'
+    state: '{{ "present" if satnogs_setup_satnogs_config_url is undefined and not experimental else "forcereinstall" }}'
   retries: 3
   register: res
   until: res is success
