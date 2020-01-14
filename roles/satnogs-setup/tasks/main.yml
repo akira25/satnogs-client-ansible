@@ -50,8 +50,8 @@
   with_items: '{{ satnogs_setup_satnogs_config_pypi }}'
 - name: Install satnogs-config
   pip:
-    name: '{{ satnogs_setup_satnogs_config_url_unstable if experimental | default(false) else satnogs_setup_satnogs_config_url | default(satnogs_setup_satnogs_config_name) }}'
-    version: '{{ satnogs_setup_satnogs_config_version if satnogs_setup_satnogs_config_url is undefined and not experimental | default(false) else omit }}'
+    name: '{{ satnogs_setup_satnogs_config_url_unstable if experimental and satnogs_setup_satnogs_config_url is undefined else satnogs_setup_satnogs_config_url | default(satnogs_setup_satnogs_config_name) }}'
+    version: '{{ satnogs_setup_satnogs_config_version if satnogs_setup_satnogs_config_url is undefined and not experimental else omit }}'
     virtualenv: '{{ satnogs_setup_satnogs_config_venv }}'
     virtualenv_site_packages: true
     virtualenv_python: 'python3'

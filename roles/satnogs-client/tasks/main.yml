@@ -65,13 +65,13 @@
     - Restart satnogs-client service
 - name: Install satnogs-client
   pip:
-    name: '{{ satnogs_client_url_unstable if experimental | default(false) else satnogs_client_url | default(satnogs_client_name) }}'
-    version: '{{ satnogs_client_version if satnogs_client_url is undefined and not experimental | default(false) else omit }}'
+    name: '{{ satnogs_client_url_unstable if experimental and satnogs_client_url is undefined else satnogs_client_url | default(satnogs_client_name) }}'
+    version: '{{ satnogs_client_version if satnogs_client_url is undefined and not experimental else omit }}'
     virtualenv: '/var/lib/{{ satnogs_client_user }}'
     virtualenv_site_packages: true
     editable: false
     extra_args: '--no-deps'
-    state: '{{ "present" if satnogs_client_url is undefined and not experimental | default(false) else "forcereinstall" }}'
+    state: '{{ "present" if satnogs_client_url is undefined and not experimental else "forcereinstall" }}'
   retries: 3
   register: res
   until: res is success

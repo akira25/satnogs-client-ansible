@@ -75,4 +75,7 @@ satnogs_client_settings:
   - satnogs_soapy_rx_device
   - satnogs_rx_samp_rate
   - satnogs_rx_bandwidth
+  - satnogs_waterfall_autorange
+  - satnogs_waterfall_min_value
+  - satnogs_waterfall_max_value
   - satnogs_log_level
