@@ -47,6 +47,17 @@
     - 'local'
     - 'share'
   become: true
+- name: Create virtualenv
+  command:
+    cmd: 'virtualenv --system-site-packages --no-setuptools "/var/lib/{{ satnogs_client_user }}"'
+    creates: '/var/lib/{{ satnogs_client_user }}'
+  become: true
+  become_user: '{{ satnogs_client_user }}'
+  register: res
+  until: res is success
+  retries: 3
+  notify:
+    - Restart satnogs-client service
 - name: Install or remove PyPI dependencies
   pip:
     name: '{{ item.name }}'
