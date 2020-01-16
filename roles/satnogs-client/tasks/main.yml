@@ -50,7 +50,7 @@
 - name: Create virtualenv
   command:
     cmd: 'virtualenv --system-site-packages --no-setuptools "/var/lib/{{ satnogs_client_user }}"'
-    creates: '/var/lib/{{ satnogs_client_user }}'
+    creates: '/var/lib/{{ satnogs_client_user }}/bin/pip'
   become: true
   become_user: '{{ satnogs_client_user }}'
   register: res
