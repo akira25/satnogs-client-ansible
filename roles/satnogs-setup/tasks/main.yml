@@ -25,7 +25,7 @@
   register: res
   until: res is success
   retries: 3
-- name: Install or remove satnogs-config system dependencies
+- name: Install or remove satnogs-setup system dependencies
   package:
     name: '{{ item.name }}'
     state: '{{ item.state | default(omit) }}'
@@ -33,7 +33,7 @@
   register: res
   until: res is success
   retries: 3
-  with_items: '{{ satnogs_setup_satnogs_config_packages }}'
+  with_items: '{{ satnogs_setup_packages }}'
 - name: Install or remove PyPI dependencies
   pip:
     name: '{{ item.name }}'

@@ -6,7 +6,8 @@ satnogs_setup_satnogs_config_url_unstable: >-
 satnogs_setup_satnogs_config_venv: '/var/lib/satnogs-config'
 satnogs_setup_satnogs_config_name: 'satnogs-config'
 satnogs_setup_satnogs_config_config_file: '/etc/ansible/host_vars/localhost'
-satnogs_setup_satnogs_config_packages:
+satnogs_setup_packages:
+  - name: 'needrestart'
   - name: 'virtualenv'
   - name: 'python3-dialog'
   - name: 'python3-yaml'
