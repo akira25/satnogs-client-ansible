@@ -2,11 +2,7 @@
 version_minimum: '2.4'
 lsb_compatibility:
   - id: 'Debian'
-    codename: 'stretch'
-  - id: 'Debian'
     codename: 'buster'
-  - id: 'Raspbian'
-    codename: 'stretch'
   - id: 'Raspbian'
     codename: 'buster'
 repository_path:
