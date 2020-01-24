@@ -19,6 +19,8 @@
 
 . /etc/default/satnogs-setup
 
+BOOTSTRAP_STAMP="$HOME/.satnogs/.bootstrapped"
+INSTALL_STAMP="$HOME/.satnogs/.installed"
 LATEST_CODENAME="buster"
 SED_SOURCES_SUBS="s/stretch/buster/
 s/Raspbian_9\\.0/Raspbian_10/
@@ -84,6 +86,7 @@ WARNING: Release upgrades can consume
 a lot of time, network data and storage!
 " 0 0; then
 		release_upgrade
+		rm -f "$BOOTSTRAP_STAMP" "$INSTALL_STAMP"
 	fi
 fi
 check_needrestart
