@@ -10,7 +10,7 @@
   retries: 3
 - name: Install required package for APT
   package:
-    name: 'gpg'
+    name: 'python-apt'
     state: 'present'
   when: ansible_os_family == 'Debian'
   become: true
