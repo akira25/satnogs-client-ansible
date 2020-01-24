@@ -1,2 +1,3 @@
 ---
+experimental: false
 satnogs_client_version: '1.0'
