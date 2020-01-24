@@ -20,6 +20,12 @@
 PREFIX="/usr/local/share/satnogs-setup"
 BOOTSTRAP_SCRIPT="bootstrap.sh"
 CONFIG_SCRIPT="config.sh"
+BOOTSTRAP_STAMP="$HOME/.satnogs/.bootstrapped"
+INSTALL_STAMP="$HOME/.satnogs/.installed"
+
+if [ "$1" = "-b" ]; then
+	rm -f "$BOOTSTRAP_STAMP" "$INSTALL_STAMP"
+fi
 
 if [ -x "${PREFIX}/${BOOTSTRAP_SCRIPT}" ]; then
 	. "${PREFIX}/${BOOTSTRAP_SCRIPT}"
