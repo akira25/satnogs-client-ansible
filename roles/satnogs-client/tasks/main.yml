@@ -22,31 +22,38 @@
   with_items: '{{ satnogs_client_packages }}'
   notify:
     - Restart satnogs-client service
+- name: Get system Python version  # noqa 306
+  shell: '/usr/bin/python --version 2>&1 | awk ''/^Python/ { print $2 }'''
+  become: true
+  register: res_system_python_version
+  changed_when: false
 - name: Get virtualenv Python version  # noqa 306
   shell: '/var/lib/{{ satnogs_client_user }}/bin/python --version 2>&1 | awk ''/^Python/ { print $2 }'''
   become: true
-  register: res_python_version
+  register: res_virtualenv_python_version
   changed_when: false
 - name: Check for virtualenv with no access to global site-packages
   stat:
     path: '/var/lib/{{ satnogs_client_user }}/lib/python2.7/no-global-site-packages.txt'
   become: true
   register: res_no_global
-- name: Remove virtualenv
+- name: Remove virtualenv of old Python version
   file:
     path: '/var/lib/{{ satnogs_client_user }}/{{ item }}'
     state: 'absent'
-  when: (res_no_global.stat.exists and res_no_global.stat.isreg) or res_python_version.stdout != ansible_python_version
+  when: >-
+    (res_no_global.stat.exists and res_no_global.stat.isreg) or
+    res_system_python_version.stdout != res_virtualenv_python_version.stdout
   register: res
   until: res is success
   retries: 3
+  become: true
   with_items:
     - 'bin'
     - 'include'
     - 'lib'
     - 'local'
     - 'share'
-  become: true
 - name: Create virtualenv
   command:
     cmd: 'virtualenv --system-site-packages --no-setuptools "/var/lib/{{ satnogs_client_user }}"'

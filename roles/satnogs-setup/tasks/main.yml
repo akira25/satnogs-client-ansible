@@ -34,6 +34,25 @@
   until: res is success
   retries: 3
   with_items: '{{ satnogs_setup_packages }}'
+- name: Get system Python version  # noqa 306
+  shell: '/usr/bin/python --version 2>&1 | awk ''/^Python/ { print $2 }'''
+  become: true
+  register: res_system_python_version
+  changed_when: false
+- name: Get virtualenv Python version  # noqa 306
+  shell: '{{ satnogs_setup_satnogs_config_venv }}/bin/python --version 2>&1 | awk ''/^Python/ { print $2 }'''
+  become: true
+  register: res_virtualenv_python_version
+  changed_when: false
+- name: Remove virtualenv of old Python version
+  file:
+    path: '{{ satnogs_setup_satnogs_config_venv }}'
+    state: 'absent'
+  when: res_system_python_version.stdout != res_virtualenv_python_version.stdout
+  register: res
+  until: res is success
+  retries: 3
+  become: true
 - name: Install or remove PyPI dependencies
   pip:
     name: '{{ item.name }}'
