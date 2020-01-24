@@ -25,10 +25,13 @@ LATEST_CODENAME="buster"
 SED_SOURCES_SUBS="s/stretch/buster/
 s/Raspbian_9\\.0/Raspbian_10/
 s/Debian_9\\.0/Debian_10/"
+LC_ALL=C
+
+export LC_ALL
 
 upgrade() {
 	apt-get update
-	if LC_ALL=C apt-get -y -q -s dist-upgrade | grep -q "^The following packages will be upgraded:$" ; then
+	if apt-get -y -q -s dist-upgrade | grep -q "^The following packages will be upgraded:$" ; then
 		apt-get dist-upgrade
 		apt-get autoremove
 		apt-get autoclean
