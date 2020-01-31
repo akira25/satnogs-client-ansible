@@ -20,6 +20,14 @@
   register: res
   until: res is success
   retries: 3
+- name: Add LimeSDR udev rules
+  copy:
+    src: etc/udev/rules.d/64-limesuite.rules
+    dest: /etc/udev/rules.d/64-limesuite.rules
+    mode: 0644
+  become: true
+  notify:
+    - Retrigger udev devices
 - name: Pin packages
   template:
     src: 'etc/apt/preferences.d/satnogs.j2'

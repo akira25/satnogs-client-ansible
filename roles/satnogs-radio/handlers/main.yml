@@ -1,0 +1,4 @@
+---
+- name: Retrigger udev devices
+  command: 'udevadm trigger'
+  become: true
