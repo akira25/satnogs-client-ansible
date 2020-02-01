@@ -48,34 +48,6 @@ release_upgrade() {
 	apt-get autoclean
 }
 
-check_needrestart() {
-	case "$(needrestart -b)" in
-		*NEEDRESTART-KSTA:\ [23]*)
-			reason="A new kernel has been installed!"
-			;;
-		*NEEDRESTART-SVC:*)
-			reason="Services have been upgraded!"
-			;;
-		*NEEDRESTART-CONT:*)
-			reason="New containers have been installed!"
-			;;
-		*)
-			return
-			;;
-	esac
-	if whiptail \
-		   --yesno \
-		   --defaultno \
-		   --backtitle "SatNOGS client system upgrade utility" \
-		   --title "System reboot is required" \
-		   "${reason}
-
-Do you want to reboot the system now?" 0 0; then
-		sync
-		reboot
-	fi
-}
-
 upgrade
 if [ "$(lsb_release -c -s)" != "$LATEST_CODENAME" ]; then
 	if whiptail \
@@ -92,4 +64,3 @@ a lot of time, network data and storage!
 		rm -f "$BOOTSTRAP_STAMP" "$INSTALL_STAMP"
 	fi
 fi
-check_needrestart
