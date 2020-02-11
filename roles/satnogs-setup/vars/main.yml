@@ -14,5 +14,6 @@ satnogs_setup_packages:
   - name: 'python3-apt'
   - name: 'python3-dialog'
   - name: 'python3-yaml'
+  - name: 'python3-psutil'
 satnogs_setup_satnogs_config_pypi:
   - name: 'python-dotenv==0.10.3'
