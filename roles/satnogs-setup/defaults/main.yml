@@ -2,4 +2,4 @@
 experimental: false
 satnogs_setup_ansible_url: '{{ satnogs_setup_ansible_url_unstable }}'
 satnogs_setup_ansible_branch: 'stable'
-satnogs_setup_satnogs_config_version: '0.6.1'
+satnogs_setup_satnogs_config_version: '0.6.2'
