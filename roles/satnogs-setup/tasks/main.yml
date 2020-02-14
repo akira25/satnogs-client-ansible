@@ -35,7 +35,7 @@
   until: res is success
   retries: 3
 - name: Get system Python version  # noqa 306
-  shell: '/usr/bin/python --version 2>&1 | awk ''/^Python/ { print $2 }'''
+  shell: '/usr/bin/python3 --version 2>&1 | awk ''/^Python/ { print $2 }'''
   become: true
   register: res_system_python_version
   changed_when: false
