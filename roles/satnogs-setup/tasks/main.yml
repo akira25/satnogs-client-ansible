@@ -113,12 +113,18 @@
     state: 'directory'
     mode: 0755
   become: true
+- name: Check if host variables file exists
+  stat:
+    path: '/etc/ansible/host_vars/localhost'
+  register: res_host_vars_stat
+  become: true
 - name: Create host variables file
   file:
     path: '/etc/ansible/host_vars/localhost'
     state: 'touch'
     mode: 0644
   become: true
+  when: not res_host_vars_stat.stat.exists
 - name: Create satnogs-setup share directory
   file:
     path: '/usr/local/share/satnogs-setup'
