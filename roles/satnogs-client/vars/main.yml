@@ -7,6 +7,7 @@ satnogs_client_pypi:
   - name: 'python-dotenv==0.10.3'
   - name: 'setuptools==44.0.0'
   - name: 'validators==0.14.1'
+  - name: 'sentry_sdk~=0.13.2'
 satnogs_client_packages:
   - name: 'virtualenv'
   - name: 'python-dev'
