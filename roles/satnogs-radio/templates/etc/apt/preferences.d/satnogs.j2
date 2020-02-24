@@ -1,4 +1,8 @@
 {% if not experimental %}
+Package: gnuradio
+Pin: version {{ satnogs_radio_gnuradio_version }}
+Pin-Priority: 1001
+
 Package: gr-satnogs
 Pin: version {{ satnogs_radio_gr_satnogs_version }}
 Pin-Priority: 1001
