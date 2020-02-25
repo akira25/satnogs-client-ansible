@@ -64,6 +64,18 @@
   retries: 3
   tags:
     - satnogs_radio_software
+- name: Install satnogs-flowgraphs
+  apt:
+    name: 'satnogs-flowgraphs'
+    state: '{{ "latest" if experimental else "present" }}'
+    force: true
+  become: true
+  register: res
+  until: res is success
+  retries: 3
+  when: experimental
+  tags:
+    - satnogs_radio_software
 - name: Install packages
   apt:
     name: '{{ satnogs_radio_packages }}'
