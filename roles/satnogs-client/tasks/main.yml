@@ -6,6 +6,7 @@
     shell: '/bin/false'
     groups:
       - 'plugdev'
+      - 'dialout'
     system: true
     state: 'present'
   become: true
