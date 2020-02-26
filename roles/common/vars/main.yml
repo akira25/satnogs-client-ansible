@@ -6,9 +6,7 @@ lsb_compatibility:
   - id: 'Raspbian'
     codename: 'buster'
 repository_path:
-  debian_stretch: 'Debian_9.0'
   debian_buster: 'Debian_10'
-  raspbian_stretch: 'Raspbian_9.0'
   raspbian_buster: 'Raspbian_10'
 apt_repository_file: 'satnogs.list'
 packages:
