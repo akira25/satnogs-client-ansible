@@ -1,4 +1,10 @@
 ---
+- name: Remove APT configuration disabing recommends
+  file:
+    path: '/etc/apt/apt.conf.d/71-armbian-no-recommends'
+    state: 'absent'
+  when: ansible_os_family == 'Debian'
+  become: true
 - name: Update APT cache
   apt:
     update_cache: true
