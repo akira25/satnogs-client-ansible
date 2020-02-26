@@ -23,46 +23,6 @@
   become: true
   tags:
     - satnogs_radio_software
-- name: Check if libgnuradio-satnogs is installed
-  package:
-    name: 'libgnuradio-satnogs'
-    state: 'present'
-  check_mode: true
-  register: libgnuradio_satnogs_package
-  become: true
-  until: libgnuradio_satnogs_package is success
-  retries: 3
-- name: Uninstall gr-satnogs
-  package:
-    name: 'gr-satnogs'
-    state: 'absent'
-  become: true
-  when: libgnuradio_satnogs_package.changed
-  tags:
-    - skip_ansible_lint
-- name: Install gnuradio
-  apt:
-    name: 'gnuradio{{ "" if experimental else "=" ~ satnogs_radio_gnuradio_version }}'
-    state: '{{ "latest" if experimental else "present" }}'
-    force: true
-  become: true
-  register: res
-  until: res is success
-  retries: 3
-  tags:
-    - satnogs_radio_software
-- name: Install satnogs-flowgraphs
-  apt:
-    name: 'satnogs-flowgraphs'
-    state: '{{ "latest" if experimental else "present" }}'
-    force: true
-  become: true
-  register: res
-  until: res is success
-  retries: 3
-  when: experimental
-  tags:
-    - satnogs_radio_software
 - name: Install packages
   apt:
     name: '{{ satnogs_radio_packages }}'

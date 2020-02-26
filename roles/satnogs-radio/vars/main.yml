@@ -2,9 +2,5 @@
 satnogs_radio_blacklist_modules:
   - 'dvb_usb_rtl28xxu'
 satnogs_radio_uhd_images_tag: '003.009.005'
-satnogs_radio_gnuradio_version: '3.7.13.4-4+b1'
 satnogs_radio_packages:
-  - 'gnuradio'
-  - 'gr-osmosdr'
-  - 'gr-fcdproplus'
-  - 'gr-satnogs{{ "=" ~ satnogs_radio_gr_satnogs_version if not experimental else "" }}'
+  - 'satnogs-flowgraphs'
