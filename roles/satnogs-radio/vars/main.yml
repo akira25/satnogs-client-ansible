@@ -1,6 +1,5 @@
 ---
 satnogs_radio_blacklist_modules:
   - 'dvb_usb_rtl28xxu'
-satnogs_radio_uhd_images_tag: '003.009.005'
 satnogs_radio_packages:
   - 'satnogs-flowgraphs'
