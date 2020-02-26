@@ -1,7 +1,7 @@
 ---
 - name: Install gpsd
   package:
-    name: 'gpsd{{ "" if experimental else "=" ~ 3.17-7 }}'
+    name: 'gpsd'
     force: true
     state: 'present'
   become: true
@@ -10,7 +10,7 @@
   retries: 3
 - name: Install gpsd clients
   package:
-    name: 'gpsd-clients{{ "" if experimental else "=" ~ 3.17-7 }}'
+    name: 'gpsd-clients'
     force: true
     state: 'present'
   become: true
