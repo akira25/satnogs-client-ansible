@@ -2,7 +2,6 @@
 - name: Install gpsd
   package:
     name: 'gpsd'
-    force: true
     state: 'present'
   become: true
   register: res
@@ -11,7 +10,6 @@
 - name: Install gpsd clients
   package:
     name: 'gpsd-clients'
-    force: true
     state: 'present'
   become: true
   register: res
