@@ -1,5 +1,5 @@
 ---
-- name: Remove APT configuration disabing recommends
+- name: Remove APT configuration disabling recommends
   file:
     path: '/etc/apt/apt.conf.d/71-armbian-no-recommends'
     state: 'absent'
