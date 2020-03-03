@@ -1,0 +1,20 @@
+---
+cluster:
+  name: satnogs
+  privateKey: satnogs-key
+machines:
+  - count: 1
+    spec:
+      backend: docker
+      image: quay.io/footloose/debian10
+      name: node%d
+      portMappings:
+        - containerPort: 22
+      privileged: true
+      volumes:
+        - type: bind
+          source: /sbin/modprobe
+          destination: /sbin/modprobe
+        - type: bind
+          source: /lib/modules/
+          destination: /lib/modules/

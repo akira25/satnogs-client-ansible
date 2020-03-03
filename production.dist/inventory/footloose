@@ -1,0 +1,28 @@
+---
+all:
+  hosts:
+    satnogs:
+      ansible_connection: docker
+      ansible_python_interpreter: "/usr/bin/env python3"
+      ansible_host: 'satnogs-node0'
+      ansible_user: 'root'
+      ansible_ssh_private_key_file: 'satnogs-key'
+      ansible_ssh_pipelining: true
+satnogs-setups:
+  hosts:
+    satnogs:
+satnogs-radios:
+  hosts:
+    satnogs:
+hamlib-utils:
+  hosts:
+    satnogs:
+satnogs-clients:
+  hosts:
+    satnogs:
+snmpds:
+  hosts:
+    satnogs:
+gpsds:
+  hosts:
+    satnogs:
