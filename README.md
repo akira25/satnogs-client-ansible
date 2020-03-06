@@ -40,3 +40,36 @@ the run to only the satnogs-client playbook, you can run:
 ```
 /usr/local/share/satnogs-setup/setup.sh --tags satnogs-client
 ```
+
+## Deploying to docker
+
+There is experimental support to deploy SatNOGS to a docker container.
+
+The main goal is to either run SatNOGS on your PC without interfering with
+existing SDR libraries you probably already have. It makes it also easier
+to test and play with SatNOGS.
+
+Footloose is used to handle docker containers.
+
+* Install Footloose (https://github.com/weaveworks/footloose)
+* Copy `production.dist` to `production`: `cp -a production.dist production`
+* Optionally: Configure footloose.yaml and production/inventory/footloose
+  for multiple SatNOGS dockers
+* Create and start footloose docker container(s) with `footloose create`
+* Connect to the  footloose docker container(s) with `footloose ssh root@node0`
+* Inside the container run
+  * `apt update`
+  * `apt install -y python3 lsb-release`
+* Quit the container with `exit`
+* Run `ansible-playbook -i production/inventory/footloose site.yml`
+* Connect again to your docker with `footloose ssh root@node0`
+* Configure your station inside docker with `satnogs-setup`
+* Enjoy!
+
+To stop the SatNOGS docker run `footloose stop` and to start it again run
+`footloose start`.
+To delete it run `footloose delete`. Deleting the docker will also delete
+the configuration.
+
+Important: a USB SDR device must be connected before starting the docker container or it will be recognized but won't work correctly.
+If it gets disconnected and reconnected, the docker container must be stopped and started again for the device to work again.
