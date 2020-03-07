@@ -1,4 +1,11 @@
 ---
+- name: Configure needrestart for Raspbian
+  copy:
+    src: 'etc/needrestart/conf.d/raspbian_kernel_filter.conf'
+    dest: '/etc/needrestart/conf.d/raspbian_kernel_filter.conf'
+    mode: 0644
+  when: ansible_lsb.id == 'Raspbian'
+  become: true
 - name: Install or remove satnogs-setup system dependencies
   package:
     name: '{{ item.name }}'
