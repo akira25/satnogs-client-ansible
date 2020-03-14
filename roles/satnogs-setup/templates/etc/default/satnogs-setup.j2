@@ -1,4 +1,4 @@
-SATNOGS_SETUP_ANSIBLE_URL="{{ satnogs_setup_ansible_url_unstable if experimental else satnogs_setup_ansible_url }}"
-SATNOGS_SETUP_ANSIBLE_BRANCH="{{ satnogs_setup_ansible_branch_unstable if experimental else satnogs_setup_ansible_branch }}"
+SATNOGS_SETUP_ANSIBLE_URL="{{ satnogs_setup_ansible_url_unstable if (experimental and satnogs_setup_ansible_url is undefined) else satnogs_setup_ansible_url }}"
+SATNOGS_SETUP_ANSIBLE_BRANCH="{{ satnogs_setup_ansible_branch_unstable if (experimental and satnogs_setup_ansible_branch is undefined and satnogs_setup_ansible_url is undefined) else satnogs_setup_ansible_branch }}"
 SATNOGS_SETUP_SATNOGS_CONFIG="{{ satnogs_setup_satnogs_config_venv }}/bin/{{ satnogs_setup_satnogs_config_name }}"
 SATNOGS_SETUP_SATNOGS_CONFIG_CONFIG_FILE="{{ satnogs_setup_satnogs_config_config_file }}"
