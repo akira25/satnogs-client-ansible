@@ -2,5 +2,4 @@
 satnogs_radio_blacklist_modules:
   - 'dvb_usb_rtl28xxu'
 satnogs_radio_packages:
-  - 'satnogs-flowgraphs'
-  - 'soapysdr-tools'
+  - name: 'soapysdr-tools'

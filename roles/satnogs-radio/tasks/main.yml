@@ -23,9 +23,18 @@
   become: true
   tags:
     - satnogs_radio_software
-- name: Install packages
+- name: Install or remove system packages
   apt:
-    name: '{{ satnogs_radio_packages }}'
+    name: '{{ item.name }}'
+    state: '{{ item.state | default(omit) }}'
+  become: true
+  register: res
+  until: res is success
+  retries: 3
+  with_items: '{{ satnogs_radio_packages }}'
+- name: Install SatNOGS Flowgraphs
+  apt:
+    name: 'satnogs-flowgraphs{{ "" if experimental else "=" ~ satnogs_radio_flowgraphs_version }}'
     state: '{{ "latest" if experimental else "present" }}'
   become: true
   register: res
