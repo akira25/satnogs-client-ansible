@@ -50,9 +50,15 @@ satnogs_client_settings:
   - satnogs_doppler_corr_per_sec
   - satnogs_lo_offset
   - satnogs_ppm_error
+  - satnogs_gain_mode
   - satnogs_rf_gain
   - satnogs_antenna
   - satnogs_dev_args
+  - satnogs_stream_args
+  - satnogs_tune_args
+  - satnogs_other_settings
+  - satnogs_dc_removal
+  - satnogs_bb_freq
   - enable_iq_dump
   - iq_dump_filename
   - disable_decoded_data
