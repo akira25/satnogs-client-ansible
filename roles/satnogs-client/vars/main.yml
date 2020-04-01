@@ -66,3 +66,4 @@ satnogs_client_settings:
   - satnogs_waterfall_max_value
   - satnogs_log_level
   - sentry_dsn
+  - sentry_enabled
