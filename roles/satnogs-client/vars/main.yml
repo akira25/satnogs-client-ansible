@@ -35,7 +35,6 @@ satnogs_client_settings:
   - satnogs_remove_raw_files
   - satnogs_verify_ssl
   - satnogs_network_api_url
-  - satnogs_rot_ip
   - satnogs_rot_model
   - satnogs_rot_baud
   - satnogs_rot_port
