@@ -48,7 +48,6 @@
     state: 'present'
   become: true
   with_items: '{{ satnogs_radio_blacklist_modules }}'
-  ignore_errors: true
 - name: Check if list of kernel builtin modules exists
   stat:
     path: '/lib/modules/{{ ansible_kernel }}/modules.builtin'
@@ -57,8 +56,8 @@
   modprobe:
     name: '{{ item }}'
     state: 'absent'
-    become: true
-    with_items: '{{ satnogs_radio_blacklist_modules }}'
+  become: true
+  with_items: '{{ satnogs_radio_blacklist_modules }}'
   when: modules_builtin.stat.exists
 - name: Download UHD images
   command: '/usr/bin/uhd_images_downloader'
