@@ -1,4 +1,11 @@
 ---
+- name: Create needrestart directory for Raspbian
+  file:
+    path: '/etc/needrestart/conf.d'
+    state: 'directory'
+    mode: '0755'
+  when: ansible_lsb.id == 'Raspbian'
+  become: true
 - name: Configure needrestart for Raspbian
   copy:
     src: 'etc/needrestart/conf.d/raspbian_kernel_filter.conf'
