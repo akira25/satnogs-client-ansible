@@ -64,6 +64,10 @@ satnogs_client_settings:
   - satnogs_waterfall_autorange
   - satnogs_waterfall_min_value
   - satnogs_waterfall_max_value
+  - satnogs_artifacts_enabled
+  - satnogs_artifacts_api_url
+  - satnogs_artifacts_api_post_interval
+  - satnogs_artifacts_api_token
   - satnogs_log_level
   - sentry_dsn
   - sentry_enabled
