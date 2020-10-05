@@ -15,10 +15,8 @@ This Ansible playbook supports the following distributions and releases:
 
 * Raspbian
   * Buster
-  * Stretch
 * Debian
   * Buster
-  * Stretch
 
 ## Testing local changes in Raspbian
 
