@@ -3,53 +3,6 @@
 
 Vagrant.configure("2") do |config|
 
-  # Configure 'debian_stretch'
-  config.vm.define :debian_stretch do |debian_stretch|
-
-    # Disable sharing of project folder
-    debian_stretch.vm.synced_folder ".", "/vagrant", disabled: true
-
-    # Set preferred provider
-    debian_stretch.vm.provider "libvirt" do |domain|
-      domain.memory = "1024"
-      domain.cpus = "2"
-    end
-
-    # Set box and hostname
-    debian_stretch.vm.box = "debian/stretch64"
-    debian_stretch.vm.hostname = "debian-stretch"
-
-    # Execute shell provisioning script
-    debian_stretch.vm.provision "shell", path: ".vagrant-provision.sh", args: "debian_stretch"
-
-    # Execute Ansible provisioning
-    debian_stretch.vm.provision "ansible" do |ansible|
-      ansible.playbook = "site.yml"
-      ansible.host_vars = {
-        "debian_stretch" => {
-          "hamlib_utils_rot_enabled" => true,
-          "hamlib_utils_rot_opts" => "-m 1",
-          "satnogs_api_token" => "0123456789abcdef0123456789abcdef01234567",
-          "satnogs_rx_device" => "rtlsdr",
-          "satnogs_station_elev" => "100",
-          "satnogs_station_id" => "99999",
-          "satnogs_station_lat" => "10",
-          "satnogs_station_lon" => "10",
-          "snmpd_enabled" => true,
-          "gpsd_enabled" => true
-        }
-      }
-      ansible.groups = {
-        "satnogs-setups" => ["debian_stretch"],
-        "satnogs-radios" => ["debian_stretch"],
-        "hamlib-utils" => ["debian_stretch"],
-        "satnogs-clients" => ["debian_stretch"],
-        "snmpds" => ["debian_stretch"],
-        "gpsds" => ["debian_stretch"]
-      }
-    end
-  end
-
   # Configure 'debian_buster'
   config.vm.define :debian_buster do |debian_buster|
 
