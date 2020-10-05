@@ -13,7 +13,6 @@ satnogs_client_pypi:
   - name: 'idna==2.10'
   - name: 'kiwisolver==1.2.0'
   - name: 'matplotlib==3.3.2'
-  - name: 'numpy==1.19.2'
   - name: 'Pillow==7.2.0'
   - name: 'pyparsing==2.4.7'
   - name: 'python-dateutil==2.8.1'
@@ -31,6 +30,7 @@ satnogs_client_packages:
   - name: 'python3-gps'
   - name: 'python3-libhamlib2'
   - name: 'python3-h5py'
+  - name: 'python3-numpy'
 satnogs_client_url_unstable: 'git+https://gitlab.com/librespacefoundation/satnogs/satnogs-client.git@master'
 satnogs_client_state_dir: '/tmp/.satnogs'
 satnogs_client_settings:
