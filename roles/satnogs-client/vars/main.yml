@@ -29,7 +29,6 @@ satnogs_client_packages:
   - name: 'virtualenv'
   - name: 'python3-gps'
   - name: 'python3-libhamlib2'
-  - name: 'python3-h5py'
   - name: 'python3-numpy'
 satnogs_client_url_unstable: 'git+https://gitlab.com/librespacefoundation/satnogs/satnogs-client.git@master'
 satnogs_client_state_dir: '/tmp/.satnogs'
