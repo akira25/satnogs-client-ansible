@@ -12,8 +12,8 @@ satnogs_setup_packages:
   - name: 'needrestart'
   - name: 'virtualenv'
   - name: 'python3-apt'
-  - name: 'python3-dialog'
-  - name: 'python3-yaml'
   - name: 'python3-psutil'
 satnogs_setup_satnogs_config_pypi:
-  - name: 'python-dotenv==0.10.3'
+  - name: 'python-dotenv==0.14.0'
+  - name: 'pythondialog==3.5.1'
+  - name: 'PyYAML==5.3.1'
