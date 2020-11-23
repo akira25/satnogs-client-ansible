@@ -27,6 +27,7 @@ satnogs_client_pypi:
 satnogs_client_packages:
   - name: 'git'
   - name: 'virtualenv'
+  - name: 'libhdf5-103'
   - name: 'python3-gps'
   - name: 'python3-libhamlib2'
   - name: 'python3-numpy'
