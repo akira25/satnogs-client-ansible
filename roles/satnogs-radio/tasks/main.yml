@@ -32,6 +32,21 @@
   until: res is success
   retries: 3
   with_items: '{{ satnogs_radio_packages }}'
+- name: Get package facts
+  package_facts:
+- name: Uninstall broken SatNOGS Flowgraphs dependencies
+  apt:
+    name:
+      - libgnuradio-soapy
+      - gr-soapy
+      - libgnuradio-satnogs
+      - gr-satnogs
+    state: 'absent'
+  when: '"satnogs-flowgraphs" not in ansible_facts.packages'
+  become: true
+  register: res
+  until: res is success
+  retries: 3
 - name: Install SatNOGS Flowgraphs
   apt:
     name: 'satnogs-flowgraphs{{ "" if experimental else "=" ~ satnogs_radio_flowgraphs_version }}'
