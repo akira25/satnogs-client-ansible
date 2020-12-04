@@ -2,4 +2,22 @@
 Package: satnogs-flowgraphs
 Pin: version {{ satnogs_radio_flowgraphs_version }}
 Pin-Priority: 1001
+{% if satnogs_radio_flowgraphs_version == default_satnogs_radio_flowgraphs_version %}
+
+Package: gr-satnogs
+Pin: version {{ satnogs_radio_gr_satnogs_pin_version }}
+Pin-Priority: 1001
+
+Package: libgnuradio-satnogs
+Pin: version {{ satnogs_radio_gr_satnogs_pin_version }}
+Pin-Priority: 1001
+
+Package: gr-soapy
+Pin: version {{ satnogs_radio_gr_soapy_pin_version }}
+Pin-Priority: 1001
+
+Package: libgnuradio-soapy
+Pin: version {{ satnogs_radio_gr_soapy_pin_version }}
+Pin-Priority: 1001
+{% endif %}
 {% endif %}
