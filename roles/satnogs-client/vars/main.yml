@@ -76,6 +76,8 @@ satnogs_client_settings:
   - enable_iq_dump
   - iq_dump_filename
   - disable_decoded_data
+  - udp_dump_host
+  - udp_dump_port
   - satnogs_waterfall_autorange
   - satnogs_waterfall_min_value
   - satnogs_waterfall_max_value
