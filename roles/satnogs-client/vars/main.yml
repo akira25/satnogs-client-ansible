@@ -48,6 +48,8 @@ satnogs_client_settings:
   - satnogs_remove_raw_files
   - satnogs_verify_ssl
   - satnogs_network_api_url
+  - satnogs_network_api_query_interval
+  - satnogs_network_api_post_interval
   - satnogs_rot_model
   - satnogs_rot_baud
   - satnogs_rot_port
