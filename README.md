@@ -56,13 +56,10 @@ Footloose is used to handle docker containers.
 * Optionally: Configure footloose.yaml and production/inventory/footloose
   for multiple SatNOGS dockers
 * Create and start footloose docker container(s) with `footloose create`
-* Connect to the  footloose docker container(s) with `footloose ssh root@node0`
-* Inside the container run
-  * `apt update`
-  * `apt install -y python3 lsb-release`
-* Quit the container with `exit`
-* Run `ansible-playbook -i production/inventory/footloose site.yml`
-* Connect again to your docker with `footloose ssh root@node0`
+* Run `footloose ssh "apt-get -q update && apt-get -qy install lsb-release python"`
+* Run `ansible-playbook -i production/inventory/footloose -t satnogs-setup
+  site.yml`
+* Connect to your docker with `footloose ssh root@node0`
 * Configure your station inside docker with `satnogs-setup`
 * Enjoy!
 
