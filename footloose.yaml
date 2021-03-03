@@ -10,7 +10,6 @@ machines:
       name: node%d
       portMappings:
         - containerPort: 22
-      privileged: true
       volumes:
         - type: bind
           source: /sbin/modprobe
