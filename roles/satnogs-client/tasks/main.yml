@@ -115,6 +115,7 @@
     fstype: 'tmpfs'
     opts: 'rw,nosuid,noexec,nodev,noatime'
     state: 'mounted'
+  when: ansible_virtualization_role != 'guest' or ansible_virtualization_type != 'docker'
   become: true
   notify:
     - Restart satnogs-client service

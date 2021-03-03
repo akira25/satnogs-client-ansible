@@ -12,8 +12,5 @@ machines:
         - containerPort: 22
       volumes:
         - type: bind
-          source: /sbin/modprobe
-          destination: /sbin/modprobe
-        - type: bind
-          source: /lib/modules/
-          destination: /lib/modules/
+          source: /dev/bus/usb
+          destination: /dev/bus/usb
