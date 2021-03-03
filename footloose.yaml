@@ -1,7 +1,7 @@
 ---
 cluster:
   name: satnogs
-  privateKey: satnogs-key
+  privateKey: .ssh-key
 machines:
   - count: 1
     spec:
