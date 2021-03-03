@@ -4,9 +4,6 @@ all:
     satnogs:
       ansible_connection: docker
       ansible_host: 'satnogs-node0'
-      ansible_user: 'root'
-      ansible_ssh_private_key_file: 'satnogs-key'
-      ansible_ssh_pipelining: true
 satnogs-setups:
   hosts:
     satnogs:
