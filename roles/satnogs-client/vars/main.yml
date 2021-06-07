@@ -88,3 +88,5 @@ satnogs_client_settings:
   - satnogs_log_level
   - sentry_dsn
   - sentry_enabled
+  - satnogs_upload_audio_files
+  - satnogs_upload_waterfall_files
