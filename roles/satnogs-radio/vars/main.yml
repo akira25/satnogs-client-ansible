@@ -3,6 +3,6 @@ satnogs_radio_blacklist_modules:
   - 'dvb_usb_rtl28xxu'
 satnogs_radio_packages:
   - name: 'soapysdr-tools'
-default_satnogs_radio_flowgraphs_version: '1.3.1-1'
-satnogs_radio_gr_satnogs_pin_version: '2.2.*'
+default_satnogs_radio_flowgraphs_version: '1.4-1'
+satnogs_radio_gr_satnogs_pin_version: '2.3.*'
 satnogs_radio_gr_soapy_pin_version: '2.1.*'
