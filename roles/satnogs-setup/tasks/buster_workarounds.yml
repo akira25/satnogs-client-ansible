@@ -1,0 +1,7 @@
+---
+- name: Download Libre Space Foundation OBS Repository Signing Key
+  apt_key:
+    id: '8DB3D79801FA84B51B0FDC938BD3901736A40B6C'
+    url: 'http://download.opensuse.org/repositories/home:/librespace:/satnogs-unstable/Raspbian_10/Release.key'
+    state: 'present'
+  become: true

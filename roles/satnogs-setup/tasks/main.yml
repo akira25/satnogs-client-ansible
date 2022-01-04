@@ -162,3 +162,4 @@
       - '/usr/local/bin/satnogs-upgrade'
       - '/usr/local/share/satnogs-setup/bootstrap.sh'
       - '/usr/local/share/satnogs-setup/config.sh'
+- import_tasks: buster_workarounds.yml
