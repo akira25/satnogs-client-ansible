@@ -5,3 +5,9 @@
     url: 'http://download.opensuse.org/repositories/home:/librespace:/satnogs-unstable/Raspbian_10/Release.key'
     state: 'present'
   become: true
+- name: Add configuration file for apt to allow releaseinfo changes
+  copy:
+    src: 'etc/apt/apt.conf.d/01allow-releaseinfo-changes'
+    dest: '/etc/apt/apt.conf.d/01allow-releaseinfo-changes'
+    mode: 0755
+  become: true
