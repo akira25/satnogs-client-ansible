@@ -5,3 +5,10 @@
     state: 'started'
     enabled: true
   become: true
+- name: Update APT cache
+  apt:
+    update_cache: true
+  become: true
+  register: res
+  until: res is success
+  retries: 3
