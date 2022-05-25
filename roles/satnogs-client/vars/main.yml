@@ -26,8 +26,9 @@ satnogs_client_pypi:
   - name: 'validators==0.18.1'
 satnogs_client_packages:
   - name: 'git'
+  - name: 'pkg-config'
   - name: 'virtualenv'
-  - name: 'libhdf5-103'
+  - name: 'libhdf5-dev'
   - name: 'python3-gps'
   - name: 'python3-libhamlib2'
   - name: 'python3-numpy'
