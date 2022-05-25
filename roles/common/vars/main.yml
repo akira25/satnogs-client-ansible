@@ -5,9 +5,12 @@ lsb_compatibility:
     codename: 'buster'
   - id: 'Raspbian'
     codename: 'buster'
+  - id: 'Debian'
+    codename: 'bullseye'
 repository_path:
   debian_buster: 'Debian_10'
   raspbian_buster: 'Raspbian_10'
+  debian_bullseye: 'Debian_11'
 apt_repository_file: 'satnogs.list'
 packages:
   - 'acl'
