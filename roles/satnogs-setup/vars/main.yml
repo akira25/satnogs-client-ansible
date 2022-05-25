@@ -9,7 +9,11 @@ satnogs_setup_satnogs_config_venv: '/var/lib/satnogs-config'
 satnogs_setup_satnogs_config_name: 'satnogs-config'
 satnogs_setup_satnogs_config_config_file: '/etc/ansible/host_vars/localhost'
 satnogs_setup_packages:
-  - name: 'python-apt'
+  - name: >-
+      {{
+      "python3-apt" if ansible_lsb.codename == "bullseye"
+      else "python-apt"
+      }}
   - name: 'git'
   - name: 'needrestart'
   - name: 'virtualenv'

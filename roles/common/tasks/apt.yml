@@ -16,7 +16,13 @@
   retries: 3
 - name: Install required package for APT
   package:
-    name: 'python-apt'
+    name:
+      - >-
+        {{
+        "python3-apt" if ansible_lsb.codename == "bullseye"
+        else "python-apt"
+        }}
+      - 'gnupg'
     state: 'present'
   when: ansible_os_family == 'Debian'
   become: true
