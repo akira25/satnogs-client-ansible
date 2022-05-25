@@ -115,6 +115,12 @@
   become: true
   tags:
     - satnogs_setup_software
+- name: Create Ansible configuration directory
+  file:
+    path: '/etc/ansible'
+    state: 'directory'
+    mode: 0755
+  become: true
 - name: Set up inventory
   copy:
     src: 'etc/ansible/hosts'
