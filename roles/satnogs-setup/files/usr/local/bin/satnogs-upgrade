@@ -23,6 +23,7 @@ BOOTSTRAP_STAMP="$HOME/.satnogs/.bootstrapped"
 INSTALL_STAMP="$HOME/.satnogs/.installed"
 LATEST_CODENAME="bullseye"
 SED_SOURCES_SUBS="s/buster/bullseye/
+s/bullseye\/updates/bullseye-security/
 s/Raspbian_10/Raspbian_11/
 s/Debian_10/Debian_11/
 s/trusty/focal/"
