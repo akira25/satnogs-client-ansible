@@ -1,4 +1,3 @@
-/.ssh-key*
 /.vagrant/
 /production/
 /site.retry

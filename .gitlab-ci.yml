@@ -17,5 +17,4 @@ static_ansible:
   image: ${GITLAB_CI_IMAGE_ANSIBLE}
   script:
     - ansible-playbook -i production.dist/inventory/hosts --syntax-check -vvv site.yml
-    - ansible-playbook -i production.dist/inventory/footloose --syntax-check -vvv site.yml
     - ansible-lint site.yml
