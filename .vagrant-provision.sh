@@ -1,7 +1,20 @@
 #!/bin/sh
 
-arg="$1"
-case $arg in
-	debian)
+case $1 in
+	pre)
+		case $2 in
+			debian_buster)
+			;;
+			debian_bullseye)
+			;;
+		esac
+		;;
+	post)
+		case $2 in
+			debian_buster)
+			;;
+			debian_bullseye)
+			;;
+		esac
 		;;
 esac

@@ -19,8 +19,8 @@ Vagrant.configure("2") do |config|
     debian_buster.vm.box = "debian/buster64"
     debian_buster.vm.hostname = "debian-buster"
 
-    # Execute shell provisioning script
-    debian_buster.vm.provision "shell", path: ".vagrant-provision.sh", args: "debian_buster"
+    # Execute shell pre-provisioning script
+    debian_buster.vm.provision "shell", path: ".vagrant-provision.sh", args: ["pre", "debian_buster"]
 
     # Execute Ansible provisioning
     debian_buster.vm.provision "ansible" do |ansible|
@@ -48,6 +48,10 @@ Vagrant.configure("2") do |config|
         "gpsds" => ["debian_buster"]
       }
     end
+
+    # Execute shell post-provisioning script
+    debian_buster.vm.provision "shell", path: ".vagrant-provision.sh", args: ["post", "debian_buster"]
+
   end
 
   # Configure 'debian_bullseye'
@@ -66,8 +70,8 @@ Vagrant.configure("2") do |config|
     debian_bullseye.vm.box = "debian/bullseye64"
     debian_bullseye.vm.hostname = "debian-bullseye"
 
-    # Execute shell provisioning script
-    debian_bullseye.vm.provision "shell", path: ".vagrant-provision.sh", args: "debian_bullseye"
+    # Execute shell pre-provisioning script
+    debian_bullseye.vm.provision "shell", path: ".vagrant-provision.sh", args: ["pre", "debian_bullseye"]
 
     # Execute Ansible provisioning
     debian_bullseye.vm.provision "ansible" do |ansible|
@@ -95,6 +99,10 @@ Vagrant.configure("2") do |config|
         "gpsds" => ["debian_bullseye"]
       }
     end
+
+    # Execute shell post-provisioning script
+    debian_bullseye.vm.provision "shell", path: ".vagrant-provision.sh", args: ["post", "debian_bullseye"]
+
   end
 
 end
