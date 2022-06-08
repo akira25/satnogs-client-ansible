@@ -21,6 +21,7 @@
 
 BOOTSTRAP_STAMP="$HOME/.satnogs/.bootstrapped"
 INSTALL_STAMP="$HOME/.satnogs/.installed"
+CURRENT_CODENAME="buster"
 LATEST_CODENAME="bullseye"
 SED_SOURCES_SUBS="s/buster/bullseye/
 s/bullseye\/updates/bullseye-security/
@@ -51,7 +52,7 @@ release_upgrade() {
 }
 
 upgrade
-if [ "$(lsb_release -c -s)" != "$LATEST_CODENAME" ]; then
+if [ "$release" = "$CURRENT_CODENAME" ] && [ "$release" != "$LATEST_CODENAME" ]; then
 	if whiptail \
 		   --yesno \
 		   --defaultno \
