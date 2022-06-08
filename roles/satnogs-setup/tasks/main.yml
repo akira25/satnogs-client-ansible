@@ -33,7 +33,10 @@
   retries: 3
 - name: Install Ansible repository
   apt_repository:
-    repo: 'deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main'
+    repo: >-
+      deb http://ppa.launchpad.net/ansible/ansible/ubuntu
+      {{ "trusty" if ansible_lsb.codename == "buster" else "focal" }}
+      main
     state: 'present'
     mode: 0644
   become: true
