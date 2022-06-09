@@ -39,9 +39,6 @@
     path: '/var/lib/{{ satnogs_client_user }}/{{ item }}'
     state: 'absent'
   when: res_system_python_version.stdout != res_virtualenv_python_version.stdout
-  register: res
-  until: res is success
-  retries: 3
   become: true
   with_items:
     - 'bin'

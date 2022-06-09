@@ -70,9 +70,6 @@
     path: '{{ satnogs_setup_satnogs_config_venv }}'
     state: 'absent'
   when: res_system_python_version.stdout != res_virtualenv_python_version.stdout
-  register: res
-  until: res is success
-  retries: 3
   become: true
 - name: Install or remove PyPI dependencies
   pip:

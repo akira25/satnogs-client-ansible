@@ -4,9 +4,6 @@
     repo: 'deb http://ftp.debian.org/debian jessie-backports main'
     state: 'absent'
   become: true
-  register: res
-  until: res is success
-  retries: 3
 - name: Add LimeSDR udev rules
   copy:
     src: etc/udev/rules.d/64-limesuite.rules
@@ -45,9 +42,6 @@
     state: 'absent'
   when: '"satnogs-flowgraphs" not in ansible_facts.packages'
   become: true
-  register: res
-  until: res is success
-  retries: 3
 - name: Install SatNOGS Flowgraphs
   apt:
     name: 'satnogs-flowgraphs{{ "" if experimental else "=" ~ satnogs_radio_flowgraphs_version }}'
