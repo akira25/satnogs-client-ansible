@@ -1,16 +1,9 @@
 ---
-- name: Install gpsd
+- name: Install gpsd and clients
   package:
-    name: 'gpsd'
-    state: 'present'
-  become: true
-  register: res
-  until: res is success
-  retries: '{{ package_retries }}'
-  delay: '{{ package_delay }}'
-- name: Install gpsd clients
-  package:
-    name: 'gpsd-clients'
+    name:
+      - 'gpsd'
+      - 'gpsd-clients'
     state: 'present'
   become: true
   register: res
