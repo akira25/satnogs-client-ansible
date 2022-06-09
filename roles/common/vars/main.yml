@@ -12,6 +12,8 @@ repository_path:
   raspbian_buster: 'Raspbian_10'
   debian_bullseye: 'Debian_11'
 apt_repository_file: 'satnogs.list'
+package_retries: '3'
+package_delay: '1'
 packages:
   - 'acl'
   - 'rng-tools'

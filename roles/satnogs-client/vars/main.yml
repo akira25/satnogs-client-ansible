@@ -1,4 +1,6 @@
 ---
+package_retries: '3'
+package_delay: '1'
 satnogs_client_name: 'satnogs-client'
 satnogs_client_user: 'satnogs'
 satnogs_client_pypi:

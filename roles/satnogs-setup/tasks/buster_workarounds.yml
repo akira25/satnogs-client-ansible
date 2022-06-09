@@ -8,7 +8,8 @@
   become: true
   register: res
   until: res is success
-  retries: 3
+  retries: '{{ package_retries }}'
+  delay: '{{ package_delay }}'
 - name: Add configuration file for apt to allow releaseinfo changes
   copy:
     src: 'etc/apt/apt.conf.d/01allow-releaseinfo-changes'

@@ -1,4 +1,6 @@
 ---
+package_retries: '3'
+package_delay: '1'
 satnogs_setup_ansible_url_stable: 'https://gitlab.com/librespacefoundation/satnogs/satnogs-client-ansible.git'
 satnogs_setup_ansible_branch_stable: 'stable'
 satnogs_setup_ansible_url_unstable: '{{ satnogs_setup_ansible_url_stable }}'

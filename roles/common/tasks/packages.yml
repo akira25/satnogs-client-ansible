@@ -7,4 +7,5 @@
   with_items: '{{ packages }}'
   register: res
   until: res is success
-  retries: 3
+  retries: '{{ package_retries }}'
+  delay: '{{ package_delay }}'

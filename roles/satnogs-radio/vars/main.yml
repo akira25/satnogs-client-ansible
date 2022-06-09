@@ -1,4 +1,6 @@
 ---
+package_retries: '3'
+package_delay: '1'
 satnogs_radio_blacklist_modules:
   - 'dvb_usb_rtl28xxu'
 satnogs_radio_packages:

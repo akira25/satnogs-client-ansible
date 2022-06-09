@@ -19,7 +19,8 @@
   become: true
   register: res
   until: res is success
-  retries: 3
+  retries: '{{ package_retries }}'
+  delay: '{{ package_delay }}'
   with_items: '{{ satnogs_client_packages }}'
   notify:
     - Restart satnogs-client service
@@ -61,7 +62,8 @@
   become_user: '{{ satnogs_client_user }}'
   register: res
   until: res is success
-  retries: 3
+  retries: '{{ package_retries }}'
+  delay: '{{ package_delay }}'
   with_items: '{{ satnogs_client_pypi }}'
   notify:
     - Restart satnogs-client service
@@ -80,7 +82,8 @@
     editable: false
     extra_args: '--no-deps'
     state: '{{ "present" if satnogs_client_url is undefined and not experimental else "forcereinstall" }}'
-  retries: 3
+  retries: '{{ package_retries }}'
+  delay: '{{ package_delay }}'
   register: res
   until: res is success
   become: true

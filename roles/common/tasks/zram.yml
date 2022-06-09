@@ -7,7 +7,8 @@
   register: dphys_swapfile_package
   become: true
   until: dphys_swapfile_package is success
-  retries: 3
+  retries: '{{ package_retries }}'
+  delay: '{{ package_delay }}'
 - name: Disable swap file
   service:
     name: 'dphys-swapfile'

@@ -30,7 +30,8 @@
   become: true
   register: res
   until: res is success
-  retries: 3
+  retries: '{{ package_retries }}'
+  delay: '{{ package_delay }}'
   with_items: '{{ satnogs_radio_packages }}'
 - name: Get package facts
   package_facts:
@@ -54,7 +55,8 @@
   become: true
   register: res
   until: res is success
-  retries: 3
+  retries: '{{ package_retries }}'
+  delay: '{{ package_delay }}'
   tags:
     - satnogs_radio_software
 - name: Blacklist SDR modules

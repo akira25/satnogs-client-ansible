@@ -1,4 +1,3 @@
 ---
 package_retries: '3'
 package_delay: '1'
-hamlib_utils_user: 'hamlib-utils'

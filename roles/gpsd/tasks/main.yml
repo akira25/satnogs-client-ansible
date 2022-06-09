@@ -6,7 +6,8 @@
   become: true
   register: res
   until: res is success
-  retries: 3
+  retries: '{{ package_retries }}'
+  delay: '{{ package_delay }}'
 - name: Install gpsd clients
   package:
     name: 'gpsd-clients'
@@ -14,7 +15,8 @@
   become: true
   register: res
   until: res is success
-  retries: 3
+  retries: '{{ package_retries }}'
+  delay: '{{ package_delay }}'
 - name: Start/stop gpsd service
   service:
     name: 'gpsd'
