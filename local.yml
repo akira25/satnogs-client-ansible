@@ -4,28 +4,16 @@
     - role: common
       tags:
         - common
-    - role: satnogs-setup
+    - role: satnogs_setup
       tags:
         - satnogs-setup
-    - role: satnogs-setup
-      tags:
-        - satnogs-setup
-    - role: satnogs-client
+    - role: satnogs_client
       tags:
         - satnogs-client
-    - role: satnogs-client
-      tags:
-        - satnogs-client
-    - role: satnogs-radio
+    - role: satnogs_radio
       tags:
         - satnogs-radio
-    - role: satnogs-radio
-      tags:
-        - satnogs-radio
-    - role: hamlib-utils
-      tags:
-        - hamlib-utils
-    - role: hamlib-utils
+    - role: hamlib_utils
       tags:
         - hamlib-utils
     - role: snmpd

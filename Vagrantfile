@@ -40,10 +40,10 @@ Vagrant.configure("2") do |config|
         }
       }
       ansible.groups = {
-        "satnogs-setups" => ["debian_buster"],
-        "satnogs-radios" => ["debian_buster"],
-        "hamlib-utils" => ["debian_buster"],
-        "satnogs-clients" => ["debian_buster"],
+        "satnogs_setups" => ["debian_buster"],
+        "satnogs_radios" => ["debian_buster"],
+        "hamlib_utils" => ["debian_buster"],
+        "satnogs_clients" => ["debian_buster"],
         "snmpds" => ["debian_buster"],
         "gpsds" => ["debian_buster"]
       }
@@ -91,10 +91,10 @@ Vagrant.configure("2") do |config|
         }
       }
       ansible.groups = {
-        "satnogs-setups" => ["debian_bullseye"],
-        "satnogs-radios" => ["debian_bullseye"],
-        "hamlib-utils" => ["debian_bullseye"],
-        "satnogs-clients" => ["debian_bullseye"],
+        "satnogs_setups" => ["debian_bullseye"],
+        "satnogs_radios" => ["debian_bullseye"],
+        "hamlib_utils" => ["debian_bullseye"],
+        "satnogs_clients" => ["debian_bullseye"],
         "snmpds" => ["debian_bullseye"],
         "gpsds" => ["debian_bullseye"]
       }
