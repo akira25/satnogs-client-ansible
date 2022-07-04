@@ -1,5 +1,5 @@
 ---
-version_minimum: '2.4'
+version_minimum: '2.12'
 lsb_compatibility:
   - id: 'Debian'
     codename: 'buster'
