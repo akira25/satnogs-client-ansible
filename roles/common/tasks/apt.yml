@@ -1,12 +1,12 @@
 ---
 - name: Remove APT configuration disabling recommends
-  file:
+  ansible.builtin.file:
     path: '/etc/apt/apt.conf.d/71-armbian-no-recommends'
     state: 'absent'
   when: ansible_os_family == 'Debian'
   become: true
 - name: Update APT cache
-  apt:
+  ansible.builtin.apt:
     update_cache: true
     cache_valid_time: 3600
   when: ansible_os_family == 'Debian'
@@ -16,7 +16,7 @@
   retries: '{{ package_retries }}'
   delay: '{{ package_delay }}'
 - name: Install required package for APT
-  package:
+  ansible.builtin.package:
     name:
       - >-
         {{
@@ -32,7 +32,7 @@
   retries: '{{ package_retries }}'
   delay: '{{ package_delay }}'
 - name: Install repository keys
-  apt_key:
+  ansible.builtin.apt_key:
     url: '{{ apt_key_url }}'
     id: '{{ apt_key_id }}'
     state: 'present'
@@ -47,14 +47,14 @@
   tags:
     - apt_software
 - name: Remove old repository
-  file:
+  ansible.builtin.file:
     path: '{{ item }}'
     state: 'absent'
   with_fileglob:
     - '/etc/apt/sources.list.d/download_opensuse_org_repositories_home_librespace_satnogs*.list'
   become: true
 - name: Install repository
-  template:
+  ansible.builtin.template:
     src: 'etc/apt/sources.list.d/{{ apt_repository_file }}.j2'
     dest: '/etc/apt/sources.list.d/{{ apt_repository_file }}'
     mode: 0644

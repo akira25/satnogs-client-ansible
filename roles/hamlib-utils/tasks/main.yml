@@ -1,6 +1,6 @@
 ---
 - name: Add hamlib utilities service user
-  user:
+  ansible.builtin.user:
     name: '{{ hamlib_utils_user }}'
     home: '/nonexistent'
     shell: '/bin/false'
@@ -13,7 +13,7 @@
     - Restart rigctld service
     - Restart rotctld service
 - name: Install hamlib utilities
-  package:
+  ansible.builtin.package:
     name: 'libhamlib-utils'
     state: 'present'
   become: true
@@ -25,7 +25,7 @@
     - Restart rigctld service
     - Restart rotctld service
 - name: Install hamlib utilities configuration
-  template:
+  ansible.builtin.template:
     src: 'etc/default/hamlib-utils.j2'
     dest: '/etc/default/hamlib-utils'
     mode: 0644
@@ -36,7 +36,7 @@
     - Restart rigctld service
     - Restart rotctld service
 - name: Add rigctld systemd service
-  template:
+  ansible.builtin.template:
     src: 'etc/systemd/system/rigctld.service.j2'
     dest: '/etc/systemd/system/rigctld.service'
     mode: 0644
@@ -44,7 +44,7 @@
   notify:
     - Restart rigctld service
 - name: Add rotctld systemd service
-  template:
+  ansible.builtin.template:
     src: 'etc/systemd/system/rotctld.service.j2'
     dest: '/etc/systemd/system/rotctld.service'
     mode: 0644
@@ -52,7 +52,7 @@
   notify:
     - Restart rotctld service
 - name: Start/stop rigctld service
-  systemd:
+  ansible.builtin.systemd:
     daemon_reload: true
     name: 'rigctld'
     enabled: '{{ not hamlib_utils_rig_disabled | default(false) }}'
@@ -61,7 +61,7 @@
   tags:
     - hamlib_utils_config
 - name: Start/stop rotctld service
-  systemd:
+  ansible.builtin.systemd:
     daemon_reload: true
     name: 'rotctld'
     enabled: '{{ hamlib_utils_rot_enabled | default(false) }}'

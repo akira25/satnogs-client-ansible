@@ -1,6 +1,6 @@
 ---
 - name: Install snmpd
-  package:
+  ansible.builtin.package:
     name: 'snmpd'
     state: 'present'
   become: true
@@ -11,7 +11,7 @@
   notify:
     - Restart snmpd service
 - name: Make snmp user member of video group
-  user:
+  ansible.builtin.user:
     name: 'Debian-snmp'
     groups:
       - 'video'
@@ -22,20 +22,20 @@
   notify:
     - Restart snmpd service
 - name: Remove rasberry-sensors.sh script
-  file:
+  ansible.builtin.file:
     path: /usr/local/bin/rasberry-sensors.sh
     state: absent
   when: ansible_lsb.id == 'Raspbian'
   become: true
 - name: Install raspi-sensors script
-  copy:
+  ansible.builtin.copy:
     src: usr/local/bin/raspi-sensors
     dest: /usr/local/bin/raspi-sensors
     mode: 0755
   when: ansible_lsb.id == 'Raspbian'
   become: true
 - name: Extend SNMP with raspi-sensors script OID
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: /etc/snmp/snmpd.conf
     block: |
       extend temp /usr/local/bin/raspi-sensors temp
@@ -54,7 +54,7 @@
   notify:
     - Restart snmpd service
 - name: Allow access to raspi-sensors script OID
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/snmp/snmpd.conf
     line: 'view systemonly included .1.3.6.1.4.1.8072.1.3.2'
   when: ansible_lsb.id == 'Raspbian'
@@ -62,7 +62,7 @@
   notify:
     - Restart snmpd service
 - name: Setup snmpd listen configuration
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/snmp/snmpd.conf
     regexp: '^\s*agentAddress\s'
     line: 'agentAddress {{ snmpd_agentaddress }}'
@@ -73,7 +73,7 @@
   notify:
     - Restart snmpd service
 - name: Setup snmpd rocommunity configuration
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/snmp/snmpd.conf
     regexp: '{{ item.regexp }}'
     line: '{{ item.line }}'
@@ -89,14 +89,14 @@
   notify:
     - Restart snmpd service
 - name: Remove snmp user from sudoers
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/sudoers
     line: 'Debian-snmp ALL=(ALL) NOPASSWD: /usr/local/bin/rasberry-sensors.sh, /usr/bin/vcgencmd*'
     state: 'absent'
   when: ansible_lsb.id == 'Raspbian'
   become: true
 - name: Start/stop snmpd service
-  service:
+  ansible.builtin.service:
     name: 'snmpd'
     enabled: '{{ snmpd_enabled | default(false) }}'
     state: '{{ "started" if snmpd_enabled | default(false) else "stopped" }}'

@@ -1,6 +1,6 @@
 ---
 - name: Install gpsd and clients
-  package:
+  ansible.builtin.package:
     name:
       - 'gpsd'
       - 'gpsd-clients'
@@ -11,7 +11,7 @@
   retries: '{{ package_retries }}'
   delay: '{{ package_delay }}'
 - name: Start/stop gpsd service
-  service:
+  ansible.builtin.service:
     name: 'gpsd'
     enabled: '{{ gpsd_enabled | default(false) }}'
     state: '{{ "started" if gpsd_enabled | default(false) else "stopped" }}'

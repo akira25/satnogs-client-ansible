@@ -1,20 +1,20 @@
 ---
 - name: Create needrestart directory for Raspbian
-  file:
+  ansible.builtin.file:
     path: '/etc/needrestart/conf.d'
     state: 'directory'
     mode: '0755'
   when: ansible_lsb.id == 'Raspbian'
   become: true
 - name: Configure needrestart for Raspbian
-  copy:
+  ansible.builtin.copy:
     src: 'etc/needrestart/conf.d/raspbian_kernel_filter.conf'
     dest: '/etc/needrestart/conf.d/raspbian_kernel_filter.conf'
     mode: 0644
   when: ansible_lsb.id == 'Raspbian'
   become: true
 - name: Install or remove satnogs-setup system dependencies
-  package:
+  ansible.builtin.package:
     name: '{{ item.name }}'
     state: '{{ item.state | default(omit) }}'
   become: true
@@ -24,7 +24,7 @@
   delay: '{{ package_delay }}'
   with_items: '{{ satnogs_setup_packages }}'
 - name: Install Ansible repository keys
-  apt_key:
+  ansible.builtin.apt_key:
     keyserver: 'keyserver.ubuntu.com'
     id: '93C4A3FD7BB9C367'
     state: 'present'
@@ -34,7 +34,7 @@
   retries: '{{ package_retries }}'
   delay: '{{ package_delay }}'
 - name: Install Ansible repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: >-
       deb http://ppa.launchpad.net/ansible/ansible/ubuntu
       {{ "trusty" if ansible_lsb.codename == "buster" else "focal" }}
@@ -47,7 +47,7 @@
   retries: '{{ package_retries }}'
   delay: '{{ package_delay }}'
 - name: Install Ansible package
-  package:
+  ansible.builtin.package:
     name: 'ansible'
     state: 'present'
   become: true
@@ -66,13 +66,13 @@
   register: res_virtualenv_python_version
   changed_when: false
 - name: Remove virtualenv of old Python version
-  file:
+  ansible.builtin.file:
     path: '{{ satnogs_setup_satnogs_config_venv }}'
     state: 'absent'
   when: res_system_python_version.stdout != res_virtualenv_python_version.stdout
   become: true
 - name: Install or remove PyPI dependencies
-  pip:
+  ansible.builtin.pip:
     name: '{{ item.name }}'
     virtualenv: '{{ satnogs_setup_satnogs_config_venv }}'
     virtualenv_site_packages: true
@@ -87,7 +87,7 @@
   delay: '{{ package_delay }}'
   with_items: '{{ satnogs_setup_satnogs_config_pypi }}'
 - name: Install satnogs-config
-  pip:
+  ansible.builtin.pip:
     name: >-
       {{
       satnogs_setup_satnogs_config_url_unstable
@@ -114,7 +114,7 @@
   tags:
     - satnogs_setup_software
 - name: Configure satnogs-setup
-  template:
+  ansible.builtin.template:
     src: 'etc/default/satnogs-setup.j2'
     dest: '/etc/default/satnogs-setup'
     mode: 0644
@@ -122,43 +122,43 @@
   tags:
     - satnogs_setup_software
 - name: Create Ansible configuration directory
-  file:
+  ansible.builtin.file:
     path: '/etc/ansible'
     state: 'directory'
     mode: 0755
   become: true
 - name: Set up inventory
-  copy:
+  ansible.builtin.copy:
     src: 'etc/ansible/hosts'
     dest: '/etc/ansible/hosts'
     mode: 0644
   become: true
 - name: Create host variables directory
-  file:
+  ansible.builtin.file:
     path: '/etc/ansible/host_vars'
     state: 'directory'
     mode: 0755
   become: true
 - name: Check if host variables file exists
-  stat:
+  ansible.builtin.stat:
     path: '/etc/ansible/host_vars/localhost'
   register: res_host_vars_stat
   become: true
 - name: Create host variables file
-  file:
+  ansible.builtin.file:
     path: '/etc/ansible/host_vars/localhost'
     state: 'touch'
     mode: 0644
   become: true
   when: not res_host_vars_stat.stat.exists
 - name: Create satnogs-setup share directory
-  file:
+  ansible.builtin.file:
     path: '/usr/local/share/satnogs-setup'
     state: 'directory'
     mode: 0755
   become: true
 - name: Install satnogs-setup scripts
-  copy:
+  ansible.builtin.copy:
     src: '{{ item.0 }}'
     dest: '{{ item.1 }}'
     mode: 0755

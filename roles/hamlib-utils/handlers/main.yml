@@ -1,13 +1,13 @@
 ---
 - name: Restart rigctld service
-  systemd:
+  ansible.builtin.systemd:
     daemon_reload: true
     name: 'rigctld'
     enabled: '{{ not hamlib_utils_rig_disbled | default(false) }}'
     state: '{{ "restarted" if not hamlib_utils_rig_disbled | default(false) else "stopped" }}'
   become: true
 - name: Restart rotctld service
-  systemd:
+  ansible.builtin.systemd:
     daemon_reload: true
     name: 'rotctld'
     enabled: '{{ hamlib_utils_rot_enabled | default(false) }}'

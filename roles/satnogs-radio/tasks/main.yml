@@ -1,11 +1,11 @@
 ---
 - name: Remove jessie backports repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: 'deb http://ftp.debian.org/debian jessie-backports main'
     state: 'absent'
   become: true
 - name: Add LimeSDR udev rules
-  copy:
+  ansible.builtin.copy:
     src: etc/udev/rules.d/64-limesuite.rules
     dest: /etc/udev/rules.d/64-limesuite.rules
     mode: 0644
@@ -13,7 +13,7 @@
   notify:
     - Retrigger udev devices
 - name: Pin packages
-  template:
+  ansible.builtin.template:
     src: 'etc/apt/preferences.d/satnogs.j2'
     dest: '/etc/apt/preferences.d/satnogs'
     mode: 0644
@@ -21,7 +21,7 @@
   tags:
     - satnogs_radio_software
 - name: Install or remove system packages
-  apt:
+  ansible.builtin.apt:
     name: '{{ item.name }}'
     state: '{{ item.state | default(omit) }}'
   become: true
@@ -31,9 +31,9 @@
   delay: '{{ package_delay }}'
   with_items: '{{ satnogs_radio_packages }}'
 - name: Get package facts
-  package_facts:
+  ansible.builtin.package_facts:
 - name: Uninstall broken SatNOGS Flowgraphs dependencies
-  apt:
+  ansible.builtin.apt:
     name:
       - libgnuradio-soapy
       - gr-soapy
@@ -43,7 +43,7 @@
   when: '"satnogs-flowgraphs" not in ansible_facts.packages'
   become: true
 - name: Install SatNOGS Flowgraphs
-  apt:
+  ansible.builtin.apt:
     name: 'satnogs-flowgraphs{{ "" if experimental else "=" ~ satnogs_radio_flowgraphs_version }}'
     state: '{{ "latest" if experimental else "present" }}'
   become: true
@@ -54,17 +54,17 @@
   tags:
     - satnogs_radio_software
 - name: Blacklist SDR modules
-  kernel_blacklist:
+  ansible.builtin.kernel_blacklist:
     name: '{{ item }}'
     state: 'present'
   become: true
   with_items: '{{ satnogs_radio_blacklist_modules }}'
 - name: Check if list of kernel builtin modules exists
-  stat:
+  ansible.builtin.stat:
     path: '/lib/modules/{{ ansible_kernel }}/modules.builtin'
   register: modules_builtin
 - name: Unload SDR modules
-  modprobe:
+  ansible.builtin.modprobe:
     name: '{{ item }}'
     state: 'absent'
   become: true

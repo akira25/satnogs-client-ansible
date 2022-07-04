@@ -1,6 +1,6 @@
 ---
 - name: Add satnogs-client service user
-  user:
+  ansible.builtin.user:
     name: '{{ satnogs_client_user }}'
     home: '/var/lib/{{ satnogs_client_user }}'
     shell: '/bin/false'
@@ -13,7 +13,7 @@
   notify:
     - Restart satnogs-client service
 - name: Install or remove system dependencies
-  package:
+  ansible.builtin.package:
     name: '{{ item.name }}'
     state: '{{ item.state | default(omit) }}'
   become: true
@@ -35,7 +35,7 @@
   register: res_virtualenv_python_version
   changed_when: false
 - name: Remove virtualenv of old Python version
-  file:
+  ansible.builtin.file:
     path: '/var/lib/{{ satnogs_client_user }}/{{ item }}'
     state: 'absent'
   when: res_system_python_version.stdout != res_virtualenv_python_version.stdout
@@ -47,7 +47,7 @@
     - 'local'
     - 'share'
 - name: Install or remove PyPI dependencies
-  pip:
+  ansible.builtin.pip:
     name: '{{ item.name }}'
     virtualenv: '/var/lib/{{ satnogs_client_user }}'
     virtualenv_site_packages: true
@@ -65,7 +65,7 @@
   notify:
     - Restart satnogs-client service
 - name: Install satnogs-client
-  pip:
+  ansible.builtin.pip:
     name: >-
       {{
       satnogs_client_url_unstable
@@ -90,7 +90,7 @@
   tags:
     - satnogs_client_software
 - name: Install satnogs-client configuration
-  template:
+  ansible.builtin.template:
     src: 'etc/default/satnogs-client.j2'
     dest: '/etc/default/satnogs-client'
     # TODO: Fix ownership
@@ -101,7 +101,7 @@
   notify:
     - Restart satnogs-client service
 - name: Add satnogs-client systemd service
-  template:
+  ansible.builtin.template:
     src: 'etc/systemd/system/satnogs-client.service.j2'
     dest: '/etc/systemd/system/satnogs-client.service'
     mode: 0644
@@ -109,7 +109,7 @@
   notify:
     - Restart satnogs-client service
 - name: Use tmpfs for state directory
-  mount:
+  ansible.builtin.mount:
     path: '{{ satnogs_client_state_dir }}'
     src: 'tmpfs'
     fstype: 'tmpfs'
@@ -120,7 +120,7 @@
   notify:
     - Restart satnogs-client service
 - name: Start satnogs-client service
-  systemd:
+  ansible.builtin.systemd:
     daemon_reload: true
     name: 'satnogs-client'
     enabled: true

@@ -1,6 +1,6 @@
 ---
 - name: Check if dphys-swapfile package is installed
-  package:
+  ansible.builtin.package:
     name: 'dphys-swapfile'
     state: 'present'
   check_mode: true
@@ -10,7 +10,7 @@
   retries: '{{ package_retries }}'
   delay: '{{ package_delay }}'
 - name: Disable swap file
-  service:
+  ansible.builtin.service:
     name: 'dphys-swapfile'
     state: stopped
     enabled: false
@@ -19,7 +19,7 @@
   tags:
     - skip_ansible_lint
 - name: Add ZRAM init script
-  copy:
+  ansible.builtin.copy:
     src: 'etc/init.d/zram'
     dest: '/etc/init.d/zram'
     mode: 0755
