@@ -1,17 +1,9 @@
 ---
-- hosts: hamlib-utils
-  roles:
-    - role: common
-      tags:
-        - common
-    - role: hamlib-utils
-      tags:
-        - hamlib-utils
 - hosts: hamlib_utils
   roles:
     - role: common
       tags:
         - common
-    - role: hamlib-utils
+    - role: hamlib_utils
       tags:
         - hamlib-utils

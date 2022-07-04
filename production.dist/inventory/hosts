@@ -6,16 +6,16 @@ all:
       ansible_user: 'pi'
       ansible_ssh_pass: 'raspberry'
       ansible_ssh_pipelining: true
-satnogs-setups:
+satnogs_setups:
   hosts:
     satnogs:
-satnogs-radios:
+satnogs_radios:
   hosts:
     satnogs:
-hamlib-utils:
+hamlib_utils:
   hosts:
     satnogs:
-satnogs-clients:
+satnogs_clients:
   hosts:
     satnogs:
 snmpds:
