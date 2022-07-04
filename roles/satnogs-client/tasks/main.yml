@@ -25,12 +25,12 @@
   notify:
     - Restart satnogs-client service
 - name: Get system Python 3 version  # noqa 306
-  shell: '/usr/bin/python3 --version 2>&1 | awk ''/^Python/ { print $2 }'''
+  ansible.builtin.shell: '/usr/bin/python3 --version 2>&1 | awk ''/^Python/ { print $2 }'''
   become: true
   register: res_system_python_version
   changed_when: false
 - name: Get virtualenv Python version  # noqa 306
-  shell: '/var/lib/{{ satnogs_client_user }}/bin/python --version 2>&1 | awk ''/^Python/ { print $2 }'''
+  ansible.builtin.shell: '/var/lib/{{ satnogs_client_user }}/bin/python --version 2>&1 | awk ''/^Python/ { print $2 }'''
   become: true
   register: res_virtualenv_python_version
   changed_when: false

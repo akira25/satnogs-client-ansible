@@ -56,12 +56,12 @@
   retries: '{{ package_retries }}'
   delay: '{{ package_delay }}'
 - name: Get system Python version  # noqa 306
-  shell: '/usr/bin/python3 --version 2>&1 | awk ''/^Python/ { print $2 }'''
+  ansible.builtin.shell: '/usr/bin/python3 --version 2>&1 | awk ''/^Python/ { print $2 }'''
   become: true
   register: res_system_python_version
   changed_when: false
 - name: Get virtualenv Python version  # noqa 306
-  shell: '{{ satnogs_setup_satnogs_config_venv }}/bin/python --version 2>&1 | awk ''/^Python/ { print $2 }'''
+  ansible.builtin.shell: '{{ satnogs_setup_satnogs_config_venv }}/bin/python --version 2>&1 | awk ''/^Python/ { print $2 }'''
   become: true
   register: res_virtualenv_python_version
   changed_when: false
