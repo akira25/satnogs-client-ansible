@@ -7,10 +7,13 @@ lsb_compatibility:
     codename: 'buster'
   - id: 'Debian'
     codename: 'bullseye'
+  - id: 'Raspbian'
+    codename: 'bullseye'
 repository_path:
   debian_buster: 'Debian_10'
   raspbian_buster: 'Raspbian_10'
   debian_bullseye: 'Debian_11'
+  raspbian_bullseye: 'Raspbian_11'
 apt_repository_file: 'satnogs.list'
 apt_repository_stable: >-
   deb http://download.opensuse.org/repositories/home:/librespace:/satnogs/{{
