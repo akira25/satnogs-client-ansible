@@ -36,6 +36,7 @@ satnogs_client_packages:
   - name: 'pkg-config'
   - name: 'virtualenv'
   - name: 'libhdf5-dev'
+  - name: 'libatlas3-base'
   - name: 'python3-gps'
   - name: 'python3-libhamlib2'
 satnogs_client_url_unstable: 'git+https://gitlab.com/librespacefoundation/satnogs/satnogs-client.git@master'
