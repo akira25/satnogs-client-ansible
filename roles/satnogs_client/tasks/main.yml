@@ -109,7 +109,7 @@
   notify:
     - Restart satnogs-client service
 - name: Use tmpfs for state directory
-  ansible.builtin.mount:
+  ansible.posix.mount:
     path: '{{ satnogs_client_state_dir }}'
     src: 'tmpfs'
     fstype: 'tmpfs'
