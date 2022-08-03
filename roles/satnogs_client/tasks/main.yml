@@ -46,15 +46,14 @@
     - 'lib'
     - 'local'
     - 'share'
-- name: Install or remove PyPI dependencies
+- name: Install PyPI dependencies
   ansible.builtin.pip:
-    name: '{{ item.name }}'
+    name: '{{ item }}'
     virtualenv: '/var/lib/{{ satnogs_client_user }}'
     virtualenv_site_packages: true
     virtualenv_python: 'python3'
     editable: false
-    extra_args: '{{ "--no-deps" if (item.state | default("present")) != "absent" else omit }}'
-    state: '{{ item.state | default(omit) }}'
+    extra_args: '--no-deps'
   become: true
   become_user: '{{ satnogs_client_user }}'
   register: res
