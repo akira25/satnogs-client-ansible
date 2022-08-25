@@ -17,6 +17,7 @@ This Ansible playbook supports the following distributions and releases:
   * Buster
 * Debian
   * Buster
+  * Bullseye
 
 ## Required Ansible version
 
