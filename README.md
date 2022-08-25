@@ -18,6 +18,13 @@ This Ansible playbook supports the following distributions and releases:
 * Debian
   * Buster
 
+## Required Ansible version
+
+The minimum required ansible is version 2.12. This is not available in Debian Bullseye, but
+can be installed using the Ubuntu PPA. Follow the
+[Installing Ansible on Debian](https://docs.ansible.com/ansible/latest/installation_guide/installation_distros.html#installing-ansible-on-debian)
+guide to get the required ansible.
+
 ## Testing local changes in Raspbian
 
 If you are running [the Raspbian
