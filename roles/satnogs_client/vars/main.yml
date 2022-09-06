@@ -30,23 +30,30 @@ satnogs_client_settings:
   - satnogs_station_lat
   - satnogs_station_lon
   - satnogs_station_elev
+  - satnogs_gpsd_client_enabled
+  - satnogs_gpsd_host
+  - satnogs_gpsd_port
+  - satnogs_gpsd_timeout
   - satnogs_app_path
   - satnogs_output_path
   - satnogs_complete_output_path
   - satnogs_incomplete_output_path
   - satnogs_remove_raw_files
+  - satnogs_keep_artifacts
+  - satnogs_artifacts_output_path
   - satnogs_verify_ssl
   - satnogs_network_api_url
   - satnogs_network_api_query_interval
   - satnogs_network_api_post_interval
+  - satnogs_rot_enabled
   - satnogs_rot_model
   - satnogs_rot_baud
   - satnogs_rot_port
-  - satnogs_rig_ip
-  - satnogs_rig_port
   - satnogs_rot_threshold
   - satnogs_rot_flip
   - satnogs_rot_flip_angle
+  - satnogs_rig_ip
+  - satnogs_rig_port
   - satnogs_soapy_rx_device
   - satnogs_rx_samp_rate
   - satnogs_rx_bandwidth
@@ -67,6 +74,8 @@ satnogs_client_settings:
   - disable_decoded_data
   - udp_dump_host
   - udp_dump_port
+  - satnogs_upload_audio_files
+  - satnogs_upload_waterfall_files
   - satnogs_waterfall_autorange
   - satnogs_waterfall_min_value
   - satnogs_waterfall_max_value
@@ -75,6 +84,7 @@ satnogs_client_settings:
   - satnogs_artifacts_api_post_interval
   - satnogs_artifacts_api_token
   - satnogs_log_level
+  - satnogs_scheduler_log_level
   - sentry_dsn
   - sentry_enabled
   - satnogs_upload_audio_files
