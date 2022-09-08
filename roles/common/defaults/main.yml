@@ -1,17 +1,5 @@
 ---
-apt_repository: >-
-  deb http://download.opensuse.org/repositories/home:/librespace:/satnogs{{
-  "-unstable" if experimental
-  else ""
-  }}/{{
-  repository_path[ansible_lsb.id.lower() ~ "_" ~ ansible_lsb.codename.lower()]
-  }} ./
-apt_key_url: >-
-  http://download.opensuse.org/repositories/home:/librespace:/satnogs{{
-  "-unstable" if experimental
-  else ""
-  }}/{{
-  repository_path[ansible_lsb.id.lower() ~ "_" ~ ansible_lsb.codename.lower()]
-  }}/Release.key
+apt_repository: '{{ experimental | ternary(apt_repository_unstable, apt_repository_stable) }}'
+apt_key_url: '{{ experimental | ternary(apt_key_url_unstable, apt_key_url_stable) }}'
 apt_key_id: '8BD3901736A40B6C'
 experimental: false
