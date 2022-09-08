@@ -10,7 +10,7 @@ satnogs_client_packages:
   - name: 'libatlas3-base'
   - name: 'libhdf5-103-1'
   - name: 'python3-gps'
-  - name: 'python3-libhamlib2'
+  - name: 'python3-hamlib'
 satnogs_client_pypi: >-
   {{
   lookup('ansible.builtin.file', 'requirements.txt').splitlines() |
