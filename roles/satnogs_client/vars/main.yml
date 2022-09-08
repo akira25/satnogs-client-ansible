@@ -7,8 +7,8 @@ satnogs_client_packages:
   - name: 'git'
   - name: 'pkg-config'
   - name: 'virtualenv'
-  - name: 'libhdf5-dev'
   - name: 'libatlas3-base'
+  - name: 'libhdf5-103-1'
   - name: 'python3-gps'
   - name: 'python3-libhamlib2'
 satnogs_client_pypi: >-
