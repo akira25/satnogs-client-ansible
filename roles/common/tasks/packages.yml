@@ -1,10 +1,9 @@
 ---
 - name: Install packages
   ansible.builtin.package:
-    name: '{{ item }}'
+    name: '{{ packages }}'
     state: 'present'
   become: true
-  with_items: '{{ packages }}'
   register: res
   until: res is success
   retries: '{{ package_retries }}'
