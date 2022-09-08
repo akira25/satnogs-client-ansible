@@ -12,16 +12,45 @@
   become: true
   notify:
     - Restart satnogs-client service
-- name: Install or remove system dependencies
+- name: Remove deprecated satnogs-client system dependencies
   ansible.builtin.package:
-    name: '{{ item.name }}'
-    state: '{{ item.state | default(omit) }}'
+    name: >-
+      {{
+      satnogs_client_packages |
+      rejectattr("state", "undefined") |
+      selectattr("state", "eq", "absent") |
+      map(attribute="name") |
+      list
+      }}
+    state: 'absent'
   become: true
   register: res
   until: res is success
   retries: '{{ package_retries }}'
   delay: '{{ package_delay }}'
-  with_items: '{{ satnogs_client_packages }}'
+  notify:
+    - Restart satnogs-client service
+- name: Install satnogs-client system dependencies
+  ansible.builtin.package:
+    name: >-
+      {{
+      (
+      satnogs_client_packages |
+      selectattr("state", "undefined") |
+      map(attribute="name") |
+      list
+      ) +
+      satnogs_client_packages |
+      rejectattr("state", "undefined") |
+      selectattr("state", "eq", "present") |
+      map(attribute="name") |
+      list
+      }}
+  become: true
+  register: res
+  until: res is success
+  retries: '{{ package_retries }}'
+  delay: '{{ package_delay }}'
   notify:
     - Restart satnogs-client service
 - name: Get system Python 3 version  # noqa 306
@@ -48,7 +77,7 @@
     - 'share'
 - name: Install PyPI dependencies
   ansible.builtin.pip:
-    name: '{{ item }}'
+    name: '{{ satnogs_client_pypi }}'
     virtualenv: '/var/lib/{{ satnogs_client_user }}'
     virtualenv_site_packages: true
     virtualenv_python: 'python3'
@@ -60,7 +89,6 @@
   until: res is success
   retries: '{{ package_retries }}'
   delay: '{{ package_delay }}'
-  with_items: '{{ satnogs_client_pypi }}'
   notify:
     - Restart satnogs-client service
 - name: Install satnogs-client

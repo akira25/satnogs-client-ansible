@@ -13,16 +13,43 @@
     mode: 0644
   when: ansible_lsb.id == 'Raspbian'
   become: true
-- name: Install or remove satnogs-setup system dependencies
+- name: Remove deprecated satnogs-setup system dependencies
   ansible.builtin.package:
-    name: '{{ item.name }}'
-    state: '{{ item.state | default(omit) }}'
+    name: >-
+      {{
+      satnogs_setup_packages |
+      rejectattr("state", "undefined") |
+      selectattr("state", "eq", "absent") |
+      map(attribute="name") |
+      list
+      }}
+    state: 'absent'
   become: true
   register: res
   until: res is success
   retries: '{{ package_retries }}'
   delay: '{{ package_delay }}'
-  with_items: '{{ satnogs_setup_packages }}'
+- name: Install satnogs-setup system dependencies
+  ansible.builtin.package:
+    name: >-
+      {{
+      (
+      satnogs_setup_packages |
+      selectattr("state", "undefined") |
+      map(attribute="name") |
+      list
+      ) +
+      satnogs_setup_packages |
+      rejectattr("state", "undefined") |
+      selectattr("state", "eq", "present") |
+      map(attribute="name") |
+      list
+      }}
+  become: true
+  register: res
+  until: res is success
+  retries: '{{ package_retries }}'
+  delay: '{{ package_delay }}'
 - name: Install Ansible repository keys
   ansible.builtin.apt_key:
     keyserver: 'keyserver.ubuntu.com'
@@ -71,21 +98,19 @@
     state: 'absent'
   when: res_system_python_version.stdout != res_virtualenv_python_version.stdout
   become: true
-- name: Install or remove PyPI dependencies
+- name: Install PyPI dependencies
   ansible.builtin.pip:
-    name: '{{ item.name }}'
+    name: '{{ satnogs_setup_satnogs_config_pypi }}'
     virtualenv: '{{ satnogs_setup_satnogs_config_venv }}'
     virtualenv_site_packages: true
     virtualenv_python: 'python3'
     editable: false
-    extra_args: '{{ "--no-deps" if (item.state | default("present")) != "absent" else omit }}'
-    state: '{{ item.state | default(omit) }}'
+    extra_args: '--no-deps'
   become: true
   register: res
   until: res is success
   retries: '{{ package_retries }}'
   delay: '{{ package_delay }}'
-  with_items: '{{ satnogs_setup_satnogs_config_pypi }}'
 - name: Install satnogs-config
   ansible.builtin.pip:
     name: >-
