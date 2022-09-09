@@ -1,20 +1,12 @@
 ---
-- name: Check if dphys-swapfile package is installed
-  ansible.builtin.package:
-    name: 'dphys-swapfile'
-    state: 'present'
-  check_mode: true
-  register: dphys_swapfile_package
-  become: true
-  until: dphys_swapfile_package is success
-  retries: '{{ package_retries }}'
-  delay: '{{ package_delay }}'
+- name: Gather package facts
+  ansible.builtin.package_facts:
 - name: Disable swap file
   ansible.builtin.service:
     name: 'dphys-swapfile'
     state: stopped
     enabled: false
-  when: not dphys_swapfile_package.changed
+  when: ('dphys-swapfile' in ansible_facts.packages)
   become: true
   tags:
     - skip_ansible_lint
