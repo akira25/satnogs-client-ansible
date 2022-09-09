@@ -19,6 +19,7 @@ satnogs_setup_packages:
   - name: 'git'
   - name: 'needrestart'
   - name: 'virtualenv'
+  - name: 'lsb-release'
   - name: 'python3-apt'
   - name: 'dialog'
 satnogs_setup_satnogs_config_pypi: >-
