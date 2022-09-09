@@ -5,7 +5,6 @@ satnogs_client_name: 'satnogs-client'
 satnogs_client_user: 'satnogs'
 satnogs_client_packages:
   - name: 'git'
-  - name: 'pkg-config'
   - name: 'virtualenv'
   - name: 'libatlas3-base'
   - name: 'libhdf5-103-1'
