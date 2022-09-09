@@ -4,7 +4,7 @@
     id: '8DB3D79801FA84B51B0FDC938BD3901736A40B6C'
     url: 'http://download.opensuse.org/repositories/home:/librespace:/satnogs-unstable/Raspbian_10/Release.key'
     state: 'present'
-  when: ansible_lsb.codename == "buster"
+  when: ansible_distribution_release == "buster"
   become: true
   register: res
   until: res is success
@@ -15,11 +15,11 @@
     src: 'etc/apt/apt.conf.d/01allow-releaseinfo-changes'
     dest: '/etc/apt/apt.conf.d/01allow-releaseinfo-changes'
     mode: 0755
-  when: ansible_lsb.codename == "buster"
+  when: ansible_distribution_release == "buster"
   become: true
 - name: Remove configutation file for APT to allow releaseinfo changes
   ansible.builtin.file:
     path: '/etc/apt/apt.conf.d/01allow-releaseinfo-changes'
     state: 'absent'
-  when: ansible_lsb.codename == "bullseye"
+  when: ansible_distribution_release == "bullseye"
   become: true

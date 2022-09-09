@@ -5,8 +5,8 @@
     msg: 'Detected Ansible {{ ansible_version.full }}. This role requires Ansible {{ version_minimum }} or greater.'
 - name: Check distribution
   ansible.builtin.assert:
-    that: dict(id=ansible_lsb.id, codename=ansible_lsb.codename) in lsb_compatibility
-    msg: 'This role does not support {{ ansible_lsb.id }} {{ ansible_lsb.codename }}.'
+    that: dict(id=ansible_distribution, codename=ansible_distribution_release) in lsb_compatibility
+    msg: 'This role does not support {{ ansible_distribution }} {{ ansible_distribution_release }}.'
 - import_tasks: apt.yml
 - import_tasks: packages.yml
 - import_tasks: zram.yml

@@ -20,7 +20,7 @@
     name:
       - >-
         {{
-        "python3-apt" if ansible_lsb.codename == "bullseye"
+        "python3-apt" if ansible_distribution_release == "bullseye"
         else "python-apt"
         }}
       - 'gnupg'

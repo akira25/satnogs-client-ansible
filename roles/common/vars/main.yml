@@ -14,19 +14,19 @@ repository_path:
 apt_repository_file: 'satnogs.list'
 apt_repository_stable: >-
   deb http://download.opensuse.org/repositories/home:/librespace:/satnogs/{{
-  repository_path[ansible_lsb.id.lower() ~ "_" ~ ansible_lsb.codename.lower()]
+  repository_path[ansible_distribution.lower() ~ "_" ~ ansible_distribution_release.lower()]
   }} ./
 apt_repository_unstable: >-
   deb http://download.opensuse.org/repositories/home:/librespace:/satnogs-unstable/{{
-  repository_path[ansible_lsb.id.lower() ~ "_" ~ ansible_lsb.codename.lower()]
+  repository_path[ansible_distribution.lower() ~ "_" ~ ansible_distribution_release.lower()]
   }} ./
 apt_key_url_stable: >-
   http://download.opensuse.org/repositories/home:/librespace:/satnogs/{{
-  repository_path[ansible_lsb.id.lower() ~ "_" ~ ansible_lsb.codename.lower()]
+  repository_path[ansible_distribution.lower() ~ "_" ~ ansible_distribution_release.lower()]
   }}/Release.key
 apt_key_url_unstable: >-
   http://download.opensuse.org/repositories/home:/librespace:/satnogs-unstable/{{
-  repository_path[ansible_lsb.id.lower() ~ "_" ~ ansible_lsb.codename.lower()]
+  repository_path[ansible_distribution.lower() ~ "_" ~ ansible_distribution_release.lower()]
   }}/Release.key
 package_retries: '3'
 package_delay: '1'
