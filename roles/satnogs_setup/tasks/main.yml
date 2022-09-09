@@ -4,14 +4,14 @@
     path: '/etc/needrestart/conf.d'
     state: 'directory'
     mode: '0755'
-  when: ansible_distribution == 'Raspbian'
+  when: ansible_lsb.id == 'Raspbian'
   become: true
 - name: Configure needrestart for Raspbian
   ansible.builtin.copy:
     src: 'etc/needrestart/conf.d/raspbian_kernel_filter.conf'
     dest: '/etc/needrestart/conf.d/raspbian_kernel_filter.conf'
     mode: 0644
-  when: ansible_distribution == 'Raspbian'
+  when: ansible_lsb.id == 'Raspbian'
   become: true
 - name: Remove deprecated satnogs-setup system dependencies
   ansible.builtin.package:
@@ -64,7 +64,7 @@
   ansible.builtin.apt_repository:
     repo: >-
       deb http://ppa.launchpad.net/ansible/ansible/ubuntu
-      {{ "trusty" if ansible_distribution_release == "buster" else "focal" }}
+      {{ "trusty" if ansible_lsb.codename == "buster" else "focal" }}
       main
     state: 'present'
     mode: 0644

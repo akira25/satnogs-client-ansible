@@ -17,7 +17,7 @@
       - 'video'
     append: true
     state: 'present'
-  when: ansible_distribution == 'Raspbian'
+  when: ansible_lsb.id == 'Raspbian'
   become: true
   notify:
     - Restart snmpd service
@@ -25,14 +25,14 @@
   ansible.builtin.file:
     path: /usr/local/bin/rasberry-sensors.sh
     state: absent
-  when: ansible_distribution == 'Raspbian'
+  when: ansible_lsb.id == 'Raspbian'
   become: true
 - name: Install raspi-sensors script
   ansible.builtin.copy:
     src: usr/local/bin/raspi-sensors
     dest: /usr/local/bin/raspi-sensors
     mode: 0755
-  when: ansible_distribution == 'Raspbian'
+  when: ansible_lsb.id == 'Raspbian'
   become: true
 - name: Extend SNMP with raspi-sensors script OID
   ansible.builtin.blockinfile:
@@ -49,7 +49,7 @@
       extend codec_mpg4 /usr/local/bin/raspi-sensors codec mpg4
       extend codec_mjpg /usr/local/bin/raspi-sensors codec mjpg
       extend codec_wmv9 /usr/local/bin/raspi-sensors codec wmv9
-  when: ansible_distribution == 'Raspbian'
+  when: ansible_lsb.id == 'Raspbian'
   become: true
   notify:
     - Restart snmpd service
@@ -57,7 +57,7 @@
   ansible.builtin.lineinfile:
     path: /etc/snmp/snmpd.conf
     line: 'view systemonly included .1.3.6.1.4.1.8072.1.3.2'
-  when: ansible_distribution == 'Raspbian'
+  when: ansible_lsb.id == 'Raspbian'
   become: true
   notify:
     - Restart snmpd service
@@ -93,7 +93,7 @@
     path: /etc/sudoers
     line: 'Debian-snmp ALL=(ALL) NOPASSWD: /usr/local/bin/rasberry-sensors.sh, /usr/bin/vcgencmd*'
     state: 'absent'
-  when: ansible_distribution == 'Raspbian'
+  when: ansible_lsb.id == 'Raspbian'
   become: true
 - name: Start/stop snmpd service
   ansible.builtin.service:
