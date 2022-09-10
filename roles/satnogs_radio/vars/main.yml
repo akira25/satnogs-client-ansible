@@ -2,7 +2,9 @@
 package_retries: '3'
 package_delay: '1'
 satnogs_radio_blacklist_modules:
+  - 'rtl2832_sdr'
   - 'dvb_usb_rtl28xxu'
+  - 'rtl2832'
 satnogs_radio_packages:
   - name: 'soapysdr-tools'
 default_satnogs_radio_flowgraphs_version: '1.4-1'
