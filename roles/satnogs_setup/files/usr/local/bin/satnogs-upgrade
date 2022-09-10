@@ -52,6 +52,7 @@ release_upgrade() {
 }
 
 upgrade
+release="$(lsb_release -c -s)"
 if [ "$release" = "$CURRENT_CODENAME" ] && [ "$release" != "$LATEST_CODENAME" ]; then
 	if whiptail \
 		   --yesno \
