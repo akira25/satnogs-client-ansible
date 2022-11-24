@@ -29,13 +29,18 @@
   become: true
   notify:
     - Update APT cache
+- name: Find old SatNOGS repositories
+  ansible.builtin.find:
+    paths: '/etc/apt/sources.list.d/'
+    patterns:
+      - 'download_opensuse_org_repositories_home_librespace_satnogs*.list'
+      - 'satnogs.list'
+  register: old_sources_list
 - name: Remove SatNOGS repositories
   ansible.builtin.file:
-    path: '{{ item }}'
+    path: '{{ item.path }}'
     state: 'absent'
-  with_fileglob:
-    - '/etc/apt/sources.list.d/download_opensuse_org_repositories_home_librespace_satnogs*.list'
-    - '/etc/apt/sources.list.d/satnogs.list'
+  loop: '{{ old_sources_list.files }}'
   when: ansible_os_family == 'Debian'
   become: true
   notify:
