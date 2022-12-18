@@ -1,4 +1,0 @@
----
-- name: Retrigger udev devices
-  ansible.builtin.command: 'udevadm trigger'
-  become: true

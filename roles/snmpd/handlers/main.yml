@@ -1,7 +1,0 @@
----
-- name: Restart snmpd service
-  ansible.builtin.service:
-    name: 'snmpd'
-    enabled: '{{ snmpd_enabled | default(false) }}'
-    state: '{{ "restarted" if snmpd_enabled | default(false) else "stopped" }}'
-  become: true

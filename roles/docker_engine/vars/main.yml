@@ -1,0 +1,7 @@
+---
+package_retries: '3'
+package_delay: '1'
+docker_compose_virtualenv: '/usr/local/share/virtualenvs/docker-compose'
+docker_compose_version: '1.29.2'
+docker_default:
+  log_driver: 'journald'

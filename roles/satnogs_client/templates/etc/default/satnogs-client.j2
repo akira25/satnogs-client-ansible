@@ -1,5 +1,0 @@
-{% for s in satnogs_client_settings %}
-{% if vars[s] is defined %}
-{{ s|upper }}="{{ vars[s] }}"
-{% endif %}
-{% endfor %}

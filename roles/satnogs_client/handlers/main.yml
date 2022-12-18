@@ -1,8 +1,0 @@
----
-- name: Restart satnogs-client service
-  ansible.builtin.systemd:
-    daemon_reload: true
-    name: 'satnogs-client'
-    enabled: true
-    state: 'restarted'
-  become: true

@@ -1,3 +1,0 @@
----
-experimental: false
-satnogs_radio_flowgraphs_version: '{{ default_satnogs_radio_flowgraphs_version }}'

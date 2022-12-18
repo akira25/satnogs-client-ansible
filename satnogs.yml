@@ -1,9 +1,12 @@
 ---
-- hosts: localhost
+- hosts: satnogs
   roles:
     - role: common
       tags:
         - common
+    - role: docker_engine
+      tags:
+        - docker_engine
     - role: satnogs
       tags:
         - satnogs

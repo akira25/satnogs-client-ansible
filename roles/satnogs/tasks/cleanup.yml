@@ -1,0 +1,102 @@
+---
+- name: Remove systemd services
+  ansible.builtin.file:
+    path: '{{ item }}'
+    state: 'absent'
+  become: true
+  loop:
+    - '/etc/systemd/system/rigctld.service'
+    - '/etc/systemd/system/rotctld.service'
+    - '/etc/systemd/system/satnogs-client.service'
+  notify:
+    - Reload systemd daemon
+- name: Remove SatNOGS Client tmpfs mount
+  ansible.posix.mount:
+    path: '/tmp/.satnogs'
+    src: 'tmpfs'
+    fstype: 'tmpfs'
+    opts: 'rw,nosuid,noexec,nodev,noatime'
+    state: 'absent'
+  when: ansible_virtualization_role != 'guest' or ansible_virtualization_type != 'docker'
+  become: true
+- name: Remove third-party repositories repositories
+  ansible.builtin.apt_repository:
+    repo: '{{ item }}'
+    state: 'absent'
+  when: ansible_os_family == 'Debian'
+  loop:
+    - 'deb http://ftp.debian.org/debian jessie-backports main'
+  become: true
+  notify:
+    - Update APT cache
+- name: Remove SatNOGS repositories
+  ansible.builtin.file:
+    path: '{{ item }}'
+    state: 'absent'
+  with_fileglob:
+    - '/etc/apt/sources.list.d/download_opensuse_org_repositories_home_librespace_satnogs*.list'
+    - '/etc/apt/sources.list.d/satnogs.list'
+  when: ansible_os_family == 'Debian'
+  become: true
+  notify:
+    - Update APT cache
+- name: Remove APT pins and configurations
+  ansible.builtin.file:
+    path: '{{ item }}'
+    state: 'absent'
+  loop:
+    - '/etc/apt/preferences.d/satnogs'
+    - '/etc/apt/apt.conf.d/01allow-releaseinfo-changes'
+  become: true
+  notify:
+    - Update APT cache
+- name: Uninstall SatNOGS packages
+  ansible.builtin.apt:
+    name:
+      - satnogs-flowgraphs
+      - libgnuradio-soapy
+      - gr-soapy
+      - libgnuradio-satnogs
+      - gr-satnogs
+    state: 'absent'
+  become: true
+- name: Remove SatNOGS scripts and directories
+  ansible.builtin.file:
+    path: '{{ item }}'
+    state: 'absent'
+  loop:
+    - '/usr/local/bin/satnogs-setup'
+    - '/usr/local/bin/satnogs-upgrade'
+    - '/usr/local/share/satnogs-setup'
+    - '/var/lib/satnogs-config'
+    - '/var/lib/satnogs'
+  become: true
+- name: Remove Raspbian specific scripts
+  ansible.builtin.file:
+    path: '{{ item }}'
+    state: absent
+  loop:
+    - '/usr/local/bin/rasberry-sensors.sh'
+    - '/usr/local/bin/raspi-sensors'
+  when: ansible_lsb.id == 'Raspbian'
+  become: true
+- name: Remove SNMP extra configuration
+  ansible.builtin.blockinfile:
+    path: /etc/snmp/snmpd.conf
+    block: |
+      extend temp /usr/local/bin/raspi-sensors temp
+      extend volts_core /usr/local/bin/raspi-sensors volts core
+      extend volts_sdram_c /usr/local/bin/raspi-sensors volts sdram_c
+      extend volts_sdram_i /usr/local/bin/raspi-sensors volts sdram_i
+      extend volts_sdram_p /usr/local/bin/raspi-sensors volts sdram_p
+      extend codec_h264 /usr/local/bin/raspi-sensors codec h264
+      extend codec_mpg2 /usr/local/bin/raspi-sensors codec mpg2
+      extend codec_wvc1 /usr/local/bin/raspi-sensors codec wvc1
+      extend codec_mpg4 /usr/local/bin/raspi-sensors codec mpg4
+      extend codec_mjpg /usr/local/bin/raspi-sensors codec mjpg
+      extend codec_wmv9 /usr/local/bin/raspi-sensors codec wmv9
+    state: absent
+  when: ansible_lsb.id == 'Raspbian'
+  become: true
+  notify:
+    - Restart snmpd service

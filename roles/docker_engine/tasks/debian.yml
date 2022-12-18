@@ -1,0 +1,179 @@
+---
+- name: Install Docker
+  ansible.builtin.apt:
+    name: '{{ item }}'
+    state: 'present'
+  loop:
+    - 'docker.io'
+    - 'docker-compose'
+  register: res
+  until: res is success
+  retries: '{{ package_retries }}'
+  delay: '{{ package_delay }}'
+  become: true
+- name: Configure Docker
+  ansible.builtin.template:
+    src: etc/docker/daemon.json.j2
+    dest: /etc/docker/daemon.json
+    mode: 0600
+  notify: 'Restart Docker'
+  become: true
+- name: Enable Docker
+  ansible.builtin.service:
+    name: 'docker'
+    enabled: true
+    state: 'started'
+  become: true
+- name: Install Python 3 virtualenv
+  ansible.builtin.package:
+    name: '{{ item }}'
+    state: 'present'
+  register: res
+  until: res is success
+  retries: '{{ package_retries }}'
+  delay: '{{ package_delay }}'
+  with_items:
+    - 'python3-virtualenv'
+  become: true
+- name: Get system Python 3 version  # noqa 306
+  ansible.builtin.shell: '/usr/bin/python3 --version 2>&1 | awk ''/^Python/ { print $2 }'''
+  become: true
+  register: res_system_python_version
+  changed_when: false
+- name: Get virtualenv Python version  # noqa 306
+  ansible.builtin.shell: '{{ docker_compose_virtualenv }}/bin/python --version 2>&1 | awk ''/^Python/ { print $2 }'''
+  become: true
+  register: res_virtualenv_python_version
+  changed_when: false
+- name: Remove virtualenv of old Python version
+  ansible.builtin.file:
+    path: '{{ docker_compose_virtualenv }}'
+    state: 'absent'
+  when: res_system_python_version.stdout != res_virtualenv_python_version.stdout
+  become: true
+- name: Install Docker Compose in virtualenv
+  ansible.builtin.pip:
+    name: 'docker-compose'
+    version: '{{ docker_compose_version }}'
+    state: 'present'
+    virtualenv: '{{ docker_compose_virtualenv }}'
+  register: res
+  until: res is success
+  retries: '{{ package_retries }}'
+  delay: '{{ package_delay }}'
+  become: true
+- name: Configure Docker networks
+  community.general.docker_network:
+    api_version: '{{ item.api_version | default(omit) }}'
+    appends: '{{ item.appends | default(omit) }}'
+    attachable: '{{ item.attachable | default(omit) }}'
+    ca_cert: '{{ item.ca_cert | default(omit) }}'
+    client_cert: '{{ item.client_cert | default(omit) }}'
+    client_key: '{{ item.client_key | default(omit) }}'
+    connected: '{{ item.connected | default(omit) }}'
+    debug: '{{ item.debug | default(omit) }}'
+    docker_host: '{{ item.docker_host | default(omit) }}'
+    driver: '{{ item.driver | default(omit) }}'
+    driver_options: '{{ item.driver_options | default(omit) }}'
+    enable_ipv6: '{{ item.enable_ipv6 | default(omit) }}'
+    force: '{{ item.force | default(omit) }}'
+    internal: '{{ item.internal | default(omit) }}'
+    ipam_config: '{{ item.ipam_config | default(omit) }}'
+    ipam_driver: '{{ item.ipam_driver | default(omit) }}'
+    ipam_driver_options: '{{ item.ipam_driver_options | default(omit) }}'
+    labels: '{{ item.labels | default(omit) }}'
+    name: '{{ item.name | default(omit) }}'
+    scope: '{{ item.scope | default(omit) }}'
+    ssl_version: '{{ item.ssl_version | default(omit) }}'
+    state: '{{ item.state | default(omit) }}'
+    timeout: '{{ item.timeout | default(omit) }}'
+    tls: '{{ item.tls | default(omit) }}'
+    tls_hostname: '{{ item.tls_hostname | default(omit) }}'
+    validate_certs: '{{ item.validate_certs | default(omit) }}'
+  vars:
+    ansible_python_interpreter: '{{ docker_compose_virtualenv }}/bin/python'
+  become: true
+  with_items: '{{ docker_networks | default([]) }}'
+- name: Check for Docker Compose changes
+  community.general.docker_compose:
+    api_version: '{{ item.api_version | default(omit) }}'
+    build: '{{ item.build | default(omit) }}'
+    cacert_path: '{{ item.cacert_path | default(omit) }}'
+    cert_path: '{{ item.cert_path | default(omit) }}'
+    debug: '{{ item.debug | default(omit) }}'
+    definition: '{{ item.definition | default(omit) }}'
+    dependencies: '{{ item.dependencies | default(omit) }}'
+    docker_host: '{{ item.docker_host | default(omit) }}'
+    files: '{{ item.files | default(omit) }}'
+    hostname_check: '{{ item.hostname_check | default(omit) }}'
+    key_path: '{{ item.key_path | default(omit) }}'
+    nocache: '{{ item.nocache | default(omit) }}'
+    project_name: '{{ item.project_name | default(omit) }}'
+    project_src: '{{ item.project_src | default(omit) }}'
+    pull: '{{ item.pull | default(omit) }}'
+    recreate: '{{ item.recreate | default(omit) }}'
+    remove_images: '{{ item.remove_images | default(omit) }}'
+    remove_volumes: '{{ item.remove_volumes | default(omit) }}'
+    restarted: '{{ item.restarted | default(omit) }}'
+    scale: '{{ item.scale | default(omit) }}'
+    services: '{{ item.services | default(omit) }}'
+    ssl_version: '{{ item.ssl_version | default(omit) }}'
+    state: '{{ item.state | default(omit) }}'
+    stopped: '{{ item.stopped | default(omit) }}'
+    timeout: '{{ item.timeout | default(omit) }}'
+    tls: '{{ item.tls | default(omit) }}'
+    tls_hostname: '{{ item.tls_hostname | default(omit) }}'
+    tls_verify: '{{ item.tls_verify | default(omit) }}'
+  vars:
+    ansible_python_interpreter: '{{ docker_compose_virtualenv }}/bin/python'
+  check_mode: true
+  become: true
+  with_items: '{{ docker_composes | default([]) }}'
+  register: res_compose_recreate
+#  no_log: true
+- name: Start Docker Compose application
+  community.general.docker_compose:
+    api_version: '{{ item.api_version | default(omit) }}'
+    build: '{{ item.build | default(omit) }}'
+    cacert_path: '{{ item.cacert_path | default(omit) }}'
+    cert_path: '{{ item.cert_path | default(omit) }}'
+    debug: '{{ item.debug | default(omit) }}'
+    definition: '{{ item.definition | default(omit) }}'
+    dependencies: '{{ item.dependencies | default(omit) }}'
+    docker_host: '{{ item.docker_host | default(omit) }}'
+    files: '{{ item.files | default(omit) }}'
+    hostname_check: '{{ item.hostname_check | default(omit) }}'
+    key_path: '{{ item.key_path | default(omit) }}'
+    nocache: '{{ item.nocache | default(omit) }}'
+    project_name: '{{ item.project_name | default(omit) }}'
+    project_src: '{{ item.project_src | default(omit) }}'
+    pull: '{{ item.pull | default(omit) }}'
+    recreate: '{{ item.recreate | default(omit) }}'
+    remove_images: '{{ item.remove_images | default(omit) }}'
+    remove_volumes: '{{ item.remove_volumes | default(omit) }}'
+    restarted: '{{ item.restarted | default(omit) }}'
+    scale: '{{ item.scale | default(omit) }}'
+    services: '{{ item.services | default(omit) }}'
+    ssl_version: '{{ item.ssl_version | default(omit) }}'
+    state: '{{ item.state | default(omit) }}'
+    stopped: '{{ item.stopped | default(omit) }}'
+    timeout: '{{ item.timeout | default(omit) }}'
+    tls: '{{ item.tls | default(omit) }}'
+    tls_hostname: '{{ item.tls_hostname | default(omit) }}'
+    tls_verify: '{{ item.tls_verify | default(omit) }}'
+  vars:
+    ansible_python_interpreter: '{{ docker_compose_virtualenv }}/bin/python'
+  become: true
+  with_items: >-
+    {{
+    docker_composes | default([]) |
+    selectattr("project_name", "in",
+      res_compose_recreate.results |
+      selectattr("changed") |
+      map(attribute="item.project_name") |
+      list
+    ) |
+    map("combine", {"state": "absent"}) +
+    docker_composes | default([])
+    }}
+#  no_log: true

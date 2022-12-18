@@ -7,7 +7,6 @@
   ansible.builtin.assert:
     that: dict(id=ansible_lsb.id, codename=ansible_lsb.codename) in lsb_compatibility
     msg: 'This role does not support {{ ansible_lsb.id }} {{ ansible_lsb.codename }}.'
-- import_tasks: apt.yml
 - import_tasks: packages.yml
 - import_tasks: zram.yml
   when: ansible_memtotal_mb < zram_memtotal_min

@@ -1,0 +1,4 @@
+---
+- import_tasks: debian.yml
+  when: ansible_distribution in ('Debian')
+# Clean up of images, volumes, networks etc.

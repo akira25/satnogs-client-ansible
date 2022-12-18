@@ -1,0 +1,19 @@
+{
+{% if docker is defined %}
+  {% if docker.ipv6 | default(false) %}
+    "ipv6": true,
+  {% endif %}
+  {% if not (docker.userland_proxy | default(true)) %}
+    "userland-proxy": false,
+  {% endif %}
+  {% if docker.fixed_cidr_v6 is defined %}
+    "fixed-cidr-v6": "{{ docker.fixed_cidr_v6 }}",
+  {% endif %}
+    "log-driver": "{{ docker.log_driver | default(docker_default.log_driver) }}",
+  {% if docker.log_opts is defined %}
+    "log-opts": {{ docker.log_opts | to_json }}
+  {% endif %}
+{% else %}
+    "log-driver": "{{ docker_default.log_driver }}"
+{% endif %}
+}

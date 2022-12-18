@@ -1,5 +1,0 @@
----
-apt_repository: '{{ experimental | ternary(apt_repository_unstable, apt_repository_stable) }}'
-apt_key_url: '{{ experimental | ternary(apt_key_url_unstable, apt_key_url_stable) }}'
-apt_key_id: '8BD3901736A40B6C'
-experimental: false

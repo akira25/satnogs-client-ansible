@@ -1,9 +1,0 @@
----
-- hosts: snmpds
-  roles:
-    - role: common
-      tags:
-        - common
-    - role: snmpd
-      tags:
-        - snmpd

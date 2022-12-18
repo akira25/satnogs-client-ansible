@@ -1,0 +1,27 @@
+---
+- name: Add LimeSDR udev rules
+  ansible.builtin.copy:
+    src: etc/udev/rules.d/64-limesuite.rules
+    dest: /etc/udev/rules.d/64-limesuite.rules
+    mode: 0644
+  become: true
+  notify:
+    - Retrigger udev devices
+- name: Blacklist SDR modules
+  ansible.builtin.kernel_blacklist:
+    name: '{{ item }}'
+    state: 'present'
+  become: true
+  with_items: '{{ satnogs_radio_blacklist_modules }}'
+- name: Check if list of kernel builtin modules exists
+  ansible.builtin.stat:
+    path: '/lib/modules/{{ ansible_kernel }}/modules.builtin'
+  register: modules_builtin
+- name: Unload SDR modules
+  ansible.builtin.modprobe:
+    name: '{{ item }}'
+    state: 'absent'
+  become: true
+  with_items: '{{ satnogs_radio_blacklist_modules }}'
+  when: modules_builtin.stat.exists
+

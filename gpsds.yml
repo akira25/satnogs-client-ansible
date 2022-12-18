@@ -1,9 +1,0 @@
----
-- hosts: gpsds
-  roles:
-    - role: common
-      tags:
-        - common
-    - role: gpsd
-      tags:
-        - gpsd
