@@ -1,6 +1,10 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+require 'yaml'
+
+host_vars = YAML.load_file("production/inventory/host_vars/satnogs/main.yml")
+
 Vagrant.configure("2") do |config|
 
   # Configure 'debian_buster'
@@ -26,18 +30,7 @@ Vagrant.configure("2") do |config|
     debian_buster.vm.provision "ansible" do |ansible|
       ansible.playbook = "site.yml"
       ansible.host_vars = {
-        "debian_buster" => {
-          "hamlib_utils_rot_enabled" => true,
-          "hamlib_utils_rot_opts" => "-m 1",
-          "satnogs_api_token" => "0123456789abcdef0123456789abcdef01234567",
-          "satnogs_rx_device" => "rtlsdr",
-          "satnogs_station_elev" => "100",
-          "satnogs_station_id" => "99999",
-          "satnogs_station_lat" => "10",
-          "satnogs_station_lon" => "10",
-          "snmpd_enabled" => true,
-          "gpsd_enabled" => true
-        }
+        "debian_buster" => example_host_vars
       }
       ansible.groups = {
         "satnogs_setups" => ["debian_buster"],
@@ -77,18 +70,7 @@ Vagrant.configure("2") do |config|
     debian_bullseye.vm.provision "ansible" do |ansible|
       ansible.playbook = "site.yml"
       ansible.host_vars = {
-        "debian_bullseye" => {
-          "hamlib_utils_rot_enabled" => true,
-          "hamlib_utils_rot_opts" => "-m 1",
-          "satnogs_api_token" => "0123456789abcdef0123456789abcdef01234567",
-          "satnogs_rx_device" => "rtlsdr",
-          "satnogs_station_elev" => "100",
-          "satnogs_station_id" => "99999",
-          "satnogs_station_lat" => "10",
-          "satnogs_station_lon" => "10",
-          "snmpd_enabled" => true,
-          "gpsd_enabled" => true
-        }
+        "debian_bullseye" => host_vars
       }
       ansible.groups = {
         "satnogs_setups" => ["debian_bullseye"],
