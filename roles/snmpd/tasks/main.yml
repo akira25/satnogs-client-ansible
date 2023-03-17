@@ -64,7 +64,7 @@
 - name: Setup snmpd listen configuration
   ansible.builtin.lineinfile:
     path: /etc/snmp/snmpd.conf
-    regexp: '^\s*agentAddress\s'
+    regexp: '^\s*agent[Aa]ddress\s'
     line: 'agentAddress {{ snmpd_agentaddress }}'
   when: snmpd_agentaddress is defined
   become: true
