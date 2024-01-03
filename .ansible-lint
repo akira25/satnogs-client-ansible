@@ -1,0 +1,5 @@
+---
+skip_list:
+  - 'name[play]'
+  - 'var-naming[no-role-prefix]'
+  - 'no-changed-when'
