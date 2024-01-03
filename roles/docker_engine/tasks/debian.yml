@@ -35,12 +35,12 @@
   with_items:
     - 'python3-virtualenv'
   become: true
-- name: Get system Python 3 version  # noqa 306
+- name: Get system Python 3 version  # noqa risky-shell-pipe
   ansible.builtin.shell: '/usr/bin/python3 --version 2>&1 | awk ''/^Python/ { print $2 }'''
   become: true
   register: res_system_python_version
   changed_when: false
-- name: Get virtualenv Python version  # noqa 306
+- name: Get virtualenv Python version  # noqa risky-shell-pipe
   ansible.builtin.shell: '{{ docker_compose_virtualenv }}/bin/python --version 2>&1 | awk ''/^Python/ { print $2 }'''
   become: true
   register: res_virtualenv_python_version
