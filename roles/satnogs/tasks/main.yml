@@ -1,3 +1,5 @@
 ---
+- name: Import tasks cleanup
   ansible.builtin.import_tasks: cleanup.yml
+- name: Import tasks sdr
   ansible.builtin.import_tasks: sdr.yml
