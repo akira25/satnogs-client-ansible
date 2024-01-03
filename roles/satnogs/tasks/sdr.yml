@@ -8,7 +8,7 @@
   notify:
     - Retrigger udev devices
 - name: Blacklist SDR modules
-  ansible.builtin.kernel_blacklist:
+  community.general.kernel_blacklist:
     name: '{{ item }}'
     state: 'present'
   become: true
@@ -18,10 +18,9 @@
     path: '/lib/modules/{{ ansible_kernel }}/modules.builtin'
   register: modules_builtin
 - name: Unload SDR modules
-  ansible.builtin.modprobe:
+  community.general.modprobe:
     name: '{{ item }}'
     state: 'absent'
   become: true
   with_items: '{{ satnogs_radio_blacklist_modules }}'
   when: modules_builtin.stat.exists
-

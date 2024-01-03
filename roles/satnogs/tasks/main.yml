@@ -1,3 +1,3 @@
 ---
-- import_tasks: cleanup.yml
-- import_tasks: sdr.yml
+  ansible.builtin.import_tasks: cleanup.yml
+  ansible.builtin.import_tasks: sdr.yml
