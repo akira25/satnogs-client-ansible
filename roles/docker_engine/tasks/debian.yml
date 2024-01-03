@@ -15,7 +15,7 @@
   ansible.builtin.template:
     src: etc/docker/daemon.json.j2
     dest: /etc/docker/daemon.json
-    mode: 0600
+    mode: '600'
   notify: 'Restart Docker'
   become: true
 - name: Enable Docker

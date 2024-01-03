@@ -14,7 +14,7 @@
   ansible.builtin.copy:
     src: 'etc/init.d/zram'
     dest: '/etc/init.d/zram'
-    mode: 0755
+    mode: '755'
   become: true
   notify:
     - Start ZRAM service

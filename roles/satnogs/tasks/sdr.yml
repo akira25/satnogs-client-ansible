@@ -3,7 +3,7 @@
   ansible.builtin.copy:
     src: etc/udev/rules.d/64-limesuite.rules
     dest: /etc/udev/rules.d/64-limesuite.rules
-    mode: 0644
+    mode: '644'
   become: true
   notify:
     - Retrigger udev devices
