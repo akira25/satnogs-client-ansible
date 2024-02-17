@@ -30,7 +30,7 @@ Vagrant.configure("2") do |config|
     debian_buster.vm.provision "ansible" do |ansible|
       ansible.playbook = "site.yml"
       ansible.host_vars = {
-        "debian_buster" => example_host_vars
+        "debian_buster" => host_vars
       }
       ansible.groups = {
         "satnogs_setups" => ["debian_buster"],
