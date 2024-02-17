@@ -130,7 +130,7 @@
   become: true
   with_items: '{{ docker_composes | default([]) }}'
   register: res_compose_recreate
-#  no_log: true
+  no_log: true
 - name: Start Docker Compose application
   community.general.docker_compose:
     api_version: '{{ item.api_version | default(omit) }}'
@@ -176,4 +176,4 @@
     map("combine", {"state": "absent"}) +
     docker_composes | default([])
     }}
-#  no_log: true
+  no_log: true
