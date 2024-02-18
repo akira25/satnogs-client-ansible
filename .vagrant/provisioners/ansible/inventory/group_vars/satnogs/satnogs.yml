@@ -1,0 +1,15 @@
+---
+satnogs_api_token: '0123456789abcdef0123456789abcdef01234567'
+satnogs_soapy_rx_device: 'driver=rtlsdr'
+satnogs_antenna: 'RX'
+satnogs_rx_samp_rate: '2.048e6'
+satnogs_station_elev: '1000'
+satnogs_station_id: '99999'
+satnogs_station_lat: '37.971'
+satnogs_station_lon: '23.725'
+
+hamlib_utils_rot_enabled: true
+hamlib_utils_rot_opts: '-m 1'
+
+snmpd_enabled: true
+gpsd_enabled: true

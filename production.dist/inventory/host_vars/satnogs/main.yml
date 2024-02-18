@@ -15,11 +15,6 @@ satnogs_station_id: '9999'
 satnogs_station_lat: '37.971'
 satnogs_station_lon: '23.725'
 
-hamlib_utils_rot_enabled: true
-hamlib_utils_rot_opts: '-m 1'
-
-snmpd_enabled: true
-gpsd_enabled: true
 ###
 # Default configuration values
 #

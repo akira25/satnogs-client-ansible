@@ -1,0 +1,7 @@
+---
+all:
+  hosts:
+    debian_bullseye:
+satnogs:
+  hosts:
+    debian_bullseye:

@@ -1,10 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-require 'yaml'
-
-host_vars = YAML.load_file("production/inventory/host_vars/satnogs/main.yml")
-
 Vagrant.configure("2") do |config|
 
   # Configure 'debian_bullseye'
@@ -30,17 +26,6 @@ Vagrant.configure("2") do |config|
     debian_bullseye.vm.provision "ansible" do |ansible|
       ansible.compatibility_mode = "2.0"
       ansible.playbook = "site.yml"
-      ansible.host_vars = {
-        "debian_bullseye" => host_vars
-      }
-      ansible.groups = {
-        "satnogs_setups" => ["debian_bullseye"],
-        "satnogs_radios" => ["debian_bullseye"],
-        "hamlib_utils" => ["debian_bullseye"],
-        "satnogs_clients" => ["debian_bullseye"],
-        "snmpds" => ["debian_bullseye"],
-        "gpsds" => ["debian_bullseye"]
-      }
     end
 
     # Execute shell post-provisioning script
