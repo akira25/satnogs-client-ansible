@@ -95,10 +95,35 @@ satnogs_station_lon: '23.725'
 #
 # Hamlib configuration
 #
-# hamlib_utils_rot_enabled: false
-# hamlib_utils_rot_opts: null
-# hamlib_utils_rig_disabled: false
-# hamlib_utils_rig_opts: '-T 127.0.0.1 -m 1'
+# rigctld_disabled: false
+# rigctld_model: null
+# rigctld_serial_speed: null
+# rigctld_port: null
+# rigctld_listen_addr: null
+# rigctld_set_conf: null
+# rigctld_verbose: null
+# rigctld_debug_time_stamps: null
+# rigctld_rig_file: null
+# rigctld_ptt_file: null
+# rigctld_dcd_file: null
+# rigctld_ptt_type: null
+# rigctld_dcd_type: null
+# rigctld_civaddr: null
+# rigctld_vfo: null
+# rigctld_twiddle_timeout: null
+# rigctld_uplink: null
+#
+# rotctld_enabled: false
+# rotctld_model: null
+# rotctld_serial_speed: null
+# rotctld_port: null
+# rotctld_listen_addr: null
+# rotctld_set_conf: null
+# rotctld_verbose: null
+# rotctld_debug_time_stamps: null
+# rotctld_rot_file: null
+# rotctld_set_azoffset: null
+# rotctld_set_eloffset: null
 
 #
 # SNMP configuration

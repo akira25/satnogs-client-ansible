@@ -1,0 +1,32 @@
+---
+rigctld_vars_map:
+  rigctld_model: 'MODEL'
+  rigctld_serial_speed: 'SERIAL_SPEED'
+  rigctld_port: 'PORT'
+  rigctld_listen_addr: 'LISTEN_ADDR'
+  rigctld_set_conf: 'SET_CONF'
+  rigctld_verbose: 'VERBOSE'
+  rigctld_debug_time_stamps: 'DEBUG_TIME_STAMPS'
+
+  rigctld_rig_file: 'RIG_FILE'
+  rigctld_ptt_file: 'PTT_FILE'
+  rigctld_dcd_file: 'DCD_FILE'
+  rigctld_ptt_type: 'PTT_TYPE'
+  rigctld_dcd_type: 'DCD_TYPE'
+  rigctld_civaddr: 'CIVADDR'
+  rigctld_vfo: 'VFO'
+  rigctld_twiddle_timeout: 'TWIDDLE_TIMEOUT'
+  rigctld_uplink: 'UPLINK'
+
+rotctld_vars_map:
+  rotctld_model: 'MODEL'
+  rotctld_serial_speed: 'SERIAL_SPEED'
+  rotctld_port: 'PORT'
+  rotctld_listen_addr: 'LISTEN_ADDR'
+  rotctld_set_conf: 'SET_CONF'
+  rotctld_verbose: 'VERBOSE'
+  rotctld_debug_time_stamps: 'DEBUG_TIME_STAMPS'
+
+  rotctld_rot_file: 'ROT_FILE'
+  rotctld_set_azoffset: 'SET_AZOFFSET'
+  rotctld_set_eloffset: 'SET_ELOFFSET'
