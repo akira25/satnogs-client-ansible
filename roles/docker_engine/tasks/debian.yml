@@ -1,5 +1,5 @@
 ---
-- name: Install Docker
+- name: Install Docker on Debian
   ansible.builtin.apt:
     name: '{{ item }}'
     state: 'present'

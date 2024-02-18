@@ -9,6 +9,8 @@
     msg: 'This role does not support {{ ansible_lsb.id }} {{ ansible_lsb.codename }}.'
 - name: Import tasks packages
   ansible.builtin.import_tasks: packages.yml
+- name: Import tasks cron
+  ansible.builtin.import_tasks: cron.yml
 - name: Import tasks zram
   ansible.builtin.import_tasks: zram.yml
   when: ansible_memtotal_mb < zram_memtotal_min
