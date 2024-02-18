@@ -1,0 +1,115 @@
+---
+- name: Update APT cache
+  ansible.builtin.apt:
+    update_cache: true
+  become: true
+- name: Manage packages for Debian/Ubuntu
+  ansible.builtin.package:
+    name: '{{ item.1 | map(attribute="name") }}'
+    state: '{{ item.0 }}'
+  become: true
+  loop: >-
+    {% set ns = namespace(result=[]) -%}
+    {% for package in packages | default([]) -%}
+    {% if package.keys() | reject("in", ["name", "state"]) == [] -%}
+    {% set ns.result =
+        ns.result + [package] -%}
+    {% endif -%}
+    {% endfor -%}
+    {{ ns.result | groupby("state", default="present") }}
+  tags:
+    - packages
+- name: Create temporary package download directory
+  ansible.builtin.tempfile:
+    state: 'directory'
+  register: 'res_download_dir'
+  when: >-
+    (
+    packages |
+    selectattr('state', 'defined') |
+    selectattr('state', 'eq', 'present') +
+    packages |
+    rejectattr('state', 'defined')
+    ) |
+    selectattr('deb', 'defined') |
+    selectattr('deb', 'regex', '://') != []
+  changed_when: false
+  become: true
+  tags:
+    - packages
+- name: Download packages
+  ansible.builtin.get_url:
+    checksum: '{{ item.checksum | default(omit) }}'
+    dest: '{{ res_download_dir.path }}'
+    url: '{{ item.deb }}'
+    mode: '644'
+  changed_when: false
+  become: true
+  loop: >-
+    {{
+    (packages |
+    selectattr('state', 'defined') |
+    selectattr('state', 'eq', 'present') +
+    packages |
+    rejectattr('state', 'defined')) |
+    selectattr('deb', 'defined') |
+    selectattr('deb', 'regex', '://')
+    }}
+  tags:
+    - packages
+- name: Manage packages with 'apt' for Debian/Ubuntu
+  ansible.builtin.apt:
+    allow_unauthenticated: '{{ item.allow_unauthenticated | default(omit) }}'
+    autoclean: '{{ item.autoclean | default(omit) }}'
+    autoremove: '{{ item.autoremove | default(omit) }}'
+    cache_valid_time: '{{ item.cache_valid_time | default(omit) }}'
+    deb: >-
+      {{
+      item.deb is regex('://') |
+      ternary([res_download_dir.path, item.deb | basename] | path_join,
+      item.deb) | default(omit)
+      }}
+    default_release: '{{ item.default_release | default(omit) }}'
+    dpkg_options: '{{ item.dpkg_options | default(omit) }}'
+    force: '{{ item.force | default(omit) }}'
+    force_apt_get: '{{ item.force_apt_get | default(omit) }}'
+    install_recommends: '{{ item.install_recommends | default(omit) }}'
+    name: '{{ item.name | default(omit) }}'
+    only_upgrade: '{{ item.only_upgrade | default(omit) }}'
+    policy_rc_d: '{{ item.policy_rc_d | default(omit) }}'
+    purge: '{{ item.purge | default(omit) }}'
+    state: '{{ item.state | default(omit) }}'
+    update_cache: '{{ item.update_cache | default(omit) }}'
+    upgrade: '{{ item.upgrade | default(omit) }}'
+  become: true
+  loop: >-
+    {% set ns = namespace(result=[]) -%}
+    {% for package in packages | default([]) -%}
+    {% if package.keys() | reject("in", ["name", "state"]) != [] -%}
+    {% set ns.result =
+        ns.result + [package] -%}
+    {% endif -%}
+    {% endfor -%}
+    {{ ns.result }}
+  tags:
+    - packages
+- name: Delete temporary package download directory
+  ansible.builtin.file:
+    path: '{{ res_download_dir.path }}'
+    state: 'absent'
+  when: >-
+    (
+    (
+    packages |
+    selectattr('state', 'defined') |
+    selectattr('state', 'eq', 'present') +
+    packages |
+    rejectattr('state', 'defined')
+    ) |
+    selectattr('deb', 'defined') |
+    selectattr('deb', 'regex', '://') != []
+    ) and res_download_dir.path is defined
+  changed_when: false
+  become: true
+  tags:
+    - packages

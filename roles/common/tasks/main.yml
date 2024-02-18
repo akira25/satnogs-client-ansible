@@ -7,8 +7,9 @@
   ansible.builtin.assert:
     that: dict(id=ansible_lsb.id, codename=ansible_lsb.codename) in lsb_compatibility
     msg: 'This role does not support {{ ansible_lsb.id }} {{ ansible_lsb.codename }}.'
-- name: Import tasks packages
-  ansible.builtin.import_tasks: packages.yml
+- name: Import tasks packages for Debian
+  ansible.builtin.import_tasks: packages.debian.yml
+  when: ansible_distribution in ('Ubuntu', 'Debian')
 - name: Import tasks cron
   ansible.builtin.import_tasks: cron.yml
 - name: Import tasks zram

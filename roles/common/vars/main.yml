@@ -12,7 +12,10 @@ lsb_compatibility:
 package_retries: '3'
 package_delay: '1'
 packages:
-  - 'acl'
-  - 'rng-tools'
-  - 'sudo'
+  - name: 'acl'
+    state: 'present'
+  - name: 'rng-tools'
+    state: 'present'
+  - name: 'sudo'
+    state: 'present'
 zram_memtotal_min: 2048
