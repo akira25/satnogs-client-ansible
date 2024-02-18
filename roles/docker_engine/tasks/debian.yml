@@ -51,6 +51,17 @@
     state: 'absent'
   when: res_system_python_version.stdout != res_virtualenv_python_version.stdout
   become: true
+- name: Install Docker in virtualenv
+  ansible.builtin.pip:
+    name: 'docker'
+    version: '{{ docker_version }}'
+    state: 'present'
+    virtualenv: '{{ docker_compose_virtualenv }}'
+  register: res
+  until: res is success
+  retries: '{{ package_retries }}'
+  delay: '{{ package_delay }}'
+  become: true
 - name: Install Docker Compose in virtualenv
   ansible.builtin.pip:
     name: 'docker-compose'
