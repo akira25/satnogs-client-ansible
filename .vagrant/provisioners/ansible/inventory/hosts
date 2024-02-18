@@ -2,6 +2,6 @@
 all:
   hosts:
     debian_bullseye:
-satnogs:
+satnogses:
   hosts:
     debian_bullseye:
