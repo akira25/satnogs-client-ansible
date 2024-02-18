@@ -28,6 +28,7 @@ Vagrant.configure("2") do |config|
 
     # Execute Ansible provisioning
     debian_bullseye.vm.provision "ansible" do |ansible|
+      ansible.compatibility_mode = "2.0"
       ansible.playbook = "site.yml"
       ansible.host_vars = {
         "debian_bullseye" => host_vars
