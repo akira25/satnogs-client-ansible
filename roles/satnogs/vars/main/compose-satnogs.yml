@@ -29,6 +29,10 @@ compose_satnogs_params:
     name: 'satnogs_rigctld'
     uid: '999'
     gid: '999'
+  rotctld:
+    name: 'satnogs_rotctld'
+    uid: '999'
+    gid: '999'
   satnogs_client:
     name: 'satnogs_satnogs-client'
     uid: '999'
