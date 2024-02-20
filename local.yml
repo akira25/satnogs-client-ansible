@@ -1,9 +1,2 @@
 ---
-- hosts: localhost
-  roles:
-    - role: common
-      tags:
-        - common
-    - role: satnogs
-      tags:
-        - satnogs
+- import_playbook: satnogses.yml
