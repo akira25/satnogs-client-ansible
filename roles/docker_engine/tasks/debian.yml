@@ -54,6 +54,7 @@
     state: 'present'
     extra_args: '--no-deps'
     virtualenv: '{{ docker_compose_virtualenv }}'
+    virtualenv_python: '{{ (ansible_distribution_release == "buster") | ternary("python3", omit) }}'
   register: res
   until: res is success
   retries: '{{ package_retries }}'

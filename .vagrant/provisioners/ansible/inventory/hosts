@@ -1,9 +1,11 @@
 ---
 all:
   hosts:
+    debian_buster:
     debian_bullseye:
     debian_bookworm:
 satnogses:
   hosts:
+    debian_buster:
     debian_bullseye:
     debian_bookworm:
