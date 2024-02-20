@@ -1,4 +1,12 @@
 ---
+- name: Add RTL-SDR udev rules
+  ansible.builtin.copy:
+    src: etc/udev/rules.d/rtl-sdr.rules
+    dest: /etc/udev/rules.d/rtl-sdr.rules
+    mode: '644'
+  become: true
+  notify:
+    - Retrigger udev devices
 - name: Add LimeSDR udev rules
   ansible.builtin.copy:
     src: etc/udev/rules.d/64-limesuite.rules
