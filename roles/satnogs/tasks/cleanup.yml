@@ -80,6 +80,10 @@
     - '/usr/local/bin/raspi-sensors'
   when: ansible_lsb.id == 'Raspbian'
   become: true
+- name: Get stats of the SNMP config file
+  ansible.builtin.stat:
+    path: /etc/snmp/snmpd.conf
+  register: res_snmp_conf
 - name: Remove SNMP extra configuration
   ansible.builtin.blockinfile:
     path: /etc/snmp/snmpd.conf
@@ -96,7 +100,10 @@
       extend codec_mjpg /usr/local/bin/raspi-sensors codec mjpg
       extend codec_wmv9 /usr/local/bin/raspi-sensors codec wmv9
     state: absent
-  when: ansible_lsb.id == 'Raspbian'
+  when: >-
+    ansible_lsb.id == 'Raspbian' and
+    res_snmp_conf.stat.isreg is defined and
+    res_snmp_conf.stat.isreg
   become: true
   notify:
     - Restart snmpd service
