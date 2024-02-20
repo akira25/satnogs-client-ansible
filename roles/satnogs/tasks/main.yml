@@ -3,3 +3,5 @@
   ansible.builtin.import_tasks: cleanup.yml
 - name: Import tasks sdr
   ansible.builtin.import_tasks: sdr.yml
+- name: Import tasks satnogs-install
+  ansible.builtin.import_tasks: satnogs-install.yml

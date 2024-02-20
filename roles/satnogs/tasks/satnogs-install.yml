@@ -1,0 +1,7 @@
+---
+- name: Copy install script
+  ansible.builtin.copy:
+    src: 'usr/local/bin/satnogs-install'
+    dest: '/usr/local/bin/satnogs-install'
+    mode: '755'
+  become: true
