@@ -9,6 +9,10 @@ lsb_compatibility:
     codename: 'bullseye'
   - id: 'Raspbian'
     codename: 'bullseye'
+  - id: 'Debian'
+    codename: 'bookworm'
+  - id: 'Raspbian'
+    codename: 'bookworm'
 package_retries: '3'
 package_delay: '1'
 packages:

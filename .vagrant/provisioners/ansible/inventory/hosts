@@ -2,6 +2,8 @@
 all:
   hosts:
     debian_bullseye:
+    debian_bookworm:
 satnogses:
   hosts:
     debian_bullseye:
+    debian_bookworm:
