@@ -45,7 +45,7 @@ compose_satnogs:
     version: '3.8'
     services:
       rigctld:
-        image: 'librespace/hamlib:4.0'
+        image: '{{ docker_rigctld_image }}'
         container_name: '{{ compose_satnogs_params.rigctld.name }}'
         read_only: true
         user: '{{ compose_satnogs_params.rigctld.uid }}:{{ compose_satnogs_params.rigctld.gid }}'
@@ -58,7 +58,7 @@ compose_satnogs:
           }}
         restart: 'always'
       rotctld:
-        image: 'librespace/hamlib:4.0'
+        image: '{{ docker_rotctld_image }}'
         container_name: '{{ compose_satnogs_params.rotctld.name }}'
         read_only: true
         user: '{{ compose_satnogs_params.rotctld.uid }}:{{ compose_satnogs_params.rotctld.gid }}'
@@ -71,7 +71,7 @@ compose_satnogs:
           }}
         restart: 'always'
       satnogs_client:
-        image: 'librespace/satnogs-client:master'
+        image: '{{ docker_satnogs_client_image }}'
         container_name: '{{ compose_satnogs_params.satnogs_client.name }}'
         read_only: true
         user: '{{ compose_satnogs_params.satnogs_client.uid }}:{{ compose_satnogs_params.satnogs_client.gid }}'
