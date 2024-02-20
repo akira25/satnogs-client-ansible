@@ -1,11 +1,8 @@
 ---
 - name: Install Docker on Debian
   ansible.builtin.apt:
-    name: '{{ item }}'
+    name: 'docker.io'
     state: 'present'
-  loop:
-    - 'docker.io'
-    - 'docker-compose'
   register: res
   until: res is success
   retries: '{{ package_retries }}'
