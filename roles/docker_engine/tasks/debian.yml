@@ -30,7 +30,7 @@
   retries: '{{ package_retries }}'
   delay: '{{ package_delay }}'
   with_items:
-    - 'python3-virtualenv'
+    - 'virtualenv'
   become: true
 - name: Get system Python 3 version  # noqa risky-shell-pipe
   ansible.builtin.shell: '/usr/bin/python3 --version 2>&1 | awk ''/^Python/ { print $2 }'''
