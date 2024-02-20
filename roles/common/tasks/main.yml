@@ -10,8 +10,10 @@
 - name: Import tasks packages for Debian
   ansible.builtin.import_tasks: packages.debian.yml
   when: ansible_distribution in ('Ubuntu', 'Debian')
-- name: Import tasks cron
+- name: Import tasks for files
+  ansible.builtin.import_tasks: files.yml
+- name: Import tasks for cron
   ansible.builtin.import_tasks: cron.yml
-- name: Import tasks zram
+- name: Import tasks for zram
   ansible.builtin.import_tasks: zram.yml
   when: ansible_memtotal_mb < zram_memtotal_min
