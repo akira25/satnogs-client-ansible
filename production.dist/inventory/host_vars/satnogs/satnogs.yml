@@ -126,13 +126,6 @@ satnogs_station_lon: '23.725'
 # rotctld_set_eloffset: null
 
 #
-# SNMP configuration
-#
-# snmpd_enabled: false
-# snmpd_agentaddress: null
-# snmpd_rocommunity: null
-
-#
 # GPS configuration
 #
 # gpsd_enabled: false

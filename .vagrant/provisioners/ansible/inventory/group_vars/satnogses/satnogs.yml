@@ -11,5 +11,4 @@ satnogs_station_lon: '23.725'
 rotctld_enabled: true
 rotctld_model: '1'
 
-snmpd_enabled: true
 gpsd_enabled: true
