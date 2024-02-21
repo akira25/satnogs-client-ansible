@@ -2,3 +2,5 @@
 docker_rigctld_image: 'librespace/hamlib:4.0'
 docker_rotctld_image: 'librespace/hamlib:4.0'
 docker_satnogs_client_image: 'librespace/satnogs-client:master'
+
+satnogs_rig_ip: 'rigctld'
