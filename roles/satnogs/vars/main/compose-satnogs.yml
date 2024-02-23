@@ -82,7 +82,7 @@ compose_satnogs:
         volumes:
           - type: 'tmpfs'
             target: '/tmp'
-          - type: 'volume'
+          - type: 'tmpfs'
             target: '/var/lib/satnogs-client'
           - '/dev/bus/usb:/dev/bus/usb'
         restart: 'always'
