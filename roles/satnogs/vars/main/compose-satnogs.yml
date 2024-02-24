@@ -38,51 +38,48 @@ compose_satnogs_params:
     uid: '999'
     gid: '999'
 
+compose_satnogs_service_rigctld:
+  image: '{{ docker_rigctld_image }}'
+  container_name: '{{ compose_satnogs_params.rigctld.name }}'
+  read_only: true
+  user: '{{ compose_satnogs_params.rigctld.uid }}:{{ compose_satnogs_params.rigctld.gid }}'
+  environment: '{{ compose_satnogs_rigctld_environment }}'
+  command: 'rigctld'
+  restart: 'always'
+
+compose_satnogs_service_rotctld:
+  image: '{{ docker_rotctld_image }}'
+  container_name: '{{ compose_satnogs_params.rotctld.name }}'
+  read_only: true
+  user: '{{ compose_satnogs_params.rotctld.uid }}:{{ compose_satnogs_params.rotctld.gid }}'
+  environment: '{{ compose_satnogs_rotctld_environment }}'
+  command: 'rotctld'
+  restart: 'always'
+
+compose_satnogs_service_satnogs_client:
+  image: '{{ docker_satnogs_client_image }}'
+  container_name: '{{ compose_satnogs_params.satnogs_client.name }}'
+  read_only: true
+  user: '{{ compose_satnogs_params.satnogs_client.uid }}:{{ compose_satnogs_params.satnogs_client.gid }}'
+  device_cgroup_rules:
+    - 'c 189:* rwm'
+  environment: '{{ compose_satnogs_satnogs_client_environment }}'
+  command: 'satnogs-client'
+  volumes:
+    - type: 'tmpfs'
+      target: '/tmp'
+    - type: 'tmpfs'
+      target: '/var/lib/satnogs-client'
+    - '/dev/bus/usb:/dev/bus/usb'
+  restart: 'always'
+
 compose_satnogs:
   project_name: '{{ compose_satnogs_params.name }}'
   pull: true
+  remove_orphans: true
   definition:
     version: '3.8'
     services:
-      rigctld:
-        image: '{{ docker_rigctld_image }}'
-        container_name: '{{ compose_satnogs_params.rigctld.name }}'
-        read_only: true
-        user: '{{ compose_satnogs_params.rigctld.uid }}:{{ compose_satnogs_params.rigctld.gid }}'
-        environment: '{{ compose_satnogs_rigctld_environment }}'
-        command: >-
-          {{
-          rigctld_disabled |
-          default(false) |
-          ternary('/bin/sh -c "while true; do sleep 10000; done"', 'rigctld')
-          }}
-        restart: 'always'
-      rotctld:
-        image: '{{ docker_rotctld_image }}'
-        container_name: '{{ compose_satnogs_params.rotctld.name }}'
-        read_only: true
-        user: '{{ compose_satnogs_params.rotctld.uid }}:{{ compose_satnogs_params.rotctld.gid }}'
-        environment: '{{ compose_satnogs_rotctld_environment }}'
-        command: >-
-          {{
-          rotctld_disabled |
-          default(false) |
-          ternary('/bin/sh -c "while true; do sleep 10000; done"', 'rotctld')
-          }}
-        restart: 'always'
-      satnogs_client:
-        image: '{{ docker_satnogs_client_image }}'
-        container_name: '{{ compose_satnogs_params.satnogs_client.name }}'
-        read_only: true
-        user: '{{ compose_satnogs_params.satnogs_client.uid }}:{{ compose_satnogs_params.satnogs_client.gid }}'
-        device_cgroup_rules:
-          - 'c 189:* rwm'
-        environment: '{{ compose_satnogs_satnogs_client_environment }}'
-        command: 'satnogs-client'
-        volumes:
-          - type: 'tmpfs'
-            target: '/tmp'
-          - type: 'tmpfs'
-            target: '/var/lib/satnogs-client'
-          - '/dev/bus/usb:/dev/bus/usb'
-        restart: 'always'
+      rigctld: '{{ rigctld_disabled | default(false) | ternary(omit, compose_satnogs_service_rigctld) }}'
+      rotctld: '{{ rotctld_enabled | default(false) | ternary(compose_satnogs_service_rotctld, omit) }}'
+      satnogs_client: '{{ compose_satnogs_service_satnogs_client }}'
