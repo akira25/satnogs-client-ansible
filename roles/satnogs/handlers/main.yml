@@ -1,21 +1,4 @@
 ---
-- name: Update APT cache
-  ansible.builtin.apt:
-    update_cache: true
-  become: true
-  register: res
-  until: res is success
-  retries: '{{ package_retries }}'
-  delay: '{{ package_delay }}'
-- name: Reload systemd daemon
-  ansible.builtin.systemd:
-    daemon_reload: true
-  become: true
 - name: Retrigger udev devices
   ansible.builtin.command: 'udevadm trigger'
-  become: true
-- name: Restart snmpd service
-  ansible.builtin.service:
-    name: 'snmpd'
-    state: 'restarted'
   become: true

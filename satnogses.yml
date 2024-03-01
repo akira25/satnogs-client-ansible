@@ -1,6 +1,9 @@
 ---
 - hosts: satnogses
   roles:
+    - role: satnogs_cleanup
+      tags:
+        - satnogs-cleanup
     - role: common
       tags:
         - common
@@ -9,4 +12,4 @@
         - satnogs
     - role: docker_engine
       tags:
-        - docker_engine
+        - docker-engine
