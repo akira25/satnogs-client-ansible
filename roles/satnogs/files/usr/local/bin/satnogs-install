@@ -106,7 +106,6 @@ main() {
 
 	echo "Executing SatNOGS Ansible..."
 	exec docker run \
-	     -ti \
 	     --rm \
 	     --name "${DOCKER_ANSIBLE_NAME}" \
 	     --hostname "${DOCKER_ANSIBLE_NAME}" \
