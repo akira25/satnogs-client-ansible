@@ -115,6 +115,7 @@ main() {
 	     -v "/root/.ansible/pull:/root/.ansible/pull:ro" \
 	     "${DOCKER_ANSIBLE_IMAGE}" \
 	     ansible-pull \
+	     -o \
 	     -i "${DOCKER_ANSIBLE_CONFIG_DIR}" \
 	     -U "${playbook_url}" \
 	     -C "${checkout_ref}"
