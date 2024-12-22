@@ -1,5 +1,5 @@
 ---
 - name: Import tasks sdr
   ansible.builtin.import_tasks: sdr.yml
-- name: Import tasks satnogs-install
-  ansible.builtin.import_tasks: satnogs-install.yml
+- name: Import tasks satnogs-setup
+  ansible.builtin.import_tasks: satnogs-setup.yml

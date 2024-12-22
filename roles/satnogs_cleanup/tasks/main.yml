@@ -70,7 +70,6 @@
     path: '{{ item }}'
     state: 'absent'
   loop:
-    - '/usr/local/bin/satnogs-setup'
     - '/usr/local/bin/satnogs-upgrade'
     - '/usr/local/share/satnogs-setup'
     - '/var/lib/satnogs-config'

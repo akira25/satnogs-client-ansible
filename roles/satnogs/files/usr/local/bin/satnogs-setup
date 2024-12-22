@@ -1,0 +1,280 @@
+#!/bin/sh -e
+#
+# SatNOGS station setup script
+#
+# Copyright (C) 2024 Libre Space Foundation <https://libre.space/>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+DEFAULT_SATNOGS_SETUP_SATNOGS_ANSIBLE_CHECKOUT_REF="stable"
+DEFAULT_SATNOGS_SETUP_SATNOGS_ANSIBLE_PLAYBOOK_URL="https://gitlab.com/librespacefoundation/satnogs/satnogs-ansible.git"
+DEFAULT_SATNOGS_SETUP_DOCKER_ANSIBLE_IMAGE="librespace/ansible:8.4.0"
+DEFAULT_SATNOGS_SETUP_DOCKER_SATNOGS_CONFIG_IMAGE="librespace/satnogs-config:master"
+
+DOCKER_BINDMOUNTS_DIR="/var/lib/docker-bindmounts"
+DOCKER_ANSIBLE_NAME="ansible"
+DOCKER_ANSIBLE_CONFIG_DIR="/etc/ansible"
+DOCKER_SATNOGS_CONFIG_NAME="satnogs-config"
+DOCKER_SATNOGS_CONFIG_UID="999"
+DOCKER_SATNOGS_CONFIG_VARSTATEDIR="/var/lib/satnogs-config"
+
+DEFAULT_CONF_FILE="/etc/satnogs-setup.conf"
+REQUIREMENTS="
+grep
+sudo
+apt-get
+"
+
+requirements() {
+	for req in $REQUIREMENTS; do
+		if ! which "$req" >/dev/null; then
+			if [ -z "$has_missing" ]; then
+				echo "satnogs-setup: Missing script requirements!" 1>&2
+				echo "Please install:" 1>&2
+				has_missing=1
+			fi
+			echo " - '$req'" 1>&2
+		fi
+	done
+	if [ -n "$has_missing" ]; then
+		exit 1
+	fi
+}
+
+usage() {
+	cat 1>&2 <<EOF
+Usage: satnogs-setup [OPTIONS]...
+SatNOGS station setup script
+
+Options:
+  -c FILE                   Configuration file
+  -C GIT_REF                Git branch/tag/commit of SatNOGS Ansible to checkout.
+                             (default: '$DEFAULT_SATNOGS_SETUP_SATNOGS_ANSIBLE_CHECKOUT_REF')
+  -U GIT_URL                Git URL of SatNOGS Ansible repository.
+                             (default: '$DEFAULT_SATNOGS_SETUP_SATNOGS_ANSIBLE_PLAYBOOK_URL')
+  -a DOCKER_IMAGE           Ansible Docker image.
+                             (default: '$DEFAULT_SATNOGS_SETUP_DOCKER_ANSIBLE_IMAGE')
+  -i DOCKER_IMAGE           SatNOGS Config Docker image.
+                             (default: '$DEFAULT_SATNOGS_SETUP_DOCKER_SATNOGS_CONFIG_IMAGE')
+  -n                        Skip installation.
+  -s                        Skip configuration.
+
+  --help                    Print usage
+
+Configuration:
+'${conf_file:-$DEFAULT_CONF_FILE}' file is sourced and may contain the following
+environment variables:
+
+  SATNOGS_SETUP_SATNOGS_ANSIBLE_CHECKOUT_REF
+                            Git branch/tag/commit of SatNOGS Ansible to checkout.
+                             (default: '$DEFAULT_SATNOGS_SETUP_SATNOGS_ANSIBLE_CHECKOUT_REF')
+  SATNOGS_SETUP_SATNOGS_ANSIBLE_PLAYBOOK_URL
+                            Git URL of SatNOGS Ansible repository.
+                             (default: '$DEFAULT_SATNOGS_SETUP_SATNOGS_ANSIBLE_PLAYBOOK_URL')
+  SATNOGS_SETUP_DOCKER_ANSIBLE_IMAGE
+                            Ansible Docker image.
+                             (default: '$DEFAULT_SATNOGS_SETUP_DOCKER_ANSIBLE_IMAGE')
+  SATNOGS_SETUP_DOCKER_SATNOGS_CONFIG_IMAGE
+                            SatNOGS Config Docker image.
+                             (default: '$DEFAULT_SATNOGS_SETUP_DOCKER_SATNOGS_CONFIG_IMAGE')
+
+EOF
+	exit 1
+}
+
+parse_args() {
+	unset conf_file
+	unset satnogs_ansible_checkout_ref
+	unset satnogs_ansible_playbook_url
+	unset docker_ansible_image
+	unset docker_satnogs_config_image
+	unset skip_install
+	unset skip_config
+
+	while [ $# -gt 0 ]; do
+		arg="$1"
+		case $arg in
+			-c)
+				if [ -n "$conf_file" ] || [ $# -le 1 ]; then
+					usage
+				fi
+				shift
+				conf_file="$1"
+				;;
+			-C)
+				if [ -n "$satnogs_ansible_checkout_ref" ] || [ $# -le 1 ]; then
+					usage
+				fi
+				shift
+				satnogs_ansible_checkout_ref="$1"
+				;;
+			-U)
+				if [ -n "$satnogs_ansible_playbook_url" ] || [ $# -le 1 ]; then
+					usage
+				fi
+				shift
+				satnogs_ansible_playbook_url="$1"
+				;;
+			-a)
+				if [ -n "$docker_ansible_image" ] || [ $# -le 1 ]; then
+					usage
+				fi
+				shift
+				docker_ansible_image="$1"
+				;;
+			-i)
+				if [ -n "$docker_satnogs_config_image" ] || [ $# -le 1 ]; then
+					usage
+				fi
+				shift
+				docker_satnogs_config_image="$1"
+				;;
+			-n)
+				skip_install=1
+				;;
+			-s)
+				skip_config=1
+				;;
+			--help)
+				usage
+				;;
+			*)
+				;;
+		esac
+		shift
+	done
+}
+
+load_conf() {
+	if [ -f "${conf_file:-$DEFAULT_CONF_FILE}" ]; then
+		# shellcheck disable=SC1090
+		. "$(realpath "${conf_file:-$DEFAULT_CONF_FILE}")"
+	fi
+
+        satnogs_ansible_checkout_ref="${satnogs_ansible_checkout_ref:-${SATNOGS_SETUP_SATNOGS_ANSIBLE_CHECKOUT_REF:-$DEFAULT_SATNOGS_SETUP_SATNOGS_ANSIBLE_CHECKOUT_REF}}"
+        satnogs_ansible_playbook_url="${satnogs_ansible_playbook_url:-${SATNOGS_SETUP_SATNOGS_ANSIBLE_PLAYBOOK_URL:-$DEFAULT_SATNOGS_SETUP_SATNOGS_ANSIBLE_PLAYBOOK_URL}}"
+        docker_ansible_image="${docker_ansible_image:-${SATNOGS_SETUP_DOCKER_ANSIBLE_IMAGE:-$DEFAULT_SATNOGS_SETUP_DOCKER_ANSIBLE_IMAGE}}"
+        docker_satnogs_config_image="${docker_satnogs_config_image:-${SATNOGS_SETUP_DOCKER_SATNOGS_CONFIG_IMAGE:-$DEFAULT_SATNOGS_SETUP_DOCKER_SATNOGS_CONFIG_IMAGE}}"
+}
+
+root_or_sudo() {
+	if [ "$(id -u)" -eq 0 ]; then
+		"$@"
+	else
+		sudo -H "$@"
+	fi
+}
+
+install_docker() {
+	echo "Installing Docker..."
+	root_or_sudo apt-get -qq update
+	root_or_sudo apt-get -qqy install docker.io
+	echo
+}
+
+configure_ansible() {
+	echo "Configuring SatNOGS Ansible..."
+	root_or_sudo install \
+		-m 750 \
+		-o ${DOCKER_SATNOGS_CONFIG_UID} \
+		-d "${DOCKER_BINDMOUNTS_DIR}/${DOCKER_ANSIBLE_NAME}${DOCKER_ANSIBLE_CONFIG_DIR}/host_vars"
+
+	root_or_sudo tee "${DOCKER_BINDMOUNTS_DIR}/${DOCKER_ANSIBLE_NAME}${DOCKER_ANSIBLE_CONFIG_DIR}/hosts" <<EOF >/dev/null
+all:
+  hosts:
+    ${DOCKER_ANSIBLE_NAME}:
+      ansible_connection: 'community.docker.nsenter'
+satnogses:
+  hosts:
+    ${DOCKER_ANSIBLE_NAME}:
+EOF
+
+	root_or_sudo tee "${DOCKER_BINDMOUNTS_DIR}/${DOCKER_ANSIBLE_NAME}${DOCKER_ANSIBLE_CONFIG_DIR}/ansible.cfg" <<EOF >/dev/null
+[defaults]
+interpreter_python = auto_silent
+EOF
+	echo
+}
+
+provision_station() {
+	docker_ansible_image="$1"
+	satnogs_ansible_playbook_url="$2"
+	satnogs_ansible_checkout_ref="$3"
+	only_if_changed="$4"
+
+	echo "Provisioning SatNOGS station..."
+	root_or_sudo docker run \
+		--rm \
+		--read-only \
+		--pull always \
+		--name "${DOCKER_ANSIBLE_NAME}" \
+		--hostname "${DOCKER_ANSIBLE_NAME}" \
+		--privileged \
+		--pid=host \
+		--tmpfs "/tmp" \
+		--tmpfs "/root/.ansible/tmp" \
+		-v "${DOCKER_BINDMOUNTS_DIR}/${DOCKER_ANSIBLE_NAME}${DOCKER_ANSIBLE_CONFIG_DIR}:${DOCKER_ANSIBLE_CONFIG_DIR}:ro" \
+		-v "/root/.ansible/pull:/root/.ansible/pull:ro" \
+		"${docker_ansible_image}" \
+		ansible-pull \
+		${only_if_changed:+-o} \
+		-i "${DOCKER_ANSIBLE_CONFIG_DIR}" \
+		-U "${satnogs_ansible_playbook_url}" \
+		-C "${satnogs_ansible_checkout_ref}"
+}
+
+configure_station() {
+	docker_satnogs_config_image="$1"
+
+	echo "Launching SatNOGS configuration tool..."
+	root_or_sudo docker run \
+		-ti \
+		--rm \
+		--read-only \
+		--user "${DOCKER_SATNOGS_CONFIG_UID}:${DOCKER_SATNOGS_CONFIG_UID}" \
+		--pull always \
+		--name "${DOCKER_SATNOGS_CONFIG_NAME}" \
+		--hostname "${DOCKER_SATNOGS_CONFIG_NAME}" \
+		-e SATNOGS_CONFIG_CONFIG_FILE="${DOCKER_ANSIBLE_CONFIG_DIR}/host_vars/${DOCKER_ANSIBLE_NAME}" \
+		--tmpfs "/tmp" \
+		-v "${DOCKER_BINDMOUNTS_DIR}/${DOCKER_ANSIBLE_NAME}${DOCKER_ANSIBLE_CONFIG_DIR}/host_vars:${DOCKER_ANSIBLE_CONFIG_DIR}/host_vars" \
+		"${docker_satnogs_config_image}"
+}
+
+main() {
+	requirements
+	parse_args "$@"
+	load_conf
+	if [ -z "$skip_install" ]; then
+		install_docker
+		configure_ansible
+		if [ -z "$skip_config" ]; then
+			provision_station \
+				"$docker_ansible_image" \
+				"$satnogs_ansible_playbook_url" \
+				"$satnogs_ansible_checkout_ref" \
+				1
+			exec satnogs-setup -n "$@"
+		fi
+	fi
+	if [ -z "$skip_config" ]; then
+		configure_station "$docker_satnogs_config_image"
+	fi
+	provision_station \
+		"$docker_ansible_image" \
+		"$satnogs_ansible_playbook_url" \
+		"$satnogs_ansible_checkout_ref"
+}
+
+main "$@"
