@@ -1,4 +1,10 @@
 ---
+- name: Create setup script configuration file
+  ansible.builtin.template:
+    src: 'etc/satnogs-setup.conf.j2'
+    dest: '/etc/satnogs-setup.conf'
+    mode: '644'
+  become: true
 - name: Copy setup script
   ansible.builtin.copy:
     src: 'usr/local/bin/satnogs-setup'
