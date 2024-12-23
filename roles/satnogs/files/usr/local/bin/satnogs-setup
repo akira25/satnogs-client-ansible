@@ -275,6 +275,7 @@ main() {
 		"$docker_ansible_image" \
 		"$satnogs_ansible_playbook_url" \
 		"$satnogs_ansible_checkout_ref"
+	echo "SatNOGS station provisioned successfully!"
 }
 
 main "$@"
