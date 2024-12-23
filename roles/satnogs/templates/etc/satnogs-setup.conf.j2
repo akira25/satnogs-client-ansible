@@ -1,3 +1,6 @@
 {% if satnogs_setup_satnogs_ansible_checkout_ref is defined -%}
 SATNOGS_SETUP_SATNOGS_ANSIBLE_CHECKOUT_REF={{ satnogs_setup_satnogs_ansible_checkout_ref | ansible.builtin.quote }}
 {% endif -%}
+{% if satnogs_setup_satnogs_ansible_playbook_url is defined -%}
+SATNOGS_SETUP_SATNOGS_ANSIBLE_PLAYBOOK_URL={{ satnogs_setup_satnogs_ansible_playbook_url | ansible.builtin.quote }}
+{% endif -%}
