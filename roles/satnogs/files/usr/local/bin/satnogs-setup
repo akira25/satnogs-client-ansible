@@ -20,7 +20,7 @@
 DEFAULT_SATNOGS_SETUP_SATNOGS_ANSIBLE_CHECKOUT_REF="stable"
 DEFAULT_SATNOGS_SETUP_SATNOGS_ANSIBLE_PLAYBOOK_URL="https://gitlab.com/librespacefoundation/satnogs/satnogs-ansible.git"
 DEFAULT_SATNOGS_SETUP_DOCKER_ANSIBLE_IMAGE="librespace/ansible:8.4.0"
-DEFAULT_SATNOGS_SETUP_DOCKER_SATNOGS_CONFIG_IMAGE="librespace/satnogs-config:master"
+DEFAULT_SATNOGS_SETUP_DOCKER_SATNOGS_CONFIG_IMAGE="librespace/satnogs-config:1.0"
 
 DOCKER_BINDMOUNTS_DIR="/var/lib/docker-bindmounts"
 DOCKER_ANSIBLE_NAME="ansible"
