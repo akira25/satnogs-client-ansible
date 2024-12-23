@@ -259,7 +259,7 @@ main() {
 	if [ -z "$skip_install" ]; then
 		install_docker
 		configure_ansible
-		if [ -z "$skip_config" ]; then
+		if [ -z "$skip_config" ] && [ -t 0 ]; then
 			provision_station \
 				"$docker_ansible_image" \
 				"$satnogs_ansible_playbook_url" \
@@ -268,14 +268,18 @@ main() {
 			exec satnogs-setup -n "$@"
 		fi
 	fi
-	if [ -z "$skip_config" ]; then
-		configure_station "$docker_satnogs_config_image"
+	if [ -z "$skip_config" ] && [ -t 0 ]; then
+			configure_station "$docker_satnogs_config_image"
 	fi
 	provision_station \
 		"$docker_ansible_image" \
 		"$satnogs_ansible_playbook_url" \
 		"$satnogs_ansible_checkout_ref"
 	echo "SatNOGS station provisioned successfully!"
+
+	if [ -n "$skip_config" ] || [ ! -t 0 ]; then
+		echo "You can now run 'satnogs-setup' to configure the station."
+	fi
 }
 
 main "$@"
