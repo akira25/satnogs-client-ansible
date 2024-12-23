@@ -4,3 +4,6 @@ SATNOGS_SETUP_SATNOGS_ANSIBLE_CHECKOUT_REF={{ satnogs_setup_satnogs_ansible_chec
 {% if satnogs_setup_satnogs_ansible_playbook_url is defined -%}
 SATNOGS_SETUP_SATNOGS_ANSIBLE_PLAYBOOK_URL={{ satnogs_setup_satnogs_ansible_playbook_url | ansible.builtin.quote }}
 {% endif -%}
+{% if satnogs_setup_docker_ansible_image is defined -%}
+SATNOGS_SETUP_DOCKER_ANSIBLE_IMAGE={{ satnogs_setup_docker_ansible_image | ansible.builtin.quote }}
+{% endif -%}
