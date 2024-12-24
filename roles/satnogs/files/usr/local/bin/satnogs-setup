@@ -249,7 +249,7 @@ configure_station() {
 		-e SATNOGS_CONFIG_CONFIG_FILE="${DOCKER_ANSIBLE_CONFIG_DIR}/host_vars/${DOCKER_ANSIBLE_NAME}" \
 		--tmpfs "/tmp" \
 		-v "${DOCKER_BINDMOUNTS_DIR}/${DOCKER_ANSIBLE_NAME}${DOCKER_ANSIBLE_CONFIG_DIR}/host_vars:${DOCKER_ANSIBLE_CONFIG_DIR}/host_vars" \
-		"${docker_satnogs_config_image}"
+		"${docker_satnogs_config_image}" < /dev/tty
 }
 
 main() {
@@ -259,7 +259,7 @@ main() {
 	if [ -z "$skip_install" ]; then
 		install_docker
 		configure_ansible
-		if [ -z "$skip_config" ] && [ -t 0 ]; then
+		if [ -z "$skip_config" ]; then
 			provision_station \
 				"$docker_ansible_image" \
 				"$satnogs_ansible_playbook_url" \
@@ -268,7 +268,7 @@ main() {
 			exec satnogs-setup -n "$@"
 		fi
 	fi
-	if [ -z "$skip_config" ] && [ -t 0 ]; then
+	if [ -z "$skip_config" ]; then
 			configure_station "$docker_satnogs_config_image"
 	fi
 	provision_station \
@@ -277,7 +277,7 @@ main() {
 		"$satnogs_ansible_checkout_ref"
 	echo "SatNOGS station provisioned successfully!"
 
-	if [ -n "$skip_config" ] || [ ! -t 0 ]; then
+	if [ -n "$skip_config" ]; then
 		echo "You can now run 'satnogs-setup' to configure the station."
 	fi
 }
