@@ -212,17 +212,25 @@ provision_station() {
 	satnogs_ansible_playbook_url="$2"
 	satnogs_ansible_checkout_ref="$3"
 	only_if_changed="$4"
+	unset has_pull
 
 	if [ -n "$(docker ps -f name="^${DOCKER_ANSIBLE_NAME}\$" --format 1)" ]; then
 		echo "Provisioning already in progress! Exiting..." 1>&2
 		exit 1
 	fi
 
+	if [ "$(. /etc/os-release; echo "$VERSION_CODENAME")" != "buster" ]; then
+		has_pull=1
+	fi
+
 	echo "Provisioning SatNOGS station..."
+	if [ -z "$has_pull" ]; then
+		root_or_sudo docker pull "${docker_ansible_image}"
+	fi
 	root_or_sudo docker run \
 		--rm \
 		--read-only \
-		--pull always \
+		${has_pull:+--pull always} \
 		--name "${DOCKER_ANSIBLE_NAME}" \
 		--hostname "${DOCKER_ANSIBLE_NAME}" \
 		--privileged \
@@ -241,14 +249,22 @@ provision_station() {
 
 configure_station() {
 	docker_satnogs_config_image="$1"
+	unset has_pull
+
+	if [ "$(. /etc/os-release; echo "$VERSION_CODENAME")" != "buster" ]; then
+		has_pull=1
+	fi
 
 	echo "Launching SatNOGS configuration tool..."
+	if [ -z "$has_pull" ]; then
+		root_or_sudo docker pull "${docker_ansible_image}"
+	fi
 	root_or_sudo docker run \
 		-ti \
 		--rm \
 		--read-only \
 		--user "${DOCKER_SATNOGS_CONFIG_UID}:${DOCKER_SATNOGS_CONFIG_UID}" \
-		--pull always \
+		${has_pull:+--pull always} \
 		--name "${DOCKER_SATNOGS_CONFIG_NAME}" \
 		--hostname "${DOCKER_SATNOGS_CONFIG_NAME}" \
 		-e SATNOGS_CONFIG_CONFIG_FILE="${DOCKER_ANSIBLE_CONFIG_DIR}/host_vars/${DOCKER_ANSIBLE_NAME}" \
