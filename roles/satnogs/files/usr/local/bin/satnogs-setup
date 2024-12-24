@@ -67,8 +67,8 @@ Options:
                              (default: '$DEFAULT_SATNOGS_SETUP_DOCKER_ANSIBLE_IMAGE')
   -i DOCKER_IMAGE           SatNOGS Config Docker image.
                              (default: '$DEFAULT_SATNOGS_SETUP_DOCKER_SATNOGS_CONFIG_IMAGE')
-  -n                        Skip installation.
-  -s                        Skip configuration.
+  --install                 Install SatNOGS software.
+  --no-config               Skip configuration.
 
   --help                    Print usage
 
@@ -99,7 +99,7 @@ parse_args() {
 	unset satnogs_ansible_playbook_url
 	unset docker_ansible_image
 	unset docker_satnogs_config_image
-	unset skip_install
+	unset do_install
 	unset skip_config
 
 	while [ $# -gt 0 ]; do
@@ -140,10 +140,10 @@ parse_args() {
 				shift
 				docker_satnogs_config_image="$1"
 				;;
-			-n)
-				skip_install=1
+			--install)
+				do_install=1
 				;;
-			-s)
+			--no-config)
 				skip_config=1
 				;;
 			--help)
@@ -256,7 +256,13 @@ main() {
 	requirements
 	parse_args "$@"
 	load_conf
-	if [ -z "$skip_install" ]; then
+
+	# Assume installation is requested when file is sourced
+	if [ "$(basename "$0")" != "satnogs-setup" ]; then
+		do_install=1
+	fi
+
+	if [ -n "$do_install" ]; then
 		install_docker
 		configure_ansible
 		if [ -z "$skip_config" ]; then
@@ -265,7 +271,16 @@ main() {
 				"$satnogs_ansible_playbook_url" \
 				"$satnogs_ansible_checkout_ref" \
 				1
-			exec satnogs-setup -n "$@"
+
+			# Remove '--install' argument from next call
+			for arg in "$@"; do
+				shift
+				if [ "$arg" = "--install" ]; then
+					continue
+				fi
+				set -- "$@" "$arg"
+			done
+			exec satnogs-setup "$@"
 		fi
 	fi
 	if [ -z "$skip_config" ]; then
