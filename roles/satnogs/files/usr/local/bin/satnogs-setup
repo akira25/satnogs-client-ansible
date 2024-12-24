@@ -213,6 +213,11 @@ provision_station() {
 	satnogs_ansible_checkout_ref="$3"
 	only_if_changed="$4"
 
+	if [ -n "$(docker ps -f name="^${DOCKER_ANSIBLE_NAME}\$" --format 1)" ]; then
+		echo "Provisioning already in progress! Exiting..." 1>&2
+		exit 1
+	fi
+
 	echo "Provisioning SatNOGS station..."
 	root_or_sudo docker run \
 		--rm \
