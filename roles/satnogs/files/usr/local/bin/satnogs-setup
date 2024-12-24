@@ -214,7 +214,7 @@ provision_station() {
 	only_if_changed="$4"
 	unset has_pull
 
-	if [ -n "$(docker ps -f name="^${DOCKER_ANSIBLE_NAME}\$" --format 1)" ]; then
+	if [ -n "$(root_or_sudo docker ps -f name="^${DOCKER_ANSIBLE_NAME}\$" --format 1)" ]; then
 		echo "Provisioning already in progress! Exiting..." 1>&2
 		exit 1
 	fi
