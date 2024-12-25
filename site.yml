@@ -1,2 +1,3 @@
 ---
 - import_playbook: satnogses.yml
+- import_playbook: satnogs_setups.yml

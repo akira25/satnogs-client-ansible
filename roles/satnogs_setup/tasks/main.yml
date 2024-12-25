@@ -1,0 +1,22 @@
+---
+- name: Change satnogs_setup_ansible_branch ref to oldstable
+  ansible.builtin.lineinfile:
+    path: '/etc/ansible/host_vars/localhost'
+    regexp: '^satnogs_setup_ansible_branch: .*'
+    line: "satnogs_setup_ansible_branch: oldstable"
+    create: true
+    mode: '644'
+  become: true
+  register: oldstable
+- name: Change SATNOGS_SETUP_ANSIBLE_BRANCH to oldstable
+  ansible.builtin.lineinfile:
+    path: '/etc/default/satnogs-setup'
+    regexp: '^SATNOGS_SETUP_ANSIBLE_BRANCH=.*'
+    line: 'SATNOGS_SETUP_ANSIBLE_BRANCH="oldstable"'
+    backrefs: true
+    create: true
+    mode: '644'
+  become: true
+- name: Prompt for re-run
+  ansible.builtin.fail:
+    msg: "Please, re-run 'satnogs-setup'"
