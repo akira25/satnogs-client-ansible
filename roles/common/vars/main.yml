@@ -13,6 +13,10 @@ lsb_compatibility:
     codename: 'bookworm'
   - id: 'Raspbian'
     codename: 'bookworm'
+  - id: 'Ubuntu'
+    codename: 'focal'
+  - id: 'Ubuntu'
+    codename: 'jammy'
 package_retries: '3'
 package_delay: '1'
 packages:
