@@ -22,6 +22,8 @@ package_delay: '1'
 packages:
   - name: 'acl'
     state: 'present'
+  - name: 'cron'
+    state: 'present'
   - name: 'rng-tools'
     state: 'present'
   - name: 'sudo'
