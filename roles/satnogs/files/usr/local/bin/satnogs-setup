@@ -291,7 +291,6 @@ main() {
 				"$docker_ansible_image" \
 				"$satnogs_ansible_playbook_url" \
 				"$satnogs_ansible_checkout_ref" \
-				1
 
 			# Remove '--install' argument from next call
 			for arg in "$@"; do
