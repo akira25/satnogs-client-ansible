@@ -93,4 +93,64 @@ Vagrant.configure("2") do |config|
 
   end
 
+  # Configure 'ubuntu focal'
+  config.vm.define :ubuntu_focal do |ubuntu_focal|
+
+    # Disable sharing of project folder
+    ubuntu_focal.vm.synced_folder ".", "/vagrant", disabled: true
+
+    # Set preferred provider
+    ubuntu_focal.vm.provider "libvirt" do |domain|
+      domain.memory = "1024"
+      domain.cpus = "2"
+    end
+
+    # Set box and hostname
+    ubuntu_focal.vm.box = "ubuntu/focal64"
+    ubuntu_focal.vm.hostname = "ubuntu-focal"
+
+    # Execute shell pre-provisioning script
+    ubuntu_focal.vm.provision "shell", path: ".vagrant-provision.sh", args: ["pre", "ubuntu_focal"]
+
+    # Execute Ansible provisioning
+    ubuntu_focal.vm.provision "ansible" do |ansible|
+      ansible.compatibility_mode = "2.0"
+      ansible.playbook = "site.yml"
+    end
+
+    # Execute shell post-provisioning script
+    ubuntu_focal.vm.provision "shell", path: ".vagrant-provision.sh", args: ["post", "ubuntu_focal"]
+
+  end
+
+  # Configure 'ubuntu jammy'
+  config.vm.define :ubuntu_jammy do |ubuntu_jammy|
+
+    # Disable sharing of project folder
+    ubuntu_jammy.vm.synced_folder ".", "/vagrant", disabled: true
+
+    # Set preferred provider
+    ubuntu_jammy.vm.provider "libvirt" do |domain|
+      domain.memory = "1024"
+      domain.cpus = "2"
+    end
+
+    # Set box and hostname
+    ubuntu_jammy.vm.box = "ubuntu/jammy64"
+    ubuntu_jammy.vm.hostname = "ubuntu-jammy"
+
+    # Execute shell pre-provisioning script
+    ubuntu_jammy.vm.provision "shell", path: ".vagrant-provision.sh", args: ["pre", "ubuntu_jammy"]
+
+    # Execute Ansible provisioning
+    ubuntu_jammy.vm.provision "ansible" do |ansible|
+      ansible.compatibility_mode = "2.0"
+      ansible.playbook = "site.yml"
+    end
+
+    # Execute shell post-provisioning script
+    ubuntu_jammy.vm.provision "shell", path: ".vagrant-provision.sh", args: ["post", "ubuntu_jammy"]
+
+  end
+
 end

@@ -4,8 +4,12 @@ all:
     debian_buster:
     debian_bullseye:
     debian_bookworm:
+    ubuntu_focal:
+    ubuntu_jammy:
 satnogses:
   hosts:
     debian_buster:
     debian_bullseye:
     debian_bookworm:
+    ubuntu_focal:
+    ubuntu_jammy:

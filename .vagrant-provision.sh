@@ -9,6 +9,10 @@ case $1 in
 			;;
 			debian_bookworm)
 			;;
+			ubuntu_focal)
+			;;
+			ubuntu_jammy)
+			;;
 		esac
 		;;
 	post)
@@ -18,6 +22,10 @@ case $1 in
 			debian_bullseye)
 			;;
 			debian_bookworm)
+			;;
+			ubuntu_focal)
+			;;
+			ubuntu_jammy)
 			;;
 		esac
 		;;
