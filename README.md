@@ -5,7 +5,7 @@ How to install:
 
 * Copy `production.dist` to `production`
 * Configure `production/inventory/hosts` file
-* Configure `production/inventory/host_vars` variables
+* Configure `production/inventory/host_vars/satnogs` variables
 * Run `ansible-playbook -i production/inventory/hosts site.yml`
 * Enjoy!
 

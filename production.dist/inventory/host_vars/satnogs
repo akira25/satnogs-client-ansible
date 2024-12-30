@@ -36,7 +36,7 @@ satnogs_station_lon: '23.725'
 #
 # Radio settings
 #
-# satnogs_rig_ip: '127.0.0.1'
+# satnogs_rig_ip: 'rigctld'
 # satnogs_rig_port: '4532'
 # satnogs_doppler_corr_per_sec: null
 # satnogs_ppm_error: null
@@ -126,35 +126,20 @@ satnogs_station_lon: '23.725'
 # rotctld_set_eloffset: null
 
 #
-# GPS configuration
+# Development
 #
-# gpsd_enabled: false
-
+# Docker images
 #
-# Software configuration
-#
-# APT software settings
-#
-# experimental: false
-# apt_repository: null
-# apt_key_url: null
-# apt_key_id: null
-#
-# SatNOGS Client software settings
-#
-# satnogs_client_version: null
-# satnogs_client_url: null
-#
-# Radio software settings
-#
-# satnogs_radio_flowgraphs_version: null
+# docker_rigctld_image: 'librespace/hamlib:4.0'
+# docker_rotctld_image: 'librespace/hamlib:4.0'
+# docker_satnogs_client_image: 'librespace/satnogs-client:1.9.2'
 #
 # SatNOGS setup software settings
 #
-# satnogs_setup_ansible_url: null
-# satnogs_setup_ansible_branch: null
-# satnogs_setup_satnogs_config_version: null
-# satnogs_setup_satnogs_config_url: null
+# satnogs_setup_satnogs_ansible_checkout_ref: null
+# satnogs_setup_satnogs_ansible_playbook_url: null
+# satnogs_setup_docker_ansible_image: null
+# satnogs_setup_docker_satnogs_config_image: null
 
 #
 # Debug configuration
