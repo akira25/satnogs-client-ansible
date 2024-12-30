@@ -34,6 +34,7 @@ REQUIREMENTS="
 grep
 sudo
 apt-get
+git
 "
 
 requirements() {
