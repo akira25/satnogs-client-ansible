@@ -7,6 +7,16 @@
   until: res is success
   retries: '{{ package_retries }}'
   delay: '{{ package_delay }}'
+- name: Stop and disable services
+  ansible.builtin.service:
+    name: '{{ item }}'
+    enabled: false
+    state: 'stopped'
+  become: true
+  loop:
+    - 'rigctld'
+    - 'rotctld'
+    - 'satnogs-client'
 - name: Reload systemd daemon
   ansible.builtin.systemd:
     daemon_reload: true

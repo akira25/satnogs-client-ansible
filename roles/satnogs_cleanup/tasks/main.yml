@@ -9,6 +9,7 @@
     - '/etc/systemd/system/rotctld.service'
     - '/etc/systemd/system/satnogs-client.service'
   notify:
+    - Stop and disable services
     - Reload systemd daemon
 - name: Remove SatNOGS Client tmpfs mount
   ansible.posix.mount:
