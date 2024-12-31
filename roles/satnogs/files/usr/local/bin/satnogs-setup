@@ -28,13 +28,16 @@ DOCKER_ANSIBLE_CONFIG_DIR="/etc/ansible"
 DOCKER_SATNOGS_CONFIG_NAME="satnogs-config"
 DOCKER_SATNOGS_CONFIG_UID="999"
 DOCKER_SATNOGS_CONFIG_VARSTATEDIR="/var/lib/satnogs-config"
+INSTALL_PACKAGES="
+docker.io:docker:Docker
+git::Git
+"
 
 DEFAULT_CONF_FILE="/etc/satnogs-setup.conf"
 REQUIREMENTS="
 grep
 sudo
 apt-get
-git
 "
 
 requirements() {
@@ -177,11 +180,37 @@ root_or_sudo() {
 	fi
 }
 
-install_docker() {
-	echo "Installing Docker..."
-	root_or_sudo apt-get -qq update
-	root_or_sudo apt-get -qqy install docker.io
-	echo
+install_packages() {
+	unset packages
+
+	while read -r install_package; do
+		if [ -z "$install_package" ]; then
+			continue
+		fi
+		package_name="${install_package%%:*}";install_package="${install_package#*:}"
+		search_command="${install_package%%:*}";install_package="${install_package#*:}"
+		search_command="${search_command:-$package_name}"
+		package_desc="$install_package"
+		package_desc="${package_desc:-$search_command}"
+		if [ -z "$search_command" ] || ! command -v "$search_command" >/dev/null 2>&1; then
+			package_names="${package_names}${package_names:+ }${package_name}"
+			package_descs="${package_descs}${package_descs:+, }${package_desc}"
+		fi
+	done <<EOF
+$INSTALL_PACKAGES
+EOF
+	if [ -n "$package_names" ]; then
+		last_package_desc="${package_descs##*, }"
+		if [ "$last_package_desc" != "$package_descs" ]; then
+			package_descs="${package_descs%, *} and $last_package_desc"
+		fi
+
+		echo "Installing $package_descs..."
+		root_or_sudo apt-get update
+		# shellcheck disable=SC2086
+		root_or_sudo apt-get -y install $package_names
+		echo
+	fi
 }
 
 configure_ansible() {
@@ -284,9 +313,10 @@ main() {
 		do_install=1
 	fi
 
+	install_packages
+	configure_ansible
+
 	if [ -n "$do_install" ]; then
-		install_docker
-		configure_ansible
 		if [ -z "$skip_config" ]; then
 			provision_station \
 				"$docker_ansible_image" \
