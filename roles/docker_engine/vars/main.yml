@@ -61,5 +61,6 @@ docker_compose_packages_buster:
   - 'zipp==3.15.0'
 docker_compose_packages_focal: '{{ docker_compose_packages_buster }}'
 docker_compose_packages_jammy: '{{ docker_compose_packages_bookworm }}'
+docker_compose_packages_noble: '{{ docker_compose_packages_bookworm }}'
 docker_default:
   log_driver: 'journald'

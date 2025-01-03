@@ -17,6 +17,8 @@ lsb_compatibility:
     codename: 'focal'
   - id: 'Ubuntu'
     codename: 'jammy'
+  - id: 'Ubuntu'
+    codename: 'noble'
 package_retries: '3'
 package_delay: '1'
 packages:

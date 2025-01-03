@@ -24,6 +24,7 @@ This Ansible playbook supports the following distributions and releases:
 * Ubuntu
   * Focal
   * Jammy
+  * Noble
 
 ## Required Ansible version
 
