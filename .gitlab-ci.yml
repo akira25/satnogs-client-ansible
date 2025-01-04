@@ -1,7 +1,7 @@
 ---
 variables:
   GITLAB_CI_IMAGE_ALPINE: 'alpine:3.16.0'
-  GITLAB_CI_IMAGE_ANSIBLE: 'librespace/ansible:6.0.0'
+  GITLAB_CI_IMAGE_ANSIBLE: 'librespace/ansible:9.9.0'
   GITLAB_CI_SIGN_OFF_EXCLUDE: '560ebadf7353fd458be7bfd2eb08546465cc1e71'
 stages:
   - static
