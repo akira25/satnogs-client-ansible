@@ -1,15 +1,13 @@
 ---
-- name: Gather package facts
-  ansible.builtin.package_facts:
+- name: Gather service facts
+  ansible.builtin.service_facts:
 - name: Disable swap file
   ansible.builtin.service:
     name: 'dphys-swapfile'
     state: stopped
     enabled: false
-  when: ('dphys-swapfile' in ansible_facts.packages)
+  when: ansible_facts.services['dphys-swapfile.service']['status'] | default('not-found') == 'enabled'
   become: true
-  tags:
-    - skip_ansible_lint
 - name: Add ZRAM init script
   ansible.builtin.copy:
     src: 'etc/init.d/zram'
