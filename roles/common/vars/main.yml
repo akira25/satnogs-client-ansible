@@ -30,4 +30,4 @@ packages:
     state: 'present'
   - name: 'sudo'
     state: 'present'
-zram_memtotal_min: 2048
+zram_memtotal_min: 8192

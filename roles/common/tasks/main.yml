@@ -16,4 +16,4 @@
   ansible.builtin.import_tasks: cron.yml
 - name: Import tasks for zram
   ansible.builtin.import_tasks: zram.yml
-  when: ansible_memtotal_mb < zram_memtotal_min
+  when: ansible_memtotal_mb <= zram_memtotal_min
