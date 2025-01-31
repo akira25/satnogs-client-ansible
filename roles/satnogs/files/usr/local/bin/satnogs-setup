@@ -2,7 +2,7 @@
 #
 # SatNOGS station setup script
 #
-# Copyright (C) 2024 Libre Space Foundation <https://libre.space/>
+# Copyright (C) 2024-2025 Libre Space Foundation <https://libre.space/>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 
 DEFAULT_SATNOGS_SETUP_SATNOGS_ANSIBLE_CHECKOUT_REF="stable"
 DEFAULT_SATNOGS_SETUP_SATNOGS_ANSIBLE_PLAYBOOK_URL="https://gitlab.com/librespacefoundation/satnogs/satnogs-ansible.git"
-DEFAULT_SATNOGS_SETUP_DOCKER_ANSIBLE_IMAGE="librespace/ansible:9.9.0"
+DEFAULT_SATNOGS_SETUP_DOCKER_ANSIBLE_IMAGE="librespace/ansible:9.13.0"
 DEFAULT_SATNOGS_SETUP_DOCKER_SATNOGS_CONFIG_IMAGE="librespace/satnogs-config:1.0"
 
 DOCKER_BINDMOUNTS_DIR="/var/lib/docker-bindmounts"
