@@ -1,7 +1,12 @@
 ---
-- name: Start ZRAM service
+- name: Remove old ZRAM init script
+  ansible.builtin.file:
+    dest: '/etc/init.d/zram'
+    state: 'absent'
+  become: true
+- name: Restart ZRAM service
   ansible.builtin.service:
-    name: 'zram'
-    state: 'started'
+    name: 'zramswap'
+    state: 'restarted'
     enabled: true
   become: true

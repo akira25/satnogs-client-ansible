@@ -8,11 +8,37 @@
     enabled: false
   when: ansible_facts.services['dphys-swapfile.service']['status'] | default('not-found') == 'enabled'
   become: true
-- name: Add ZRAM init script
-  ansible.builtin.copy:
-    src: 'etc/init.d/zram'
-    dest: '/etc/init.d/zram'
-    mode: '755'
+- name: Check if old zram init script exists
+  ansible.builtin.stat:
+    path: '/etc/init.d/zram'
+  register: res_zram_initscript
+  become: true
+- name: Stop old ZRAM init script
+  ansible.builtin.service:
+    name: 'zram'
+    state: 'stopped'
+    enabled: false
+  become: true
+  when: res_zram_initscript.stat.exists
+  notify:
+    - Remove old ZRAM init script
+- name: Install zram-tools
+  ansible.builtin.package:
+    name: 'zram-tools'
+  become: true
+- name: Configure ZRAM compression algorithm
+  ansible.builtin.lineinfile:
+    path: '/etc/default/zramswap'
+    regexp: '^ALGO='
+    line: 'ALGO=zstd'
   become: true
   notify:
-    - Start ZRAM service
+    - Restart ZRAM service
+- name: Configure ZRAM 50% RAM usage
+  ansible.builtin.lineinfile:
+    path: '/etc/default/zramswap'
+    regexp: '^PERCENT='
+    line: 'PERCENT=50'
+  become: true
+  notify:
+    - Restart ZRAM service
