@@ -3,3 +3,7 @@ satnogs_radio_blacklist_modules:
   - 'rtl2832_sdr'
   - 'dvb_usb_rtl28xxu'
   - 'rtl2832'
+  - 'airspy'
+  - 'hackrf'
+  - 'msi001'
+  - 'msi2500'

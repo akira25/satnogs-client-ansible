@@ -15,6 +15,46 @@
   become: true
   notify:
     - Retrigger udev devices
+- name: Add PlutoSDR udev rules
+  ansible.builtin.copy:
+    src: etc/udev/rules.d/53-adi-plutosdr-usb.rules
+    dest: /etc/udev/rules.d/53-adi-plutosdr-usb.rules
+    mode: '644'
+  become: true
+  notify:
+    - Retrigger udev devices
+- name: Add PlutoSDR m2k udev rules
+  ansible.builtin.copy:
+    src: etc/udev/rules.d/53-adi-m2k-usb.rules
+    dest: /etc/udev/rules.d/53-adi-m2k-usb.rules
+    mode: '644'
+  become: true
+  notify:
+    - Retrigger udev devices
+- name: Add AirSpy udev rules
+  ansible.builtin.copy:
+    src: etc/udev/rules.d/60-libairspy.rules
+    dest: /etc/udev/rules.d/60-libairspy.rules
+    mode: '644'
+  become: true
+  notify:
+    - Retrigger udev devices
+- name: Add HackRF udev rules
+  ansible.builtin.copy:
+    src: etc/udev/rules.d/60-libhackrf0.rules
+    dest: /etc/udev/rules.d/60-libhackrf0.rules
+    mode: '644'
+  become: true
+  notify:
+    - Retrigger udev devices
+- name: Add UHD udev rules
+  ansible.builtin.copy:
+    src: etc/udev/rules.d/60-uhd-host.rules
+    dest: /etc/udev/rules.d/60-uhd-host.rules
+    mode: '644'
+  become: true
+  notify:
+    - Retrigger udev devices
 - name: Blacklist SDR modules
   community.general.kernel_blacklist:
     name: '{{ item }}'

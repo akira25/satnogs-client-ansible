@@ -1,0 +1,4 @@
+# AirSpyHF
+SUBSYSTEMS=="usb", ATTR{idVendor}=="03eb", ATTR{idProduct}=="800c", MODE="0666"
+# AirSpy
+SUBSYSTEMS=="usb", ATTR{idVendor}=="1d50", ATTR{idProduct}=="60a1", MODE="0666"
