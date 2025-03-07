@@ -1,16 +1,24 @@
 ---
-- name: Add RTL-SDR udev rules
+- name: Add Airspy udev rules
   ansible.builtin.copy:
-    src: etc/udev/rules.d/rtl-sdr.rules
-    dest: /etc/udev/rules.d/rtl-sdr.rules
+    src: etc/udev/rules.d/52-airspy.rules
+    dest: /etc/udev/rules.d/52-airspy.rules
     mode: '644'
   become: true
   notify:
     - Retrigger udev devices
-- name: Add LimeSDR udev rules
+- name: Add Airspy HF+ udev rules
   ansible.builtin.copy:
-    src: etc/udev/rules.d/64-limesuite.rules
-    dest: /etc/udev/rules.d/64-limesuite.rules
+    src: etc/udev/rules.d/52-airspyhf.rules
+    dest: /etc/udev/rules.d/52-airspyhf.rules
+    mode: '644'
+  become: true
+  notify:
+    - Retrigger udev devices
+- name: Add M2k udev rules
+  ansible.builtin.copy:
+    src: etc/udev/rules.d/53-adi-m2k-usb.rules
+    dest: /etc/udev/rules.d/53-adi-m2k-usb.rules
     mode: '644'
   become: true
   notify:
@@ -23,26 +31,10 @@
   become: true
   notify:
     - Retrigger udev devices
-- name: Add PlutoSDR m2k udev rules
-  ansible.builtin.copy:
-    src: etc/udev/rules.d/53-adi-m2k-usb.rules
-    dest: /etc/udev/rules.d/53-adi-m2k-usb.rules
-    mode: '644'
-  become: true
-  notify:
-    - Retrigger udev devices
-- name: Add AirSpy udev rules
-  ansible.builtin.copy:
-    src: etc/udev/rules.d/60-libairspy.rules
-    dest: /etc/udev/rules.d/60-libairspy.rules
-    mode: '644'
-  become: true
-  notify:
-    - Retrigger udev devices
 - name: Add HackRF udev rules
   ansible.builtin.copy:
-    src: etc/udev/rules.d/60-libhackrf0.rules
-    dest: /etc/udev/rules.d/60-libhackrf0.rules
+    src: etc/udev/rules.d/53-hackrf.rules
+    dest: /etc/udev/rules.d/53-hackrf.rules
     mode: '644'
   become: true
   notify:
@@ -51,6 +43,22 @@
   ansible.builtin.copy:
     src: etc/udev/rules.d/60-uhd-host.rules
     dest: /etc/udev/rules.d/60-uhd-host.rules
+    mode: '644'
+  become: true
+  notify:
+    - Retrigger udev devices
+- name: Add LimeSDR udev rules
+  ansible.builtin.copy:
+    src: etc/udev/rules.d/64-limesuite.rules
+    dest: /etc/udev/rules.d/64-limesuite.rules
+    mode: '644'
+  become: true
+  notify:
+    - Retrigger udev devices
+- name: Add RTL-SDR udev rules
+  ansible.builtin.copy:
+    src: etc/udev/rules.d/rtl-sdr.rules
+    dest: /etc/udev/rules.d/rtl-sdr.rules
     mode: '644'
   become: true
   notify:

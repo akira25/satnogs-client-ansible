@@ -1,0 +1,8 @@
+roles/satnogs/files/etc/udev/rules.d/52-airspy.rules
+roles/satnogs/files/etc/udev/rules.d/52-airspyhf.rules
+roles/satnogs/files/etc/udev/rules.d/53-adi-m2k-usb.rules
+roles/satnogs/files/etc/udev/rules.d/53-adi-plutosdr-usb.rules
+roles/satnogs/files/etc/udev/rules.d/53-hackrf.rules
+roles/satnogs/files/etc/udev/rules.d/60-uhd-host.rules
+roles/satnogs/files/etc/udev/rules.d/64-limesuite.rules
+roles/satnogs/files/etc/udev/rules.d/rtl-sdr.rules

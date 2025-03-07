@@ -1,0 +1,5 @@
+# source: https://raw.githubusercontent.com/airspy/airspyone_host/refs/heads/master/airspy-tools/52-airspy.rules
+#
+# Use ./contrib/refresh-udev-rules.sh to refresh this file from remote sources
+
+SUBSYSTEM=="usb", ATTR{idVendor}=="1d50", ATTR{idProduct}=="60a1", SYMLINK+="airspy-%k", MODE="666"

@@ -1,4 +1,8 @@
-# allow access to ADI PlutoSDR devices
+# source: https://raw.githubusercontent.com/analogdevicesinc/plutosdr-fw/refs/heads/master/scripts/53-adi-plutosdr-usb.rules
+#
+# Use ./contrib/refresh-udev-rules.sh to refresh this file from remote sources
+
+# allow "plugdev" group read/write access to ADI PlutoSDR devices
 # DFU Device
 SUBSYSTEM=="usb", ATTRS{idVendor}=="0456", ATTRS{idProduct}=="b674", MODE="0660"
 SUBSYSTEM=="usb", ATTRS{idVendor}=="2fa2", ATTRS{idProduct}=="5a32", MODE="0660"

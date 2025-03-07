@@ -1,0 +1,5 @@
+# source: https://raw.githubusercontent.com/airspy/airspyhf/refs/heads/master/tools/52-airspyhf.rules
+#
+# Use ./contrib/refresh-udev-rules.sh to refresh this file from remote sources
+
+SUBSYSTEM=="usb", ATTR{idVendor}=="03eb", ATTR{idProduct}=="800c", SYMLINK+="airspyhf-%k", TAG+="uaccess"
