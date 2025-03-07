@@ -78,3 +78,13 @@
 
 - Problem: Ansible exited with `failed` tasks, but there is no output log for these tasks.
 - Solution: Remove `-stdout_callback = unixy` from `ansible.cfg` for more verbose output.
+
+## Updating SDR udev rules
+
+To update the SDR udev rules run:
+
+```
+./contrib/refresh-udev-rules.sh
+```
+
+Review the changes and commit.
