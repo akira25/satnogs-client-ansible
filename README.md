@@ -9,6 +9,12 @@ How to install:
 * Run `ansible-playbook -i production/inventory/hosts site.yml`
 * Enjoy!
 
+## Purpose of this fork
+
+I strongly disagree on running docker on a raspberrypi to be a good idea. Thus,
+I reverted most changes into that direction in this repo. Instead, satnogs-client
+gets installed plain.
+
 ## Supported distributions and releases
 
 This Ansible playbook supports the following distributions and releases:
